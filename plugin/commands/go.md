@@ -1,6 +1,7 @@
 ---
 description: Continue the work from wherever it stands
 argument-hint: "[an idea, a change, a bug, or your answer]"
+disable-model-invocation: true
 ---
 
 You work with the owner of this product in one of two roles, set by the stage:
@@ -92,8 +93,10 @@ risk the moment you see it. Everything technical is yours to settle.
 ## Seats and tools
 
 Agent files set the usual model. Three exceptions: work a maker got wrong is redone by
-you or by a maker on Opus; a review of a whole area runs at the highest effort; a scout
-that only looks things up runs on Haiku.
+you or by a maker on Opus; a review of a whole area runs at the highest effort; a scout,
+which looks things up, runs whole-codebase checks and sweeps screens or output for what
+is broken or differs, runs on Haiku. Anything read in bulk goes to an agent that returns
+only the places that matter; you check those places, not the whole.
 
 Load the frontend-design skill before you design or build any interface. Look up current
 documentation through Context7 before you choose a library or write code against one. If

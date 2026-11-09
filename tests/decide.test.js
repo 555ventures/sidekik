@@ -7,6 +7,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const script = path.join(__dirname, '..', 'plugin', 'scripts', 'decide.js');
+const { decisionsFor } = require(script);
 
 // A fresh project with an empty state and the given files under sidekik/.
 function project(files = {}) {
@@ -63,4 +64,11 @@ test('open questions come from every questions file and can be narrowed to one b
     '- [open] all: Which currency?',
   ]);
   assert.equal(p.run('questions', '02').out.trim(), '- [open] 02: Do reminders go by text?\n- [open] all: Which currency?');
+});
+
+test('decisionsFor lists the dated decisions of exactly one brief', () => {
+  const p = project({ 'decisions.md': '- 2026-01-01 01: First.\n- 2026-01-02 all: For everyone.\n- 2026-01-03 01: Second.\n- 2026-01-03 02: Other.\n' });
+  assert.deepEqual(decisionsFor(p.root, '01'), [{ date: '2026-01-01', brief: '01', text: 'First.' }, { date: '2026-01-03', brief: '01', text: 'Second.' }]);
+  assert.deepEqual(decisionsFor(p.root, 'all'), [{ date: '2026-01-02', brief: 'all', text: 'For everyone.' }]);
+  assert.deepEqual(decisionsFor(project().root, '01'), []);
 });

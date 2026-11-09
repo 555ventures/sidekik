@@ -12,6 +12,7 @@ const B2 = '02 reminders: Clients get a reminder the day before.';
 const NOTE = '# Booking flow\n\n## Reuse\n- The kit form.\n\n## Done when\n- A client books in under a minute.\n';
 const IN_ROOT = 'test -f sidekik/briefs.md';
 const YES = '- 2026-01-01 all: The briefs stand as proposed.\n';
+const YES_01 = '- 2026-01-01 01: Looks right.\n';
 const proto = (status, extra = '') => ({
   'prototype/kit/kit.css': '.btn { color: black; }\n',
   'prototype/book/start.html': `<link rel="stylesheet" href="../kit/kit.css"><button class="btn">Book</button>${extra}\n`,
@@ -21,7 +22,7 @@ const proto = (status, extra = '') => ({
 // A project with two briefs; `state` is merged into a fresh state (null for none), a null file is left out.
 function project(state = {}, files = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-state-'));
-  const all = { 'briefs.md': `- ${B1}\n- ${B2}\n`, 'decisions.md': YES, ...files };
+  const all = { 'briefs.md': `- ${B1}\n- ${B2}\n`, 'decisions.md': YES + YES_01, ...files };
   const decisionsHash = all['decisions.md'] === null ? null : require('crypto').createHash('sha256').update(all['decisions.md']).digest('hex');
   if (state) all['state.json'] = JSON.stringify({ check: null, stack: false, kitHash: null, decisionsHash, briefs: {}, ...state });
   for (const [rel, text] of Object.entries(all).filter(([, t]) => t !== null)) {
@@ -127,6 +128,16 @@ test('confirmed needs untampered decisions and no open question for the brief', 
   assert.equal(p.read().briefs['01'], 'confirmed');
 });
 
+test('confirmed needs a decision for exactly this brief dated on or after its prototyped mark', () => {
+  const at = new Date(2026, 5, 15, 12).toISOString();
+  const state = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at }] };
+  const refusal = /no decision recording the owner's yes on its prototype\. After their yes, run decide\.js add 01 "<their words>" and mark again\./;
+  project(state, { 'decisions.md': YES }).refused(['mark', '01', 'confirmed'], refusal);
+  project(state, { 'decisions.md': `${YES}- 2026-06-14 01: Before the prototype was done.\n` }).refused(['mark', '01', 'confirmed'], refusal);
+  const p = project(state, { 'decisions.md': `${YES}- 2026-06-15 01: Same day.\n` });
+  assert.equal(p.run('mark', '01', 'confirmed').code, 0);
+});
+
 test('confirmed binds the approval to the mapped files, so noted and built refuse after a change until reconfirm', () => {
   const p = project({ stack: true, briefs: { '01': 'prototyped' } }, { ...proto('done'), 'build-notes/01-booking-flow.md': NOTE, 'questions/pm.md': '' });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
@@ -157,7 +168,7 @@ test('noted needs the stack settled and a build note with a reuse section and a 
 });
 
 test('noted records the git commit as the base, and built refuses an empty change, measures the commits since it, moves the base of a brief still waiting, and accepts that brief as measured with it', () => {
-  const p = project({ check: IN_ROOT, stack: true, briefs: { '01': 'confirmed' } }, { 'build-notes/01-booking-flow.md': NOTE });
+  const p = project({ check: IN_ROOT, stack: true, briefs: { '01': 'confirmed' } }, { 'build-notes/01-booking-flow.md': NOTE, 'decisions.md': `${YES}${YES_01}- 2026-01-01 02: Looks right.\n` });
   p.run('reconfirm', '01');
   for (const [rel, text] of Object.entries({ 'old.js': 'old\nlines\n', 'tests/old.js': 'x\n', '.gitignore': 'ignored/\n' })) {
     fs.mkdirSync(path.dirname(path.join(p.root, rel)), { recursive: true });
@@ -234,6 +245,11 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   const state = { check: IN_ROOT, briefs: { '01': 'confirmed', '02': 'confirmed' } };
   const stack = { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' };
   project({ ...state, briefs: { '01': 'confirmed' } }, stack).refused(['mark', 'stack'], /Every brief/);
+  const at = new Date(2026, 5, 15, 12).toISOString();
+  const history = [{ brief: '01', mark: 'confirmed', at }, { brief: '02', mark: 'confirmed', at }];
+  const refusal = /stack has no decision recording the owner's picks\. After their yes, run decide\.js add all "<their picks>" and mark again\./;
+  project({ ...state, history }, { ...stack, 'decisions.md': YES_01 }).refused(['mark', 'stack'], refusal);
+  project({ ...state, history }, { ...stack, 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'stack'], refusal);
   project(state, { ...stack, 'stack.md': '## Picks\n- Node\n' }).refused(['mark', 'stack'], /Your steps/);
   project(state, { ...stack, 'model.md': null }).refused(['mark', 'stack'], /model\.md/);
   project({ ...state, check: 'exit 1' }, stack).refused(['mark', 'stack'], /did not pass/);
@@ -255,6 +271,11 @@ test('the shipped mark needs a done brief not yet shipped and a passing check, a
   const state = { check: IN_ROOT, stack: true, tidied: 1, briefs: { '01': 'done', '02': 'built' } };
   project({ ...state, shipped: ['01'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
   project({ ...state, check: 'exit 1' }).refused(['mark', 'shipped'], /did not pass/);
+  const at = new Date(2026, 5, 15, 12).toISOString();
+  const refusal = /no decision recording the owner's yes to go live\. After their yes, run decide\.js add all "<their words>" and mark again\./;
+  project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': YES_01 }).refused(['mark', 'shipped'], refusal);
+  project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped'], refusal);
+  assert.equal(project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': '- 2026-06-15 all: Go live.\n' }).run('mark', 'shipped').code, 0);
   const p = project(state);
   assert.equal(p.run('mark', 'shipped').code, 0);
   assert.deepEqual(p.read().shipped, ['01']);

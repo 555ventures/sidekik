@@ -31,6 +31,14 @@ function verifyDecisions(root) {
   return { ok: false, problems: [`The decisions file was ${what} after the last recorded decision. Ask the owner whether that was them; if it was, run decide.js seal.`] };
 }
 
+// The decisions recorded for exactly this brief (NN or all), oldest first.
+function decisionsFor(root, brief) {
+  return (readOrNull(decisionsFile(root)) ?? '').split('\n')
+    .map((line) => /^- (\d{4}-\d\d-\d\d) (\d\d|all): (.+)$/.exec(line))
+    .filter((m) => m && m[2] === brief)
+    .map(([, date, b, text]) => ({ date, brief: b, text }));
+}
+
 function openQuestions(root, brief) {
   const qdir = path.join(dir(root), 'questions');
   if (!fs.existsSync(qdir)) return [];
@@ -66,4 +74,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { addDecision, verifyDecisions, openQuestions };
+module.exports = { addDecision, verifyDecisions, decisionsFor, openQuestions };

@@ -10,7 +10,7 @@ every choice here is made against what the product really needs.
    product, each with its cost, how hard it is to leave later, and why it ranks there.
    Where there is no real choice, take the simplest and note it in `sidekik/calls.md`.
 3. **The owner picks,** in the same stop as step 6. Never pick for them. Record each pick
-   with `decide.js add all`.
+   with `decide.js add all`; the stack mark requires that decision.
 4. **Try the risky pieces.** Where a confirmed example depends on what an outside service
    can do, run a small real test against it before anyone commits, and show the result.
 5. **Data design and areas.** Write `sidekik/model.md`: what the whole product stores, the

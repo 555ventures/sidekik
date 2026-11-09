@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { dir, readState, writeState, sha, rootFrom } = require('./lib/store');
-const { verifyDecisions, openQuestions } = require('./decide');
+const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
 
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
@@ -100,6 +100,14 @@ function doneWhenItems(note) {
   return (end === -1 ? after : after.slice(0, end)).filter((l) => l.startsWith('- ')).length;
 }
 
+// The owner's yes counts when a decision for `brief` is dated on or after the day of the last mark it must follow
+// (of `markBrief` when given). An older state file may lack that mark, and then any such decision counts.
+function decidedSince(root, state, brief, mark, markBrief) {
+  const last = state.history.findLast((h) => h.mark === mark && !h.refused && (markBrief === undefined || h.brief === markBrief));
+  const day = last && new Date(last.at).toLocaleDateString('en-CA');
+  return decisionsFor(root, brief).some((d) => !day || d.date >= day);
+}
+
 const REQUIRES = {
   prototyped(root, state, b) {
     const stray = openQuestions(root).map((q) => /^- \[open\] (\d\d):/.exec(q)?.[1])
@@ -115,7 +123,9 @@ const REQUIRES = {
     const decisions = verifyDecisions(root);
     if (!decisions.ok) return decisions.problems[0];
     const open = openQuestions(root, b.nn).length;
-    return open ? `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.` : null;
+    if (open) return `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.`;
+    return decidedSince(root, state, b.nn, 'prototyped', b.nn) ? null
+      : `Brief ${b.nn} has no decision recording the owner's yes on its prototype. After their yes, run decide.js add ${b.nn} "<their words>" and mark again.`;
   },
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';
@@ -187,6 +197,9 @@ function markStack(root, state) {
     return 'The stack file needs a "## Picks" section and a "## Your steps" section.';
   }
   if (readOrNull(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
+  if (!decidedSince(root, state, 'all', 'confirmed')) {
+    return 'The stack has no decision recording the owner\'s picks. After their yes, run decide.js add all "<their picks>" and mark again.';
+  }
   const problem = checkProblem(root, state);
   if (problem) return problem;
   const loose = uncommitted(root);
@@ -217,6 +230,9 @@ function markShipped(root, state) {
   const done = doneBriefs(root, state);
   if (done.every((nn) => state.shipped.includes(nn))) return 'There is no finished brief waiting to be shipped.';
   if (state.tidied !== done.length) return 'The codebase has not been tidied since the last briefs were finished, so the tidy comes first.';
+  if (!decidedSince(root, state, 'all', 'done')) {
+    return 'There is no decision recording the owner\'s yes to go live. After their yes, run decide.js add all "<their words>" and mark again.';
+  }
   const problem = checkProblem(root, state);
   if (problem) return problem;
   state.shipped = done;

@@ -4,9 +4,11 @@ You are the technical partner. One review per brief, by someone who did not see 
 Briefs at this stage together are reviewed at the same time.
 
 Dispatch `sidekik:reviewer` once per brief. Give it the brief's base commit (`next` prints
-it), the build note, the prototype files, the decision log and the index command. It
-returns a list, and you save it as `sidekik/reviews/<NN>.md`, under one first line naming
-the model and effort that wrote it.
+it), the build note with its "Done when" list, the prototype files, the decision log and
+the index command. It runs the product, walks every "Done when" item, including what a
+maker built, and compares the build with its prototype: screens side by side by
+screenshot, exchanges and cases by their exact output. It returns a list, and you save it
+as `sidekik/reviews/<NN>.md`, under one first line naming the model and effort that wrote it.
 
 Then:
 
@@ -14,10 +16,9 @@ Then:
   finding you will not fix, or that is really a product decision, becomes `- [owner]`, and
   you ask.
 - Apply a `- [cut]` only if the check command still passes afterwards.
-- Run the check command and walk the affected "Done when" items again yourself.
-- If you fixed anything, dispatch the reviewer once more over only what the fixes
-  changed, and fix what it proves. Nothing else in the brief is reviewed again or can
-  block.
+- Run the check command. If you fixed anything, dispatch the reviewer once more over only
+  what the fixes changed, with the affected "Done when" items, and fix what it proves.
+  Nothing else in the brief is reviewed again or can block.
 
 That ends the review of this brief. What is still open goes to the owner in plain words.
 

@@ -24,6 +24,7 @@ When they react:
 
 Repeat, using the real thing again each round. Aim for every persona finishing its task
 without help and the skeptic's biggest objection answered. Then only the owner's clear yes
-counts. Run `state.js mark <NN> confirmed` for each brief they approved. It records exactly
+counts. For each brief they approved, first record the yes with `decide.js add NN "<their words>"`,
+because the mark requires it, then run `state.js mark <NN> confirmed`. It records exactly
 what they approved: a later change to those examples needs their yes again, and then
 `state.js reconfirm <NN>`.

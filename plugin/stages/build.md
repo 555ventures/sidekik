@@ -28,12 +28,9 @@ product, you build yourself.
 
 ## Prove it
 
-Run the product and walk every "Done when" item yourself, including what a maker built.
-Compare the build with its prototype: screens side by side by screenshot, exchanges and
-cases by their exact output.
-
-Read the whole diff once and remove what abandoned attempts left behind: dead code, unused
-helpers, debug output.
+A scout reads the whole diff once and lists what abandoned attempts left behind: dead code,
+unused helpers, debug output. Remove it. The walk through the product against its
+prototype is the reviewer's, at the next stage, so that fresh eyes do it once.
 
 Run the check. When it is green, commit the brief as one commit of its own and run
 `state.js mark <NN> built` before you commit the next brief of the wave: the mark measures

@@ -40,8 +40,7 @@ gave you.
 
 Then one finished reference example per area (a part of the product a user would name):
 the heart of the product by you, the rest by makers against the kit as it stands. Look at
-them all the way step 2 below says, settle their kit requests, and run
-`proto-check.js freeze`. After that only you change the kit, and you freeze again.
+them all yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After that only you change the kit, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes starts as a saved copy of how the product behaves today, kept beside the
@@ -60,9 +59,10 @@ areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its
 ## Check
 
 1. Run `proto-check.js` and fix what it reports.
-2. Use the real thing: click the screens in a browser (serve the folder locally if it
-   refuses file addresses, and save screenshots under `sidekik/prototype/shots/`), read the
-   exchanges, run the cases.
+2. A scout uses the real thing: it clicks every screen in a browser (serving the folder
+   locally if it refuses file addresses, saving screenshots under
+   `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns what is
+   broken, empty or at odds with the rest. Fix that, and look yourself only there.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic. They inform you. Only the owner
    approves.

@@ -11,6 +11,8 @@ their yes. The tidy stage has just run.
 3. **The owner uses the real product.** Give them how to open it, what to try, the calls
    you made since the last ship, what going live changes for real users and real data, and
    how it can be taken back. End your turn.
-4. **After a clear yes,** take it live the same way and confirm it is up by using it.
+4. **After a clear yes,** record it with `decide.js add all "<their words>"`, because the
+   shipped mark requires that decision, then take it live the same way and confirm it is up by
+   using it.
 
 Run `state.js mark shipped`.

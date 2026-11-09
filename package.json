@@ -1,0 +1,10 @@
+{
+  "name": "sidekik-tests",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node tests/size.js && node --test 'tests/*.test.js'"
+  }
+}

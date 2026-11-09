@@ -1,0 +1,85 @@
+'use strict';
+const { test } = require('node:test');
+const assert = require('node:assert');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
+const { spawnSync } = require('child_process');
+
+// A project whose sidekik/ holds `files`; `state` is written as state.json unless null.
+function status(state, files = {}) {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-status-'));
+  const all = state ? { ...files, 'state.json': JSON.stringify(state) } : files;
+  for (const [rel, text] of Object.entries(all)) {
+    fs.mkdirSync(path.dirname(path.join(root, 'sidekik', rel)), { recursive: true });
+    fs.writeFileSync(path.join(root, 'sidekik', rel), text);
+  }
+  const r = spawnSync(process.execPath, [path.join(__dirname, '..', 'plugin', 'scripts', 'status.js'), '--root', root], { encoding: 'utf8' });
+  assert.equal(r.status, 0, r.stdout);
+  return { root, out: r.stdout };
+}
+
+test('the screen shows the roadmap, progress, today, so far, repeating causes, what waits on the owner and what comes next', () => {
+  const now = new Date().toISOString();
+  const day = (time, brief, mark, refused) => ({ brief, mark, at: `2020-01-01T${time}:00.000Z`, ...(refused && { refused }) });
+  const { out } = status({
+    check: 'true', stack: true, shipped: ['01'],
+    briefs: { '01': 'done', '02': 'built', '03': 'confirmed', '05': 'done' },
+    sizes: { '01': { code: 306, tests: 60, removed: 4 }, '02': { code: 71, tests: 15, removed: 0 } },
+    history: [day('10:00', '01', 'confirmed'), day('10:30', '01', 'done'), day('11:00', '05', 'confirmed'), day('11:20', '05', 'done', true),
+      day('11:46', '05', 'done'), day('12:00', null, 'shipped', true), { brief: '02', mark: 'built', at: now },
+      { brief: '02', mark: 'reviewed', at: now, refused: true }, { brief: null, mark: 'shipped', at: now }, { brief: '03', mark: 'confirmed', at: now }],
+  }, {
+    'briefs.md': '# Split the bill\n\n- 01 even-split: Split evenly.\n- 02 drinks-separately: Drinks apart.\n'
+      + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
+    'questions/pm.md': '- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
+    'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
+    'decisions.md': Array.from({ length: 9 }, (_, i) => `- 2026-11-0${i + 1} 01: Ruling ${i}.\n`).join(''),
+    'lessons.md': '- 01: [wrong-library] a\n- 05: [built-twice] b\n- fix: [built-twice] c\n- 02: [built-twice] d\n- 03: [wrong-library] e\n'
+      + '- 01: [none] f\n- 05: [none] g\n- guard: [built-twice] h\n- guard: [solo] i\n- guard: [solo] j\n',
+  });
+  assert.equal(out, `🗺️ Split the bill
+   ✅ 01 even-split          ▓▓▓▓▓▓▓  live                           306 code · 60 tests
+   🔨 02 drinks-separately   ▓▓▓▓░░░  built                          71 code · 15 tests
+   🎨 03 history             ▓▓░░░░░  design approved
+   ⬜ 04 share-link          ░░░░░░░  not started
+   📦 05 tip-jar             ▓▓▓▓▓▓░  finished
+
+📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live
+   Today      02 built · 03 design approved
+   So far     2 finished · 38 min from approval to finished · 9 decisions from you · 3 refused steps · 1 bug escaped
+   Repeating  built-twice ×3 · wrong-library ×2
+
+🙋 Waiting on you
+   ├─ 2 questions on 03 history
+   ├─ 1 review question on 02 drinks-separately
+   └─ your sign-off to take 05 live
+
+🎯 Next   review 02 drinks-separately — nothing needed from you
+`);
+});
+
+test('an empty project says there are no briefs and that the brief list comes next', () => {
+  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Nothing is waiting on you.\n\n🎯 Next   write the brief list — needs you\n');
+});
+
+test('with nothing waiting the section is one line, and the title falls back to the folder name', () => {
+  const { root, out } = status({ stack: true, shipped: [], briefs: { '01': 'noted', '02': 'noted' } },
+    { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
+  assert.equal(out, `🗺️ ${path.basename(root)}
+   🛠️ 01 a    ▓▓▓░░░░  ready to build
+   🛠️ 02 bb   ▓▓▓░░░░  ready to build
+
+📈 Progress   2 of 2 designed · 0 of 2 built · 0 of 2 live
+   Today      nothing yet
+
+🙋 Nothing is waiting on you.
+
+🎯 Next   build 01 a (with 02) — nothing needed from you
+`);
+});
+
+test('a tidy comes next once every brief is finished and the codebase is not yet tidied', () => {
+  const { out } = status({ stack: true, briefs: { '01': 'done' } }, { 'briefs.md': '- 01 a: One.\n' });
+  assert.match(out, /\n🎯 Next   tidy the codebase — nothing needed from you\n$/);
+});

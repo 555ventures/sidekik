@@ -38,8 +38,10 @@ really needs.
    lives: `set KEY --env <name> [--app <name>]` reads the value from a hidden prompt or
    stdin and writes that app's local env file or pushes to its host service's secret
    store through the host CLI, never to a committed file, and keeps the example file in
-   step; `list` with the same flags prints keys without values. Each step that needs a
-   key tells the owner to run it.
+   step; `check` with the same flags prints every key the app needs as present or
+   missing and, where a cheap test exists (a connection, a ping), as working or failing,
+   never the value. Each step that needs a key tells the owner to run `set`, and `check`
+   is how you learn which steps are done.
 9. **Best practice for the picks.** Read each pick's current documentation through
    Context7: the recommended layout, the patterns it advises, what its current version
    changed, its known traps. Write what a builder must follow into `CLAUDE.md`, briefly.

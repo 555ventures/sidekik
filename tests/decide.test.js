@@ -75,6 +75,14 @@ test('decisionsFor lists the dated decisions of exactly one brief', () => {
   assert.deepEqual(decisionsFor(project().root, '01'), []);
 });
 
+test('list prints the lines of one brief and of all in file order, or every line without a brief', () => {
+  const lines = ['- 2026-01-01 01: First.', '- 2026-01-02 all: For everyone.', '- 2026-01-03 02: Other.', '- 2026-01-04 01: Second.'];
+  const p = project({ 'decisions.md': `${lines.join('\n')}\n` });
+  assert.equal(p.run('list', '01').out, `${[lines[0], lines[1], lines[3]].join('\n')}\n`);
+  assert.equal(p.run('list', '02').out, `${[lines[1], lines[2]].join('\n')}\n`);
+  assert.equal(p.run('list').out, `${lines.join('\n')}\n`);
+});
+
 test('add takes one ruling as arguments and refuses several, writing nothing', () => {
   const p = project({ 'decisions.md': '' });
   p.run('seal');

@@ -23,8 +23,10 @@ the files you own, and what to read first.
 - Build what the brief asks and nothing more: no extra examples, options, tests or files.
 - When the files do not settle a product question, make the most reasonable choice, keep
   going, and add `- [open] NN: the question and what you chose` to the questions file your
-  brief names. `NN` is the brief's number, not a count. A guess is never a decision. How
-  to fake something in a prototype is not a product question: decide it and say so.
+  brief names. `NN` is the brief's number, not a count. A guess is never a decision. A
+  product question is one only the owner can answer: what a user may do, see or pay. How
+  to fake something in a prototype ("a chart as an image or a table?") and a technical call
+  ("which date format in the sample rows?") are not: decide them and say so in your report.
 
 Report in a few lines: what you built, what you ran and what you saw, what you did not
 verify, and what you need changed in a shared part. An empty report is not a report.

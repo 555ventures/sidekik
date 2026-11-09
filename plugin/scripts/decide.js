@@ -50,11 +50,11 @@ function verifyDecisions(root) {
   return { ok: false, problems: [`The decisions file was ${what} after the last recorded decision. Ask the owner whether that was them; if it was, run decide.js seal.`] };
 }
 
-// The decisions recorded for exactly this brief (NN or all), oldest first.
-function decisionsFor(root, brief) {
+// The decisions recorded for exactly these briefs (NN or all), oldest first; for every brief when none is named.
+function decisionsFor(root, ...briefs) {
   return (readOrNull(decisionsFile(root)) ?? '').split('\n')
     .map((line) => /^- (\d{4}-\d\d-\d\d) (\d\d|all): (.+)$/.exec(line))
-    .filter((m) => m && m[2] === brief)
+    .filter((m) => m && (briefs.length === 0 || briefs.includes(m[2])))
     .map(([, date, b, text]) => ({ date, brief: b, text }));
 }
 
@@ -119,10 +119,12 @@ if (require.main === module) {
     const { ok, problems } = verifyDecisions(root);
     console.log(ok ? 'The decisions file is as it was recorded.' : problems.join('\n'));
     process.exit(ok ? 0 : 1);
+  } else if (cmd === 'list') {
+    for (const { date, brief: b, text } of decisionsFor(root, ...(a ? [a, 'all'] : []))) console.log(`- ${date} ${b}: ${text}`);
   } else if (cmd === 'questions') {
     for (const line of openQuestions(root, a)) console.log(line);
   } else {
-    console.log('Use one of: add <NN|all> "<text>", add (lines "NN: text" on stdin), answer <NN|all> "<match>" "<answer>", seal, verify, or questions [NN].');
+    console.log('Use one of: add <NN|all> "<text>", add (lines "NN: text" on stdin), answer <NN|all> "<match>" "<answer>", seal, verify, list [NN], or questions [NN].');
     process.exit(1);
   }
 }

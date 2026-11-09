@@ -88,7 +88,8 @@ Line formats, exactly:
 
 - Brief: `- NN slug: sentence` where `NN` is two digits and `slug` is `[a-z0-9-]+`.
 - Decision: `- YYYY-MM-DD NN: text`. `NN` is a brief number or `all`.
-- Question: `- [open] NN: text`, later `- [answered] NN: text → answer`. `all` in place of
+- Question: `- [open] NN: text`, later `- [answered] NN: text → answer`, or
+  `- [settled] NN: text → choice` when the partner settled it without the owner. `all` in place of
   `NN` counts for every brief. `decide.js answer <NN|all> "<match>" "<answer>"` does the rewrite
   and records the decision in one step.
 - Map row: `| area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`. The
@@ -235,8 +236,9 @@ named), and `Base: <sha>` or `Base: none`.
   `- fix:` lines in `lessons.md`.
 - Repeating, shown when a cause other than `none` appears twice or more in `lessons.md` on
   brief and fix lines: each such cause with its count, most frequent first.
-- Waiting on you, in this order: one line per brief with open questions (`N question(s) on
-  NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
+- Waiting on you, in this order: one line for open questions filed under `all` (`N question(s) on the
+  whole product`), counted once; one line per brief with open questions filed under that
+  brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
   `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief whose
   review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any. Tree
@@ -261,6 +263,7 @@ current directory) for the project root that holds `sidekik/`.
 - `scripts/decide.js` exports `addDecision(root, brief, text)`, `verifyDecisions(root) → { ok, problems }`,
   `openQuestions(root, brief?) → [string]`, plus `addDecisions`, `parseDecisions` and `answerQuestion`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
   `decide.js add`, all or none), `decide.js answer <NN|all> "<match>" "<answer>"`, `decide.js verify`,
+  `decide.js list [NN]` (the rulings a brief must honour, its own and `all`, in file order; every ruling without `NN`),
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,

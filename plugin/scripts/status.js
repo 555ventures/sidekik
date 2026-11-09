@@ -70,8 +70,11 @@ function screen(root) {
   const { stage, brief, also } = nextStep(root, state);
   const prototyped = briefs.filter((b) => state.briefs[b.nn] === 'prototyped').map((b) => b.nn);
   const unshipped = briefs.filter((b) => state.briefs[b.nn] === 'done' && !live(b)).map((b) => b.nn);
+  // Questions filed under `all` belong to no one brief, so they get one line of their own.
+  const wholeProduct = openQuestions(root, 'all').length;
   const waiting = [
-    ...perBrief((b) => openQuestions(root, b.nn).length, 'question'),
+    ...(wholeProduct ? [`${plural(wholeProduct, 'question')} on the whole product`] : []),
+    ...perBrief((b) => openQuestions(root, b.nn).filter((line) => line.startsWith(`- [open] ${b.nn}:`)).length, 'question'),
     ...(stage === 'look' ? [`your look at the prototype (${prototyped.join(', ')})`] : []),
     ...(stage === 'stack' ? ['your stack picks'] : []),
     ...perBrief((b) => (readOrEmpty(root, `reviews/${b.nn}.md`).match(/^- \[owner\]/gm) ?? []).length, 'review question'),

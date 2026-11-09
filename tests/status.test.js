@@ -32,7 +32,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
   }, {
     'briefs.md': '# Split the bill\n\n- 01 even-split: Split evenly.\n- 02 drinks-separately: Drinks apart.\n'
       + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
-    'questions/pm.md': '- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
+    'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
     'decisions.md': Array.from({ length: 9 }, (_, i) => `- 2026-11-0${i + 1} 01: Ruling ${i}.\n`).join(''),
     'lessons.md': '- 01: [wrong-library] a\n- 05: [built-twice] b\n- fix: [built-twice] c\n- 02: [built-twice] d\n- 03: [wrong-library] e\n'
@@ -51,6 +51,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
    Repeating  built-twice ×3 · wrong-library ×2
 
 🙋 Waiting on you
+   ├─ 1 question on the whole product
    ├─ 2 questions on 03 history
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live

@@ -24,8 +24,8 @@ lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 ## Foundation (when there is no kit yet)
 
 You write what every example shares yourself, so it has one hand. Meanwhile a scout checks
-how three good current products handle the same thing. Use what works, and what the owner
-gave you.
+how three good current products handle the same thing, from their help centres and public
+docs, and says unknown where it finds nothing. Use what works, and what the owner gave you.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, and one
   small script with a way for an action to visibly change the screen. Otherwise the shared
@@ -38,8 +38,9 @@ gave you.
 - `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
   with no style blocks, and an inline style may set only position and size.
 
-Then one finished reference example per area (a part of the product a user would name):
-the heart of the product by you, the rest by makers against the kit as it stands. Look at
+Then one finished reference example per area (a part of the product a user would name),
+each in the product's primary language, with any other language shown by one example
+later: the heart of the product by you, the rest by makers against the kit as it stands. Look at
 them all yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After that only you change the kit, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
@@ -50,7 +51,9 @@ changed version. A small change needs no more foundation.
 
 A new product gets every brief prototyped in this one pass, with makers on the remaining
 areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its guesses in
-`sidekik/questions/<area>.md`. Settle the kit requests when they return.
+`sidekik/questions/<area>.md`. When they return, settle the kit requests, and the questions
+that are yours rather than the owner's as `[settled] NN: … → what you chose`; the owner
+sees only `[open]`.
 
 - An existing example that can do the job with a small change is changed, not copied.
 - A desktop screen is a real desktop layout.

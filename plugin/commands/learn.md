@@ -41,7 +41,7 @@ the owner (what it asks, when it stops, what it decides alone) is theirs to make
 it in `PROPOSALS.md` with your recommendation and leave the plugin as it is.
 
 Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
-when the last five commits hold none that starts with `tidy:`, dispatch one
+when the last four commits hold none that starts with `tidy:`, dispatch one
 general-purpose agent on Opus at the highest effort over the whole plugin, for rules that
 repeat or contradict, special cases stacked on one part, and rules no lesson or the current
 model needed. It reads every file and quotes the sentences it names. The result is a merge, a removal or a reshape, never an addition.

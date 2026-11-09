@@ -4,9 +4,6 @@ The owner is not needed.
 
 Run `state.js mark tidying` first. Then:
 
-- A scout runs the project's duplicate-code and unused-code checks over the whole codebase
-  and reads the index command's output, and returns the list: things that do the same job
-  under different names, dead code.
 - Dispatch one `sidekik:reviewer` per area, at the highest effort, over everything built
   since the last tidy, for what only shows across briefs: the same thing built twice,
   parts that no longer fit together, dead code, security holes, tests that protect

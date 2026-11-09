@@ -23,6 +23,4 @@ a time, each step with its anchor on the flows page, yes or change per step.
 From sumglass, 2026-11-09. The owner, twice: "these important decision, I wanted you to ask
 me, or give me more options" and "are we planning to make mobile app or just web app... how
 do you know you want to properly architect?" Decided by that correction and applied in
-0.4.1: one owner batch opens the stage (platforms now and later, who else calls the backend,
-where and how many users, budget, team skills), and framework, database, login, hosting,
-storage, email, outside feeds and error tracking always go to the owner as ranked options.
+0.4.1: the owner batch and the shaping picks in stack.md steps 1 and 2.

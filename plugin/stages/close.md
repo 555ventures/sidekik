@@ -1,7 +1,6 @@
 # Close
 
-You are the technical partner. Report the brief and keep going. The owner approved the
-prototype, so a finished brief is news for them, not a gate. Their gate is the ship stage.
+Report the brief and keep going.
 
 Print, in plain words: what a user can now do, how to see it running, how much the brief
 added, and the calls you made on it (from `sidekik/calls.md`). Stop only if the review left

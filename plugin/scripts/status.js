@@ -1,10 +1,9 @@
 'use strict';
 // The progress screen, derived from the same functions as state.js next so the two agree.
-const fs = require('fs');
 const path = require('path');
-const { dir, readState, rootFrom } = require('./lib/store');
+const { readState, read, rootFrom } = require('./lib/store');
 const { openQuestions } = require('./decide');
-const { MARKS, fresh, readBriefs, nextStep, lessonCauses } = require('./state');
+const { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses } = require('./state');
 const { screensFor } = require('./proto-check');
 
 const LOOK = {
@@ -19,17 +18,13 @@ const NEXT = {
 };
 const NEEDS_YOU = ['brief', 'look', 'stack', 'ship'];
 
-const readOrEmpty = (root, rel) => {
-  const file = path.join(dir(root), rel);
-  return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
-};
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
 function screen(root) {
   const state = { ...fresh(), ...readState(root) };
   const briefs = readBriefs(root);
   const live = (b) => state.shipped.includes(b.nn);
-  const reached = (mark) => (b) => MARKS.indexOf(state.briefs[b.nn]) >= MARKS.indexOf(mark);
+  const reached = (mark) => (b) => rank(state, b) >= MARKS.indexOf(mark);
   // A brief with no mark but examples on the prototype map is being prototyped.
   const key = (b) => (live(b) ? 'live' : state.briefs[b.nn] ?? (screensFor(root, b.nn).length ? 'prototyping' : 'none'));
   const name = (b) => `${b.nn} ${b.slug}`;
@@ -40,10 +35,10 @@ function screen(root) {
   if (!briefs.length) out.push('🗺️ No briefs yet.');
   else {
     const slugWidth = Math.max(...briefs.map((b) => b.slug.length));
-    out.push(`🗺️ ${/^# (.+)$/m.exec(readOrEmpty(root, 'briefs.md'))?.[1] ?? path.basename(root)}`);
+    out.push(`🗺️ ${/^# (.+)$/m.exec((read(root, 'briefs.md') ?? ''))?.[1] ?? path.basename(root)}`);
     for (const b of briefs) {
       const [icon, label] = LOOK[key(b)];
-      const cells = MARKS.indexOf(state.briefs[b.nn]) + 1 + (live(b) ? 1 : 0);
+      const cells = rank(state, b) + 1 + (live(b) ? 1 : 0);
       const size = state.sizes[b.nn];
       const rows = screensFor(root, b.nn);
       const extra = key(b) === 'prototyping' ? `${rows.filter((r) => r.status === 'done').length} of ${rows.length} examples`
@@ -63,7 +58,7 @@ function screen(root) {
       const at = (b, mark) => new Date(marks.find((h) => h.brief === b.nn && h.mark === mark)?.at);
       const minutes = done.map((b) => Math.floor((at(b, 'done') - at(b, 'confirmed')) / 60000)).filter((m) => !Number.isNaN(m)).sort((x, y) => x - y);
       const median = Math.floor((minutes[(minutes.length - 1) >> 1] + minutes[minutes.length >> 1]) / 2);
-      const lines = (rel, re) => readOrEmpty(root, rel).split('\n').filter((l) => re.test(l)).length;
+      const lines = (rel, re) => (read(root, rel) ?? '').split('\n').filter((l) => re.test(l)).length;
       const parts = [`${done.length} finished`, ...(minutes.length ? [`${median} min from approval to finished`] : []),
         `${plural(lines('decisions.md', /\S/), 'decision')} from you`, plural(state.history.filter((h) => h.refused).length, 'refused step'),
         `${plural(lines('lessons.md', /^- fix:/), 'bug')} escaped`];
@@ -83,7 +78,7 @@ function screen(root) {
     ...perBrief((b) => openQuestions(root, b.nn).filter((line) => line.startsWith(`- [open] ${b.nn}:`)).length, 'question'),
     ...(stage === 'look' ? [`your look at the prototype (${prototyped.join(', ')})`] : []),
     ...(stage === 'stack' ? ['your stack picks'] : []),
-    ...perBrief((b) => (readOrEmpty(root, `reviews/${b.nn}.md`).match(/^- \[owner\]/gm) ?? []).length, 'review question'),
+    ...perBrief((b) => ((read(root, `reviews/${b.nn}.md`) ?? '').match(/^- \[owner\]/gm) ?? []).length, 'review question'),
     ...(unshipped.length ? [`your sign-off to take ${unshipped.join(', ')} live`] : []),
   ];
   out.push('');
@@ -96,4 +91,4 @@ function screen(root) {
   return out.join('\n');
 }
 
-if (require.main === module) console.log(screen(rootFrom(process.argv)));
+if (require.main === module) console.log(screen(rootFrom(process.argv).root));

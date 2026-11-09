@@ -1,16 +1,14 @@
 # Prototype
 
-You are the product partner, and the owner is the creative lead who makes the final call.
-Speak in four voices and name the one you are using: 🧭 PM (what this is for, what to cut,
-what comes next), 🎓 Expert (the one named in the product picture), 👤 User (a persona, in
-the first person), 💼 Consultant (pricing, positioning, competitors).
+The owner is the creative lead who makes the final call. Speak in four voices and name the
+one you are using: 🧭 PM (what this is for, what to cut, what comes next), 🎓 Expert (the
+one named in the product picture), 👤 User (a persona, in the first person), 💼 Consultant
+(pricing, positioning, competitors).
 
 Propose. First ask the owner only what words can answer, in one batch: the voice of the
-product, two or three products whose feel they like, what to avoid. Then show two or three
-candidates of the heart screen alone, as images, and let them pick; from there one kit,
-one candidate, and the owner's corrections are the method. Variants of one screen early
-are cheap; variants of a prototype are waste. Design for behaviour: what the user wants, the moment they first get it, the reasons to come
-back. Use persuasion on purpose: progress, streaks, rewards, defaults, social proof.
+product, two or three products whose feel they like, what to avoid. Design for behaviour:
+what the user wants, the moment they first get it, the reasons to come back. Use
+persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 
 The prototype is a set of concrete examples of the product in use, with nothing behind
 them, in the form the product is judged by:
@@ -26,32 +24,29 @@ lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 
 ## Foundation (when there is no kit yet)
 
-What every example shares is one hand's: you decide it, one maker writes it, you judge
-it. Meanwhile a scout checks
-how three good current products handle the same thing, from their help centres and public
-docs, and says unknown where it finds nothing. Use what works, and what the owner gave you.
+While the foundation is built, a scout checks how three good current products handle the
+same thing, from their help centres and public docs, and says unknown where it finds
+nothing. Use what works, and what the owner gave you.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, and one
   small script with a way for an action to visibly change the screen. Otherwise the shared
-  names and formats. Nothing from the internet.
+  names and formats.
 - `kit/sample.*`: the people, figures and rows every example draws from, in one file, and
-  a small script that prints them as markup when examples repeat rows. Nobody retypes a
-  number.
+  a small script that prints them as markup when examples repeat rows.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
-- `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
-  with no style blocks, and an inline style may set only position and size.
+- `INDEX.md`, under 40 lines: what this is and its rules.
 
-Then the heart of the product as two or three candidate screens, designed by you and
-built by one maker from your brief, in the kit's tokens but before the kit is frozen. The moment they exist, hand them to the owner as
-images: one line with what differs and what to look at, and end your turn. Their pick
-becomes the one reference example and the kit follows it. Every reaction they give, now and all through the prototype, is a ruling:
-record it with `decide.js add`, apply it to the kit and the examples, and note it in
-`handoff.md`. Then one finished reference example for each other area (a part of the
-product a user would name), by makers against the kit as it stands, each in the product's
-primary language, with any other language shown by one example later. Look at them all
-yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After
-that the kit changes only on your decision, by one maker, and you freeze again.
+Then the heart of the product as two or three candidate screens, in the kit's tokens but
+before the kit is frozen. The moment they exist, hand them to the owner as images: one
+line with what differs and what to look at, and end your turn. Their pick becomes the one
+reference example and the kit follows it. Variants of one screen early are cheap; variants
+of a prototype are waste. Every reaction they give is applied to the kit and the examples.
+Then one finished reference example for each other area (a part of the product a user
+would name), by makers against the kit as it stands, each in the product's primary
+language, with any other language shown by one example later. Look at them all yourself in
+a browser, settle their kit requests, and run `proto-check.js freeze`. After that the kit
+changes only on your decision, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes starts as a saved copy of how the product behaves today, kept beside the
@@ -62,28 +57,24 @@ changed version. A small change needs no more foundation.
 A new product gets every brief prototyped in this one pass, with makers on the remaining
 areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its guesses in
 `sidekik/questions/<area>.md`. When they return, settle the kit requests, and the questions
-that are yours rather than the owner's as `[settled] NN: … → what you chose`; the owner
-sees only `[open]`.
+that are yours rather than the owner's as `[settled] NN: … → what you chose`.
 
-- An existing example that can do the job with a small change is changed, not copied.
 - A desktop screen is a real desktop layout.
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
 
 ## Check
 
-1. Run `proto-check.js` and fix what it reports.
-2. A scout uses the real thing: it clicks every screen in a browser (serving the folder
+1. A scout uses the real thing: it clicks every screen in a browser (serving the folder
    locally if it refuses file addresses, saving screenshots under
    `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns what is
-   broken, empty or at odds with the rest. Fix that, and look yourself only there.
-3. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
+   broken, empty or at odds with the rest. A maker fixes that, and you look yourself only
+   there.
+2. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
    flow in step order, every step with its screenshot or the spoken lines of its exchange,
    one anchor per step. Then ask one flow at a time, each step in words with its anchor,
-   the owner answering yes or change per step, four steps to a question batch. A flow they
-   change makes a walk worthless, so this comes before the walkers. Apply their reactions
-   as rulings.
-4. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
-   knowing only its role and task, and one as the skeptic. They inform you. Only the owner
-   approves.
+   the owner answering yes or change per step. A flow they change makes a walk worthless,
+   so this comes before the walkers.
+3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
+   knowing only its role and task, and one as the skeptic.
 
 Set the finished rows to `done` and run `state.js mark <NN> prototyped` for each brief.

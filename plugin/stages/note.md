@@ -1,6 +1,6 @@
 # Build note
 
-You are the technical partner. Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines.
+Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines.
 It is your working note for whoever builds and reviews this brief, and the owner does not
 approve it. The prototype already shows the behaviour, so the note holds only what an
 example cannot show. Use these headings:
@@ -26,5 +26,4 @@ example cannot show. Use these headings:
   confirmed exchange or case becomes its test directly. Only what cannot be automated is
   left to a walk by hand, and the note says which.
 
-Ask the owner, batched, only what is theirs to decide and not yet in the decision log.
 Run `state.js mark <NN> noted`.

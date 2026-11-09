@@ -1,6 +1,6 @@
 # Brief
 
-You are the product partner. Write `sidekik/briefs.md`.
+Write `sidekik/briefs.md`.
 
 For a new product, start it with the product picture in a few plain lines:
 
@@ -26,5 +26,4 @@ only what you cannot work out and what would change the list.
 
 Show the owner the picture and the list in plain words, and ask once whether anything is
 missing or wrong. Change it as they say, then record their yes with `decide.js add all
-"<their words>"`. That line is the stage's mark: `next` stays here until the decision log
-has one, so a session with no memory never asks the owner for the same yes again.
+"<their words>"`.

@@ -1,9 +1,8 @@
 'use strict';
 // The commands that read and move a project through its marks and stages.
-const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { dir, readState, writeState, sha, rootFrom } = require('./lib/store');
+const { readState, writeState, read, sha, day, rootFrom } = require('./lib/store');
 const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
 
@@ -13,10 +12,6 @@ const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {},
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
-const readOrNull = (root, rel) => {
-  const file = path.join(dir(root), rel);
-  return fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : null;
-};
 const has = (text, re) => text !== null && re.test(text);
 const git = (root, ...args) => {
   const run = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
@@ -55,21 +50,21 @@ function sizeSince(root, base) {
 }
 
 // A hash of the brief's mapped files, paths and contents, so an approval covers exactly what was shown.
-const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, readOrNull(root, `prototype/${screen}`)])));
+const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, read(root, `prototype/${screen}`)])));
 const changedSinceApproval = (root, state, nn) => state.approved[nn] !== briefHash(root, nn)
   && `The prototype of brief ${nn} changed after the owner approved it, so it must be shown to them again. After their yes, run state.js reconfirm ${nn}.`;
 
 // How often each cause appears on brief and fix lessons; [none] is never counted.
 function lessonCauses(root) {
   const counts = {};
-  for (const [, cause] of (readOrNull(root, 'lessons.md') ?? '').matchAll(/^- (?:\d\d|fix): \[([^\]]+)\]/gm)) {
+  for (const [, cause] of (read(root, 'lessons.md') ?? '').matchAll(/^- (?:\d\d|fix): \[([^\]]+)\]/gm)) {
     if (cause !== 'none') counts[cause] = (counts[cause] ?? 0) + 1;
   }
   return counts;
 }
 
 function readBriefs(root) {
-  return (readOrNull(root, 'briefs.md') ?? '').split('\n')
+  return (read(root, 'briefs.md') ?? '').split('\n')
     .map((line) => /^- (\d\d) ([a-z0-9-]+): (.+)$/.exec(line))
     .filter(Boolean)
     .map(([, nn, slug, sentence]) => ({ nn, slug, sentence }))
@@ -104,8 +99,8 @@ function doneWhenItems(note) {
 // (of `markBrief` when given). An older state file may lack that mark, and then any such decision counts.
 function decidedSince(root, state, brief, mark, markBrief) {
   const last = state.history.findLast((h) => h.mark === mark && !h.refused && (markBrief === undefined || h.brief === markBrief));
-  const day = last && new Date(last.at).toLocaleDateString('en-CA');
-  return decisionsFor(root, brief).some((d) => !day || d.date >= day);
+  const since = last && day(last.at);
+  return decisionsFor(root, brief).some((d) => !since || d.date >= since);
 }
 
 const REQUIRES = {
@@ -132,7 +127,7 @@ const REQUIRES = {
     const changed = changedSinceApproval(root, state, b.nn);
     if (changed) return changed;
     const rel = `build-notes/${b.nn}-${b.slug}.md`;
-    const note = readOrNull(root, rel);
+    const note = read(root, rel);
     if (note === null) return `The build note sidekik/${rel} does not exist yet.`;
     if (note.trimEnd().split('\n').length > 60) return `The build note sidekik/${rel} is longer than 60 lines.`;
     if (!has(note, /^## Reuse\s*$/m)) return `The build note sidekik/${rel} needs a "## Reuse" section.`;
@@ -155,13 +150,13 @@ const REQUIRES = {
     return checkProblem(root, state);
   },
   reviewed(root, state, b) {
-    const review = readOrNull(root, `reviews/${b.nn}.md`);
+    const review = read(root, `reviews/${b.nn}.md`);
     if (review === null) return `The review file sidekik/reviews/${b.nn}.md does not exist yet.`;
     if (has(review, /^- \[bug\]/m)) return `The review of brief ${b.nn} still has bugs that are not fixed.`;
     return checkProblem(root, state);
   },
   done(root, state, b) {
-    return has(readOrNull(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null
+    return has(read(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null
       : `The lessons file has no lesson for brief ${b.nn} yet, written as "- ${b.nn}: [cause] what to change".`;
   },
 };
@@ -180,8 +175,8 @@ function markBrief(root, state, nn, mark) {
   if (mark === 'confirmed') state.approved[nn] = briefHash(root, nn);
   if (mark === 'noted') state.bases[nn] = git(root, 'rev-parse', 'HEAD');
   const size = mark === 'built' && sizeSince(root, state.bases[nn]);
-  if (size) state.sizes[nn] = size;
   if (size) {
+    state.sizes[nn] = size;
     // The next brief of the same wave is measured and reviewed from here.
     const head = git(root, 'rev-parse', 'HEAD');
     for (const b of readBriefs(root)) if (state.briefs[b.nn] === 'noted') state.bases[b.nn] = head;
@@ -192,11 +187,11 @@ function markBrief(root, state, nn, mark) {
 function markStack(root, state) {
   const briefs = readBriefs(root);
   if (!briefs.length || briefs.some((b) => rank(state, b) < 1)) return 'Every brief must be confirmed before the stack is settled.';
-  const stack = readOrNull(root, 'stack.md');
+  const stack = read(root, 'stack.md');
   if (!has(stack, /^## Picks\s*$/m) || !has(stack, /^## Your steps\s*$/m)) {
     return 'The stack file needs a "## Picks" section and a "## Your steps" section.';
   }
-  if (readOrNull(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
+  if (read(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
   if (!decidedSince(root, state, 'all', 'confirmed')) {
     return 'The stack has no decision recording the owner\'s picks. After their yes, run decide.js add all "<their picks>" and mark again.';
   }
@@ -218,7 +213,7 @@ function markTidied(root, state) {
   if (last?.mark !== 'tidying') return 'The tidy has not started yet; mark tidying first.';
   const problem = checkProblem(root, state);
   if (problem) return problem;
-  const lessons = `\n${readOrNull(root, 'lessons.md') ?? ''}`;
+  const lessons = `\n${read(root, 'lessons.md') ?? ''}`;
   const [cause, n] = Object.entries(lessonCauses(root)).find(([c, count]) => count >= 3 && !lessons.includes(`\n- guard: [${c}]`)) ?? [];
   if (cause) return `The cause [${cause}] appears ${n} times in the lessons file with no machine check. Add a check that refuses it and the line "- guard: [${cause}] ..." to the lessons file.`;
   state.tidied = doneBriefs(root, state).length;
@@ -248,7 +243,7 @@ function nextStep(root, state) {
     also: briefs.filter((b) => b.nn !== brief.nn && stageOf(state, b) === stageOf(state, brief)).map((b) => b.nn) });
   // The brief list stands once the owner's yes on it is in the decision log, or work on it has begun.
   const unmarked = briefs.every((b) => rank(state, b) < 0);
-  if (!briefs.length || (unmarked && !has(readOrNull(root, 'decisions.md'), /^- /m))) return { stage: 'brief', also: [] };
+  if (!briefs.length || (unmarked && !has(read(root, 'decisions.md'), /^- /m))) return { stage: 'brief', also: [] };
   if (!state.stack) {
     const open = briefs.find((b) => rank(state, b) < 0) ?? briefs.find((b) => rank(state, b) < 1);
     return open ? withBrief(open) : { stage: 'stack', also: [] };
@@ -263,10 +258,10 @@ function nextStep(root, state) {
 
 function printNext(root, state) {
   const { stage, brief, also } = nextStep(root, state);
-  const read = stage === 'idle' ? 'none' : path.join(__dirname, '..', 'stages', `${stage}.md`);
+  const stageFile = stage === 'idle' ? 'none' : path.join(__dirname, '..', 'stages', `${stage}.md`);
   console.log(`Stage: ${stage}`);
   console.log(`Brief: ${brief ? `${brief.nn} ${brief.slug}: ${brief.sentence}` : 'none'}`);
-  console.log(`Read: ${read}`);
+  console.log(`Read: ${stageFile}`);
   console.log(`Also at this stage: ${also.join(', ') || 'none'}`);
   console.log(`Open questions for ${brief ? 'this brief' : 'all briefs'}: ${openQuestions(root, brief?.nn).length}`);
   console.log(`Base: ${(brief && state.bases[brief.nn]) || 'none'}`);
@@ -327,13 +322,12 @@ function main(root, [cmd, a, b]) {
 }
 
 if (require.main === module) {
-  const args = process.argv.slice(2);
-  if (args.includes('--root')) args.splice(args.indexOf('--root'), 2);
-  const problem = main(rootFrom(process.argv), args);
+  const { root, args } = rootFrom(process.argv);
+  const problem = main(root, args);
   if (problem) {
     console.log(problem);
     process.exit(1);
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, nextStep, lessonCauses };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses };

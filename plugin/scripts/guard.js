@@ -17,6 +17,6 @@ process.stdin.on('end', () => {
   }
   const hit = typeof file === 'string' && GUARDED.find((g) => path.resolve(file).endsWith(g));
   if (!hit) process.exit(0);
-  console.error(`sidekik/${path.basename(hit)} is written only by the plugin's scripts (state.js, decide.js). Run the script instead of editing the file.`);
+  console.error(`sidekik/${path.basename(hit)} is written only by the plugin's scripts. Run the script instead of editing the file.`);
   process.exit(2);
 });

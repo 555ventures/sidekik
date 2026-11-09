@@ -19,7 +19,7 @@ The same marketplace holds `style`, an optional plugin that makes Claude reply o
 first, in plain English, with a work queue at the end: `/plugin install style@sidekik-tools`.
 
 ```
-idea → briefs → prototype → stack → build note → build → review → close → ship
+idea → briefs → prototype → look → stack → build note → build → review → close → ship
 ```
 
 One pattern runs through all of it, for the prototype and for the product alike: one hand
@@ -31,10 +31,10 @@ is judged by: screens to click for a product you look at, exchanges to read for 
 talk to (a command-line tool, an API), cases to check for one that works on its own (an
 engine, a pipeline). Confirmed examples become the tests.
 
-Claude comes to the owner when a good partner would. Three of those moments stop the work
-until the owner answers: their yes on the prototype, their pick of the stack, and their yes
-before shipping. They are hard gates in the scripts: each needs the owner's yes recorded as
-a decision. The build between them runs unattended and reports as it goes. A bug or a
+Claude comes to the owner when a good partner would. Several of those moments stop the
+work until the owner answers; four are held by the scripts, each needing the owner's yes
+recorded as a decision: the brief list, the prototype, the stack picks and going live. The
+build between them runs unattended and reports as it goes. A bug or a
 small tweak skips the stages: it is fixed directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
@@ -245,7 +245,7 @@ named), and `Base: <sha>` or `Base: none`.
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
-- Next is the last line: `write the brief list`, `prototype NN slug`, `your look at the
+- Next is the last line: `agree the brief list`, `prototype NN slug`, `your look at the
   prototype`, `choose the stack`, `build note for NN slug`, `build NN slug`, `review NN
   slug`, `report NN slug`, `tidy the codebase`, `your sign-off to go live`, or `nothing to
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
@@ -256,18 +256,21 @@ Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (defaul
 current directory) for the project root that holds `sidekik/`.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
-  `sha(text)`, `rootFrom(argv)`.
+  `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,
+  `day(at?) → YYYY-MM-DD` (local time), `rootFrom(argv) → { root, args }` (`args` without
+  `--root <dir>`).
 - `scripts/proto-check.js` exports `checkPrototype(root) → { ok, problems: [string] }`,
   `screensFor(root, brief) → [{ screen, status }]`, `freezeKit(root)`.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
   and how many examples it checked; `proto-check.js freeze`.
-- `scripts/decide.js` exports `addDecision(root, brief, text)`, `verifyDecisions(root) → { ok, problems }`,
-  `openQuestions(root, brief?) → [string]`, plus `addDecisions`, `parseDecisions` and `answerQuestion`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
+- `scripts/decide.js` exports `verifyDecisions(root) → { ok, problems }`,
+  `decisionsFor(root, ...briefs) → [{ date, brief, text }]`, `openQuestions(root, brief?) → [string]`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
   `decide.js add`, all or none), `decide.js answer <NN|all> "<match>" "<answer>"`, `decide.js verify`,
   `decide.js list [NN]` (the rulings a brief must honour, its own and `all`, in file order; every ruling without `NN`),
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
-- `scripts/state.js` CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
+  `nextStep(root, state)` and `lessonCauses(root)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark stack|tidying|tidied|shipped`, `reconfirm <NN>`, `set-check "<cmd>"`,
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.

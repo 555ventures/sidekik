@@ -85,7 +85,7 @@ function checkHtml(proto, screen, classes) {
     for (const decl of (m[1] ?? m[2]).split(';')) {
       const prop = decl.split(':')[0].trim().toLowerCase();
       if (prop && !ALLOWED_STYLE.test(prop)) {
-        problems.push(`${screen} sets "${prop}" in an inline style; only position, size, grid and custom properties may be set there.`);
+        problems.push(`${screen} sets "${prop}" in an inline style; only top, left, width, height, grid-* and --custom properties may be set there.`);
       }
     }
   }
@@ -145,7 +145,7 @@ function checkPrototype(root) {
 
   const state = readState(root);
   if (state && state.kitHash && state.kitHash !== kitHash(root)) {
-    problems.push('The kit has changed since it was frozen; the files in kit/ must stay as they were.');
+    problems.push('The kit has changed since it was frozen: undo the change, or run proto-check.js freeze if you decided it.');
   }
   return { ok: problems.length === 0, problems };
 }
@@ -155,8 +155,8 @@ function freezeKit(root) {
 }
 
 if (require.main === module) {
-  const root = rootFrom(process.argv);
-  if (process.argv.slice(2).includes('freeze')) {
+  const { root, args } = rootFrom(process.argv);
+  if (args.includes('freeze')) {
     freezeKit(root);
     console.log('The kit is frozen.');
   } else {

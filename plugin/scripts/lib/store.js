@@ -1,5 +1,5 @@
 'use strict';
-// The one reader and writer of sidekik/state.json.
+// The one reader and writer of sidekik/state.json, and the reader of the other files in sidekik/.
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -23,12 +23,25 @@ function writeState(root, state) {
   fs.renameSync(tmp, file(root));
 }
 
-const sha = (text) => crypto.createHash('sha256').update(text).digest('hex');
-
-// `--root <dir>` from argv, else the current directory.
-function rootFrom(argv) {
-  const i = argv.indexOf('--root');
-  return path.resolve(i === -1 ? process.cwd() : argv[i + 1]);
+// A file under sidekik/ as text, or null when it does not exist.
+function read(root, rel) {
+  const target = path.join(dir(root), rel);
+  return fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null;
 }
 
-module.exports = { dir, readState, writeState, sha, rootFrom };
+const sha = (text) => crypto.createHash('sha256').update(text).digest('hex');
+
+// The local calendar day of `at` as YYYY-MM-DD, the form decisions are dated in.
+const day = (at = Date.now()) => new Date(at).toLocaleDateString('en-CA');
+
+// `--root <dir>` from argv, else the current directory, and the arguments without it.
+function rootFrom(argv) {
+  const args = argv.slice(2);
+  const i = args.indexOf('--root');
+  if (i === -1) return { root: process.cwd(), args };
+  const root = path.resolve(args[i + 1]);
+  args.splice(i, 2);
+  return { root, args };
+}
+
+module.exports = { dir, readState, writeState, read, sha, day, rootFrom };

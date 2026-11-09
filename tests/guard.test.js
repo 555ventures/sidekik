@@ -10,7 +10,7 @@ const guard = (input) => spawnSync(process.execPath, [script], { input, encoding
 test('the guard refuses a write to a file only the scripts may write', () => {
   const r = guard(JSON.stringify({ tool_input: { file_path: '/work/app/sidekik/decisions.md' } }));
   assert.equal(r.status, 2);
-  assert.match(r.stderr, /^sidekik\/decisions\.md is written only by the plugin's scripts \(state\.js, decide\.js\)\. Run the script instead of editing the file\.\n$/);
+  assert.match(r.stderr, /^sidekik\/decisions\.md is written only by the plugin's scripts\. Run the script instead of editing the file\.\n$/);
 });
 
 test('the guard lets other files through, and never blocks on input it cannot read', () => {

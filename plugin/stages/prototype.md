@@ -6,10 +6,10 @@ what comes next), 🎓 Expert (the one named in the product picture), 👤 User 
 the first person), 💼 Consultant (pricing, positioning, competitors).
 
 Propose. First ask the owner only what words can answer, in one batch: the voice of the
-product, two or three products whose feel they like, what to avoid. Then show the best
-version you can, as one candidate; the owner's corrections are the method, not a menu.
-Where two directions are genuinely plausible, ask in words with the consequence of each
-before you build, and never build variants. Design for behaviour: what the user wants, the moment they first get it, the reasons to come
+product, two or three products whose feel they like, what to avoid. Then show two or three
+candidates of the heart screen alone, as images, and let them pick; from there one kit,
+one candidate, and the owner's corrections are the method. Variants of one screen early
+are cheap; variants of a prototype are waste. Design for behaviour: what the user wants, the moment they first get it, the reasons to come
 back. Use persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 
 The prototype is a set of concrete examples of the product in use, with nothing behind
@@ -41,9 +41,10 @@ docs, and says unknown where it finds nothing. Use what works, and what the owne
 - `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
   with no style blocks, and an inline style may set only position and size.
 
-Then the heart of the product as one finished reference example, by you. The moment it
-exists, hand it to the owner: one line with how to open it and what to look at, and end
-your turn. Every reaction they give, now and all through the prototype, is a ruling:
+Then the heart of the product as two or three candidate screens, by you, in the kit's
+tokens but before the kit is frozen. The moment they exist, hand them to the owner as
+images: one line with what differs and what to look at, and end your turn. Their pick
+becomes the one reference example and the kit follows it. Every reaction they give, now and all through the prototype, is a ruling:
 record it with `decide.js add`, apply it to the kit and the examples, and note it in
 `handoff.md`. Then one finished reference example for each other area (a part of the
 product a user would name), by makers against the kit as it stands, each in the product's

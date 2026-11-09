@@ -8,8 +8,9 @@ alone). Learn describes them here with a recommendation; the owner decides.
 **Decided 2026-11-09, applied in 0.3.0** in this form: three questions up front that words can
 answer (voice, products whose feel they like, what to avoid), one best-guess heart screen
 handed to the owner the moment it exists, every reaction a recorded ruling, the flows shown
-before the walkers run. Not two or three built directions: options are asked in words, only
-when the partner is torn.
+before the walkers run. Amended the same day in 0.3.1: the heart screen comes as two or three
+candidate images before the kit is frozen, the owner picks, then one kit; variants of a
+whole prototype are never built.
 
 From sumglass, 2026-11-09, prototype stage (feedback lines 12, 13, 14, 16). The owner first
 saw screens two hours after the reference examples existed, asked twice why they were not

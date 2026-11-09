@@ -8,8 +8,8 @@ Show every brief that is prototyped and waiting, in one stop:
 - every example whole, in the order a user meets them (screens as screenshots),
 - one way to open it and try it, and a few lines on what to try,
 - the biggest issue you or the walkers found: one issue, a concrete fix, and what the fix
-  costs to build. Bring one or two findings, never twenty. Smaller ones you fix yourself
-  and list in `sidekik/calls.md`,
+  costs to build. Bring one or two findings, never twenty. Smaller ones a maker fixes on
+  your call, listed in `sidekik/calls.md`,
 - the open questions (`decide.js questions`) in plain words, each with your recommended
   answer, so one reply can settle them all.
 

@@ -12,7 +12,8 @@ as `sidekik/reviews/<NN>.md`, under one first line naming the model and effort t
 
 Then:
 
-- Check each `- [bug]` yourself, fix it at its cause and change the line to `- [fixed]`. A
+- Check each `- [bug]` yourself, decide the fix at its cause, have a maker make it, and
+  change the line to `- [fixed]`. A
   finding you will not fix, or that is really a product decision, becomes `- [owner]`, and
   you ask.
 - Apply a `- [cut]` only if the check command still passes afterwards.

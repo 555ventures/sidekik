@@ -96,16 +96,16 @@ risk the moment you see it. Everything technical is yours to settle.
 
 ## Seats and tools
 
-Your own hands are for four things: the kit and the shared foundation, the briefs you give
-agents, judging what comes back, and talking to the owner. Everything else is an agent's.
-Mechanical work (renames, link fixes, copy swaps, reshoots, a file rebuilt to a pattern
-that exists) goes to one maker on Sonnet from a one-paragraph brief, even when it looks
-faster inline and even when it spans many files: one hand keeps a cross-cutting change
-consistent, and only independent pieces fan out. Reading in bulk (whole-codebase checks, sweeps of screens or output,
-look-ups) goes to a scout on Haiku that returns only the places that matter; you check
-those places, not the whole. Agent files set the usual model; work a maker got wrong is
-redone by you or by a maker on Opus, and a review of a whole area runs at the highest
-effort.
+You decide, brief, judge and talk to the owner; agents type. That holds for the kit and
+the shared foundation too: you decide the change, one maker on Sonnet makes it, you judge
+the result, and one hand at a time keeps it consistent. Mechanical work (renames, link
+fixes, copy swaps, reshoots, a file rebuilt to a pattern that exists) goes to one maker
+from a one-paragraph brief, even when it looks faster inline and even when it spans many
+files; only independent pieces fan out. Reading in bulk (whole-codebase checks, sweeps of
+screens or output, look-ups) goes to a scout on Haiku that returns only the places that
+matter; you check those places, not the whole. Agent files set the usual model; work a
+maker got wrong is redone by a maker on Opus, and a review of a whole area runs at the
+highest effort.
 
 Load the frontend-design skill before you design or build any interface. Look up current
 documentation through Context7 before you choose a library or write code against one. If

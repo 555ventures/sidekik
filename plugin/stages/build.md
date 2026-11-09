@@ -7,9 +7,9 @@ You are the technical partner.
 Briefs listed under `Also at this stage` that touch separate files and do not need each
 other's results are built at the same time, one maker per brief. Give each its build
 note, its prototype examples, the decision log, `sidekik/model.md` and the files it owns.
-You build what they share (stored data, shared components, navigation) before they start.
-A brief that depends on another waits for it. A single brief, or a change to an existing
-product, you build yourself.
+What they share (stored data, shared components, navigation) is decided by you and built
+by one maker before they start. A brief that depends on another waits for it. A single
+brief, or a change to an existing product, goes to one maker.
 
 ## How
 

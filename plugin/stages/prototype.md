@@ -26,7 +26,8 @@ lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 
 ## Foundation (when there is no kit yet)
 
-You write what every example shares yourself, so it has one hand. Meanwhile a scout checks
+What every example shares is one hand's: you decide it, one maker writes it, you judge
+it. Meanwhile a scout checks
 how three good current products handle the same thing, from their help centres and public
 docs, and says unknown where it finds nothing. Use what works, and what the owner gave you.
 
@@ -41,8 +42,8 @@ docs, and says unknown where it finds nothing. Use what works, and what the owne
 - `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
   with no style blocks, and an inline style may set only position and size.
 
-Then the heart of the product as two or three candidate screens, by you, in the kit's
-tokens but before the kit is frozen. The moment they exist, hand them to the owner as
+Then the heart of the product as two or three candidate screens, designed by you and
+built by one maker from your brief, in the kit's tokens but before the kit is frozen. The moment they exist, hand them to the owner as
 images: one line with what differs and what to look at, and end your turn. Their pick
 becomes the one reference example and the kit follows it. Every reaction they give, now and all through the prototype, is a ruling:
 record it with `decide.js add`, apply it to the kit and the examples, and note it in
@@ -50,7 +51,7 @@ record it with `decide.js add`, apply it to the kit and the examples, and note i
 product a user would name), by makers against the kit as it stands, each in the product's
 primary language, with any other language shown by one example later. Look at them all
 yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After
-that only you change the kit, and you freeze again.
+that the kit changes only on your decision, by one maker, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes starts as a saved copy of how the product behaves today, kept beside the

@@ -31,7 +31,11 @@ really needs.
    `## Before release` in `sidekik/stack.md`: secrets and personal data kept safe, backups,
    knowing when it breaks, legal pages, platform or store rules, real wording and images.
 8. **Their steps.** Every step only a person can do (accounts, keys, billing) goes in one
-   numbered list, given once, so the build never stops to wait for one.
+   numbered list, given once, so the build never stops to wait for one. A secret never
+   passes through the chat or a command argument: the skeleton carries a small env
+   utility in the product's own language (`set KEY` reads the value from a hidden prompt
+   or stdin and writes the app's env file, keeping the example file in step; `list`
+   prints keys without values), and each step that needs a key tells the owner to run it.
 9. **Best practice for the picks.** Read each pick's current documentation through
    Context7: the recommended layout, the patterns it advises, what its current version
    changed, its known traps. Write what a builder must follow into `CLAUDE.md`, briefly.

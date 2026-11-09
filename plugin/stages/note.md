@@ -23,9 +23,10 @@ example cannot show. Use these headings:
   what will be deleted.
 - **Done when.** Three to six things a user can do or see, and each rule or number from
   Behind them that this brief makes true. Each gets a test that can be run again wherever
-  that is cheap, and always where money or data is at stake; a number is read back from
-  the running system, never from the setting meant to set it. A confirmed exchange or case
-  becomes its test directly. Only what cannot be automated is left to a walk by hand, and
-  the note says which.
+  that is cheap, and always where money or data is at stake. The test meets the rule the
+  way a user or caller does: a refusal or a failure on the screen that shows it, a number
+  read back from the running system, never only the layer that enforces it or the setting
+  meant to set it. A confirmed exchange or case becomes its test directly. Only what
+  cannot be automated is left to a walk by hand, and the note says which.
 
 Run `state.js mark <NN> noted`.

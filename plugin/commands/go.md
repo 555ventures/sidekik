@@ -65,8 +65,9 @@ can be read two ways or does not fit this product, work it demanded that produce
 add `- [open] <stage>: what happened, what you expected, what you did instead` to
 `sidekik/feedback.md` at that moment, and carry on. Never edit `sidekik/state.json` or the
 plugin's files to get past it. When you can list other sessions and one is named
-`sidekik…`, send it that line. A line there that became `[fixed]` or `[declined]` is the
-answer: read the file when you start, and try again what a fix unblocked.
+`sidekik…`, send it that line, and show the owner the same line in your reply as
+`📨 sidekik: …`, because they cannot see what passes between sessions. A line there that
+became `[fixed]` or `[declined]` is the answer: read the file when you start, and try again what a fix unblocked.
 
 ## Working with the owner
 

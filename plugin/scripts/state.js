@@ -225,7 +225,9 @@ function nextStep(root, state) {
   const briefs = readBriefs(root);
   const withBrief = (brief) => ({ stage: stageOf(state, brief), brief,
     also: briefs.filter((b) => b.nn !== brief.nn && stageOf(state, b) === stageOf(state, brief)).map((b) => b.nn) });
-  if (!briefs.length) return { stage: 'brief', also: [] };
+  // The brief list stands once the owner's yes on it is in the decision log, or work on it has begun.
+  const unmarked = briefs.every((b) => rank(state, b) < 0);
+  if (!briefs.length || (unmarked && !has(readOrNull(root, 'decisions.md'), /^- /m))) return { stage: 'brief', also: [] };
   if (!state.stack) {
     const open = briefs.find((b) => rank(state, b) < 0) ?? briefs.find((b) => rank(state, b) < 1);
     return open ? withBrief(open) : { stage: 'stack', also: [] };

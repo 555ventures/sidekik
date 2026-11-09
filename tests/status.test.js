@@ -60,7 +60,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
 });
 
 test('an empty project says there are no briefs and that the brief list comes next', () => {
-  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Nothing is waiting on you.\n\n🎯 Next   write the brief list — needs you\n');
+  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Nothing is waiting on you.\n\n🎯 Next   agree the brief list — needs you\n');
 });
 
 test('with nothing waiting the section is one line, and the title falls back to the folder name', () => {

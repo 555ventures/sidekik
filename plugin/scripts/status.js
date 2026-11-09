@@ -12,7 +12,7 @@ const LOOK = {
 };
 const LABEL_WIDTH = Math.max(...Object.values(LOOK).map(([, label]) => label.length));
 const NEXT = {
-  brief: 'write the brief list', prototype: 'prototype', look: 'your look at the prototype', stack: 'choose the stack',
+  brief: 'agree the brief list', prototype: 'prototype', look: 'your look at the prototype', stack: 'choose the stack',
   note: 'build note for', build: 'build', review: 'review', close: 'report', tidy: 'tidy the codebase', ship: 'your sign-off to go live',
   idle: 'nothing to do, everything is live',
 };

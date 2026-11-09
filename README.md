@@ -169,7 +169,7 @@ What `next` answers:
 
 | situation | stage |
 |---|---|
-| no `briefs.md`, or it has no brief lines | `brief` |
+| no `briefs.md`, or it has no brief lines, or no brief has a mark and `decisions.md` has no line (the owner's yes on the list is its first decision) | `brief` |
 | `stack` false and some brief has no mark | `prototype` (the lowest such brief) |
 | `stack` false, every brief has a mark, some brief is not `confirmed` | `look` (the lowest such brief) |
 | `stack` false and every brief is `confirmed` | `stack` |

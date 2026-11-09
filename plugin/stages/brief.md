@@ -24,4 +24,6 @@ Work all of this out from what the owner said and from the project. Do not inter
 only what you cannot work out and what would change the list.
 
 Show the owner the picture and the list in plain words, and ask once whether anything is
-missing or wrong. Change it as they say, then continue: there is no mark for this stage.
+missing or wrong. Change it as they say, then record their yes with `decide.js add all
+"<their words>"`. That line is the stage's mark: `next` stays here until the decision log
+has one, so a session with no memory never asks the owner for the same yes again.

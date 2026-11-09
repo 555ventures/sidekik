@@ -11,6 +11,7 @@ const B1 = '01 booking-flow: Clients book in under a minute.';
 const B2 = '02 reminders: Clients get a reminder the day before.';
 const NOTE = '# Booking flow\n\n## Reuse\n- The kit form.\n\n## Done when\n- A client books in under a minute.\n';
 const IN_ROOT = 'test -f sidekik/briefs.md';
+const YES = '- 2026-01-01 all: The briefs stand as proposed.\n';
 const proto = (status, extra = '') => ({
   'prototype/kit/kit.css': '.btn { color: black; }\n',
   'prototype/book/start.html': `<link rel="stylesheet" href="../kit/kit.css"><button class="btn">Book</button>${extra}\n`,
@@ -20,8 +21,9 @@ const proto = (status, extra = '') => ({
 // A project with two briefs; `state` is merged into a fresh state (null for none), a null file is left out.
 function project(state = {}, files = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-state-'));
-  const all = { 'briefs.md': `- ${B1}\n- ${B2}\n`, ...files };
-  if (state) all['state.json'] = JSON.stringify({ check: null, stack: false, kitHash: null, decisionsHash: null, briefs: {}, ...state });
+  const all = { 'briefs.md': `- ${B1}\n- ${B2}\n`, 'decisions.md': YES, ...files };
+  const decisionsHash = all['decisions.md'] === null ? null : require('crypto').createHash('sha256').update(all['decisions.md']).digest('hex');
+  if (state) all['state.json'] = JSON.stringify({ check: null, stack: false, kitHash: null, decisionsHash, briefs: {}, ...state });
   for (const [rel, text] of Object.entries(all).filter(([, t]) => t !== null)) {
     fs.mkdirSync(path.dirname(path.join(root, 'sidekik', rel)), { recursive: true });
     fs.writeFileSync(path.join(root, 'sidekik', rel), text);
@@ -50,6 +52,7 @@ test('next answers every row of the table', () => {
   const rows = [
     [{}, { 'briefs.md': null }, 'brief', 'none'],
     [{}, { 'briefs.md': '# Briefs\n' }, 'brief', 'none'],
+    [{}, { 'decisions.md': null }, 'brief', 'none'],
     [{}, {}, 'prototype', B1, { also: '02' }],
     [{ briefs: { '01': 'prototyped' } }, {}, 'prototype', B2],
     [{ briefs: { '01': 'prototyped', '02': 'confirmed' } }, { 'questions/pm.md': '- [open] 01: Weekly?\n- [open] 02: Text?\n' }, 'look', B1, { open: 1 }],
@@ -106,7 +109,7 @@ test('prototyped needs every mapped screen done, a clean prototype check and no 
 test('confirmed needs untampered decisions and no open question for the brief', () => {
   const state = { briefs: { '01': 'prototyped' } };
   project(state, { 'questions/pm.md': '- [open] 01: Weekly?\n' }).refused(['mark', '01', 'confirmed'], /open question/);
-  project(state, { 'decisions.md': '- 2026-11-09 01: Edited by hand.\n' }).refused(['mark', '01', 'confirmed'], /changed by hand/);
+  project({ ...state, decisionsHash: null }, { 'decisions.md': '- 2026-11-09 01: Edited by hand.\n' }).refused(['mark', '01', 'confirmed'], /changed by hand/);
   const p = project(state, { 'questions/pm.md': '- [answered] 01: Weekly? → yes\n- [open] 02: Text?\n' });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
   assert.equal(p.read().briefs['01'], 'confirmed');

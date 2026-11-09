@@ -35,3 +35,10 @@ Recommendation, as one reshape of the stage's owner moments:
 
 Cost: one more stop for the owner, early, when changing direction is cheap. It replaces
 corrections given late, when they are expensive. Recommended: yes.
+
+## The owner confirms flows interactively, not from a one-line hand-off
+
+From sumglass, 2026-11-09, Check step 3. The owner said: "I prefer more interactive user
+flow confirmation." Decided by that correction and applied in 0.3.7: the partner walks the
+owner through the flows one at a time, each step in words with its screen or exchange named,
+yes or change per step, four steps to a question batch.

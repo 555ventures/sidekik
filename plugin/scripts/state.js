@@ -80,10 +80,15 @@ function readBriefs(root) {
 const rank = (state, brief) => MARKS.indexOf(state.briefs[brief.nn]);
 const doneBriefs = (root, state) => readBriefs(root).filter((b) => state.briefs[b.nn] === 'done').map((b) => b.nn);
 
+const SEMICOLON = 'The check command cannot contain ";". Join the steps with && so that a failing step fails the whole check.';
+
 function checkProblem(root, state) {
   if (!state.check) return 'No check command is set yet.';
-  const run = spawnSync(state.check, { shell: true, cwd: root, stdio: 'inherit' });
-  return run.status === 0 ? null : `The check command "${state.check}" did not pass.`;
+  const run = spawnSync(state.check, { shell: true, cwd: root, encoding: 'utf8' });
+  if (run.status === 0) return null;
+  // Only the tail reaches the session; the full output is the check's own job to keep.
+  const tail = `${run.stdout ?? ''}${run.stderr ?? ''}`.trimEnd().split('\n').slice(-30).join('\n');
+  return `The check command "${state.check}" did not pass.${tail ? `\n${tail}` : ''}`;
 }
 
 function doneWhenItems(note) {
@@ -254,6 +259,7 @@ function printNext(root, state) {
 function main(root, [cmd, a, b]) {
   if (cmd === 'init') {
     const existing = a === '--existing' ? b : null;
+    if (existing?.includes(';')) return SEMICOLON;
     if (readState(root)) console.log('This project already has sidekik set up, so nothing was changed.');
     else {
       writeState(root, { ...fresh(), check: existing, stack: Boolean(existing) });
@@ -266,7 +272,7 @@ function main(root, [cmd, a, b]) {
   const state = { ...fresh(), ...stored };
   if (cmd === 'next') printNext(root, state);
   else if (cmd === 'set-check' && a) {
-    if (a.includes(';')) return 'The check command cannot contain ";". Join the steps with && so that a failing step fails the whole check.';
+    if (a.includes(';')) return SEMICOLON;
     writeState(root, { ...state, check: a });
     console.log(`The check command is now "${a}".`);
   } else if (cmd === 'set-deps' && a) {

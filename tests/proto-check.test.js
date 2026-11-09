@@ -49,7 +49,8 @@ function fails(root, pattern) {
 }
 
 test('a clean prototype passes and screensFor lists a brief\'s rows', () => {
-  const root = project();
+  // A table in map/ without a brief number, such as a kit request, is not a map.
+  const root = project({ 'map/kit-requests-bookings.md': '| class | wanted |\n|---|---|\n| .entry-date | no wrap |\n' });
   assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
   assert.deepStrictEqual(screensFor(root, '02'), [{ screen: 'bookings/waitlist.html', status: 'planned' }]);
   assert.strictEqual(screensFor(root, '01').length, 3);

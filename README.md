@@ -31,8 +31,8 @@ is judged by: screens to click for a product you look at, exchanges to read for 
 talk to (a command-line tool, an API), cases to check for one that works on its own (an
 engine, a pipeline). Confirmed examples become the tests.
 
-Claude comes to the owner when a good partner would. Three of those moments are hard gates
-in the scripts: the owner's yes on the prototype, their pick of the stack, and their yes
+Claude comes to the owner when a good partner would. Three of those moments stop the work
+until the owner answers: their yes on the prototype, their pick of the stack, and their yes
 before shipping. The build between them runs unattended and reports as it goes. A bug or a
 small tweak skips the stages: it is fixed directly and reported in one line.
 

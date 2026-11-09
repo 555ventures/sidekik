@@ -1,6 +1,7 @@
 ---
 description: Turn feedback and lessons from real projects into one change to this plugin
 argument-hint: "<path to a project that uses sidekik> [more paths]"
+disable-model-invocation: true
 ---
 
 Run this inside the sidekik repo. Projects: $ARGUMENTS.
@@ -41,9 +42,9 @@ it in `PROPOSALS.md` with your recommendation and leave the plugin as it is.
 
 Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
 when the last five commits hold none that starts with `tidy:`, dispatch one
-`sidekik:reviewer` at the highest effort over the whole plugin, for rules that repeat or
-contradict, special cases stacked on one part, and rules no lesson or the current model
-needed. The result is a merge, a removal or a reshape, never an addition.
+general-purpose agent on Opus at the highest effort over the whole plugin, for rules that
+repeat or contradict, special cases stacked on one part, and rules no lesson or the current
+model needed. It reads every file and quotes the sentences it names. The result is a merge, a removal or a reshape, never an addition.
 
 ## Land
 

@@ -34,7 +34,7 @@ function mapRows(root) {
     for (const line of fs.readFileSync(path.join(mapDir, f), 'utf8').split('\n')) {
       if (!line.trim().startsWith('|')) continue;
       const cells = line.split('|').slice(1, -1).map((c) => c.trim());
-      if (!/\.\w+$/.test(cells[0])) continue;
+      if (!/\.\w+$/.test(cells[0]) || !/^\d\d$/.test(cells[1] ?? '')) continue;
       rows.push({ map: `map/${f}`, screen: cells[0], brief: cells[1], status: cells[2] });
     }
   }

@@ -2,6 +2,7 @@
 name: walker
 description: Tries a prototype as one persona, or as the skeptic, and reports where that person would get stuck or lose trust. Changes no files. Dispatched in parallel by /sidekik:go.
 model: opus
+disallowedTools: Write, Edit, NotebookEdit
 ---
 
 Your brief gives you a persona: who you are, your situation, your task and what makes you

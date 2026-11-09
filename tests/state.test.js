@@ -91,6 +91,18 @@ test('init writes a fresh state once, and --existing settles the stack', () => {
   const existing = project(null);
   existing.run('init', '--existing', 'make test');
   assert.deepEqual([existing.read().stack, existing.read().check, existing.read().deps], [true, 'make test', null]);
+
+  const joined = project(null);
+  assert.match(joined.run('init', '--existing', 'lint; test').out, /cannot contain ";"/);
+  assert.equal(joined.run('init').code, 0, 'the refused init left no state behind');
+});
+
+test('a failing check shows only the tail of its output', () => {
+  const p = project({ stack: true, check: 'seq 1 40 && exit 1', briefs: { '01': 'built' } }, { 'reviews/01.md': '- [fixed] a\n' });
+  const r = p.run('mark', '01', 'reviewed');
+  assert.equal(r.code, 1);
+  assert.match(r.out, /did not pass\.\n11\n/);
+  assert.doesNotMatch(r.out, /\n10\n/);
 });
 
 test('a mark is refused unless it follows the current one', () => {

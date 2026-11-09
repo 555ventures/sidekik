@@ -5,9 +5,11 @@ really needs.
 
 1. **What shapes the architecture.** One owner batch before anything is chosen: the
    platforms now and later (web, native mobile, desktop), who else will call the backend,
-   where the users are and how many, the budget per month, and the team's skills. Then,
-   from the answers and the confirmed examples, list what the product needs to be built
-   and released.
+   where the users are and how many, the budget per month, the team's skills, and the
+   development machine as it is (which databases, object stores and mail catchers already
+   run, in which containers and on which ports; how env files and secrets are kept), so
+   the skeleton reuses what is there. Then, from the answers and the confirmed examples,
+   list what the product needs to be built and released.
 2. **Options.** The picks that shape the product are the owner's: framework, the UI
    toolkit the kit becomes and whether it reaches a native app, database and its access
    layer, login, hosting, storage, email, payments when the product charges, analytics,

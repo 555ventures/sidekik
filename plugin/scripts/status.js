@@ -5,9 +5,10 @@ const path = require('path');
 const { dir, readState, rootFrom } = require('./lib/store');
 const { openQuestions } = require('./decide');
 const { MARKS, fresh, readBriefs, nextStep, lessonCauses } = require('./state');
+const { screensFor } = require('./proto-check');
 
 const LOOK = {
-  none: ['⬜', 'not started'], prototyped: ['🎨', 'prototype ready for your look'], confirmed: ['🎨', 'design approved'],
+  none: ['⬜', 'not started'], prototyping: ['🎨', 'prototyping'], prototyped: ['🎨', 'prototype ready for your look'], confirmed: ['🎨', 'design approved'],
   noted: ['🛠️', 'ready to build'], built: ['🔨', 'built'], reviewed: ['🔍', 'reviewed'], done: ['📦', 'finished'], live: ['✅', 'live'],
 };
 const LABEL_WIDTH = Math.max(...Object.values(LOOK).map(([, label]) => label.length));
@@ -29,6 +30,8 @@ function screen(root) {
   const briefs = readBriefs(root);
   const live = (b) => state.shipped.includes(b.nn);
   const reached = (mark) => (b) => MARKS.indexOf(state.briefs[b.nn]) >= MARKS.indexOf(mark);
+  // A brief with no mark but examples on the prototype map is being prototyped.
+  const key = (b) => (live(b) ? 'live' : state.briefs[b.nn] ?? (screensFor(root, b.nn).length ? 'prototyping' : 'none'));
   const name = (b) => `${b.nn} ${b.slug}`;
   // One waiting line per brief whose count is above zero.
   const perBrief = (count, word) => briefs.map((b) => [b, count(b)]).filter(([, n]) => n).map(([b, n]) => `${plural(n, word)} on ${name(b)}`);
@@ -39,11 +42,14 @@ function screen(root) {
     const slugWidth = Math.max(...briefs.map((b) => b.slug.length));
     out.push(`🗺️ ${/^# (.+)$/m.exec(readOrEmpty(root, 'briefs.md'))?.[1] ?? path.basename(root)}`);
     for (const b of briefs) {
-      const [icon, label] = LOOK[live(b) ? 'live' : state.briefs[b.nn] ?? 'none'];
+      const [icon, label] = LOOK[key(b)];
       const cells = MARKS.indexOf(state.briefs[b.nn]) + 1 + (live(b) ? 1 : 0);
       const size = state.sizes[b.nn];
+      const rows = screensFor(root, b.nn);
+      const extra = key(b) === 'prototyping' ? `${rows.filter((r) => r.status === 'done').length} of ${rows.length} examples`
+        : size ? `${size.code} code · ${size.tests} tests` : '';
       out.push(`   ${icon} ${b.nn} ${b.slug.padEnd(slugWidth)}   ${'▓'.repeat(cells)}${'░'.repeat(7 - cells)}  `
-        + `${label.padEnd(LABEL_WIDTH)}  ${size ? `${size.code} code · ${size.tests} tests` : ''}`.trimEnd());
+        + `${label.padEnd(LABEL_WIDTH)}  ${extra}`.trimEnd());
     }
     const count = (test) => `${briefs.filter(test).length} of ${briefs.length}`;
     const marks = state.history.filter((h) => h.brief && !h.refused);
@@ -85,7 +91,7 @@ function screen(root) {
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));
 
   const what = brief && stage !== 'look' ? `${NEXT[stage]} ${name(brief)}` : NEXT[stage];
-  const ending = stage === 'idle' ? '' : NEEDS_YOU.includes(stage) ? ' — needs you' : ' — nothing needed from you';
+  const ending = stage === 'idle' ? '' : waiting.length || NEEDS_YOU.includes(stage) ? ' — needs you' : ' — nothing needed from you';
   out.push('', `🎯 Next   ${what}${also.length ? ` (with ${also.join(', ')})` : ''}${ending}`);
   return out.join('\n');
 }

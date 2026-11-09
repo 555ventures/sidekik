@@ -12,7 +12,8 @@ For a new product, start it with the product picture in a few plain lines:
   shows how it fails worst,
 - how careful it must be with money and personal data,
 - who else solves this, and why someone would choose this product,
-- what the first version includes. Under `## Later`, list what waits.
+- what the first version includes, and what it must make easy to add later (a language,
+  a currency, a region, a channel). Under `## Later`, list what waits.
 
 Then the briefs. A brief is one thing a user will be able to do, in one sentence a customer
 would understand. It can add a feature, change one or remove one. Order them by what has to

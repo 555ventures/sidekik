@@ -201,7 +201,7 @@ named), and `Base: <sha>` or `Base: none`.
    ✅ 01 even-split          ▓▓▓▓▓▓▓  live                           306 code · 60 tests
    🔨 02 drinks-separately   ▓▓▓▓░░░  built                          71 code · 15 tests
    🎨 03 history             ▓▓░░░░░  design approved
-   ⬜ 04 share-link          ░░░░░░░  not started
+   🎨 04 share-link          ░░░░░░░  prototyping                    1 of 2 examples
    📦 05 tip-jar             ▓▓▓▓▓▓░  finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live
@@ -214,14 +214,15 @@ named), and `Base: <sha>` or `Base: none`.
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
-🎯 Next   review 02 drinks-separately — nothing needed from you
+🎯 Next   review 02 drinks-separately — needs you
 ```
 
 - Title: the first `# ` heading in `briefs.md`, else the project folder's name.
 - Bar: seven cells, one per step reached: `prototyped`, `confirmed`, `noted`, `built`,
   `reviewed`, `done`, and shipped. Slugs are padded to the longest slug and labels to the
   longest possible label, so the columns line up.
-- Icon and label: no mark ⬜ `not started`; `prototyped` 🎨 `prototype ready for your look`;
+- Icon and label: no mark ⬜ `not started`, or 🎨 `prototyping` when the prototype map has rows for the brief
+  (the size column then reads `N of M examples`, done rows of all rows); `prototyped` 🎨 `prototype ready for your look`;
   `confirmed` 🎨 `design approved`; `noted` 🛠️ `ready to build`; `built` 🔨 `built`;
   `reviewed` 🔍 `reviewed`; `done` 📦 `finished`; shipped ✅ `live`.
 - Size is shown once recorded.
@@ -248,8 +249,8 @@ named), and `Base: <sha>` or `Base: none`.
   prototype`, `choose the stack`, `build note for NN slug`, `build NN slug`, `review NN
   slug`, `report NN slug`, `tidy the codebase`, `your sign-off to go live`, or `nothing to
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
-  It ends ` — needs you` for the brief, look, stack and ship stages, ` — nothing needed
-  from you` for the others, and nothing for idle.
+  It ends ` — needs you` for the brief, look, stack and ship stages or whenever
+  something waits on the owner, ` — nothing needed from you` when nothing waits, and nothing for idle.
 
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.

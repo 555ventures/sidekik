@@ -32,6 +32,8 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
   }, {
     'briefs.md': '# Split the bill\n\n- 01 even-split: Split evenly.\n- 02 drinks-separately: Drinks apart.\n'
       + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
+    'prototype/map/share.md': '| screen | brief | status | purpose | notes |\n|---|---|---|---|---|\n'
+      + '| share/link.html | 04 | done | link | |\n| share/revoke.html | 04 | planned | revoke | |\n',
     'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
     'decisions.md': Array.from({ length: 9 }, (_, i) => `- 2026-11-0${i + 1} 01: Ruling ${i}.\n`).join(''),
@@ -42,7 +44,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
    ✅ 01 even-split          ▓▓▓▓▓▓▓  live                           306 code · 60 tests
    🔨 02 drinks-separately   ▓▓▓▓░░░  built                          71 code · 15 tests
    🎨 03 history             ▓▓░░░░░  design approved
-   ⬜ 04 share-link          ░░░░░░░  not started
+   🎨 04 share-link          ░░░░░░░  prototyping                    1 of 2 examples
    📦 05 tip-jar             ▓▓▓▓▓▓░  finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live
@@ -56,7 +58,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
-🎯 Next   review 02 drinks-separately — nothing needed from you
+🎯 Next   review 02 drinks-separately — needs you
 `);
 });
 
@@ -82,5 +84,5 @@ test('with nothing waiting the section is one line, and the title falls back to 
 
 test('a tidy comes next once every brief is finished and the codebase is not yet tidied', () => {
   const { out } = status({ stack: true, briefs: { '01': 'done' } }, { 'briefs.md': '- 01 a: One.\n' });
-  assert.match(out, /\n🎯 Next   tidy the codebase — nothing needed from you\n$/);
+  assert.match(out, /\n🎯 Next   tidy the codebase — needs you\n$/);
 });

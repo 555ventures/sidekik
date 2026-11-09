@@ -20,7 +20,8 @@ When they react:
 - Each thing they rule on goes in the log through `decide.js add`.
 - Change the examples to match, and run `proto-check.js`. Something they accepted that
   needs a new example gets one before you call the brief confirmed.
-- An answered question becomes `- [answered] NN: text → answer` in its file.
+- `decide.js answer NN "<match>" "<answer>"` turns an answered question into
+  `- [answered] NN: text → answer` in its file and records the ruling, in one step.
 
 Repeat, using the real thing again each round. Aim for every persona finishing its task
 without help and the skeptic's biggest objection answered. Then only the owner's clear yes

@@ -89,7 +89,8 @@ Line formats, exactly:
 - Brief: `- NN slug: sentence` where `NN` is two digits and `slug` is `[a-z0-9-]+`.
 - Decision: `- YYYY-MM-DD NN: text`. `NN` is a brief number or `all`.
 - Question: `- [open] NN: text`, later `- [answered] NN: text → answer`. `all` in place of
-  `NN` counts for every brief.
+  `NN` counts for every brief. `decide.js answer <NN|all> "<match>" "<answer>"` does the rewrite
+  and records the decision in one step.
 - Map row: `| area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension.
 - Lesson: `- NN: [cause] text` for a brief, `- fix: [cause] text` for a bug that escaped,
@@ -258,9 +259,10 @@ current directory) for the project root that holds `sidekik/`.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
   and how many examples it checked; `proto-check.js freeze`.
 - `scripts/decide.js` exports `addDecision(root, brief, text)`, `verifyDecisions(root) → { ok, problems }`,
-  `openQuestions(root, brief?) → [string]`. CLI: `decide.js add <NN|all> "<text>"`, `decide.js verify`,
+  `openQuestions(root, brief?) → [string]`, plus `addDecisions`, `parseDecisions` and `answerQuestion`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
+  `decide.js add`, all or none), `decide.js answer <NN|all> "<match>" "<answer>"`, `decide.js verify`,
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
-  theirs. `add` refuses while an unaccepted hand edit is in the file.
+  theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark stack|tidying|tidied|shipped`, `reconfirm <NN>`, `set-check "<cmd>"`,
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one

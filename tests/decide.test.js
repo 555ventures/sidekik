@@ -17,8 +17,10 @@ function project(files = {}) {
     fs.mkdirSync(path.dirname(path.join(root, 'sidekik', rel)), { recursive: true });
     fs.writeFileSync(path.join(root, 'sidekik', rel), text);
   }
+  // A last argument that is an object carries options such as { input } for stdin.
   const run = (...args) => {
-    const r = spawnSync(process.execPath, [script, ...args, '--root', root], { encoding: 'utf8' });
+    const options = typeof args[args.length - 1] === 'object' ? args.pop() : {};
+    const r = spawnSync(process.execPath, [script, ...args, '--root', root], { encoding: 'utf8', ...options });
     return { code: r.status, out: r.stdout };
   };
   return { root, run, file: path.join(root, 'sidekik', 'decisions.md') };
@@ -71,4 +73,64 @@ test('decisionsFor lists the dated decisions of exactly one brief', () => {
   assert.deepEqual(decisionsFor(p.root, '01'), [{ date: '2026-01-01', brief: '01', text: 'First.' }, { date: '2026-01-03', brief: '01', text: 'Second.' }]);
   assert.deepEqual(decisionsFor(p.root, 'all'), [{ date: '2026-01-02', brief: 'all', text: 'For everyone.' }]);
   assert.deepEqual(decisionsFor(project().root, '01'), []);
+});
+
+test('add takes one ruling as arguments and refuses several, writing nothing', () => {
+  const p = project({ 'decisions.md': '' });
+  p.run('seal');
+  const r = p.run('add', '01', 'First.', 'Second.');
+  assert.equal(r.code, 1);
+  assert.equal(r.out.trim(), 'add takes one ruling. To record several at once, pipe lines "NN: text" into decide.js add.');
+  assert.equal(fs.readFileSync(p.file, 'utf8'), '');
+});
+
+test('add reads lines NN: text from stdin, in order, sealed once', () => {
+  const p = project();
+  const r = p.run('add', { input: '01: Clients may cancel.\n\nall: Prices show tax.\n02: Reminders go by text.\n' });
+  assert.equal(r.code, 0);
+  assert.equal(r.out.trim(), '3 decisions are recorded.');
+  const today = new Date().toLocaleDateString('en-CA');
+  assert.equal(fs.readFileSync(p.file, 'utf8'),
+    `- ${today} 01: Clients may cancel.\n- ${today} all: Prices show tax.\n- ${today} 02: Reminders go by text.\n`);
+  assert.equal(p.run('verify').code, 0);
+});
+
+test('one bad line in a stdin batch refuses the whole batch', () => {
+  const p = project();
+  const r = p.run('add', { input: '01: Fine.\n1: Missing a digit.\n' });
+  assert.equal(r.code, 1);
+  assert.match(r.out, /Not a decision line: 1: Missing a digit\./);
+  assert.match(r.out, /"NN: text" or "all: text"/);
+  assert.equal(fs.existsSync(p.file), false);
+});
+
+test('answer rewrites the one matching open question and records the ruling', () => {
+  const p = project({
+    'questions/designer.md': '- [open] 01: Is a booking ever longer than two hours?\n- [open] 01: Weekends too?\n',
+    'questions/engineer.md': '- [open] 02: Is a booking ever longer than two hours?\n- [open] all: Which currency?\n',
+  });
+  const r = p.run('answer', '01', 'LONGER than', 'No, two hours at most.');
+  assert.equal(r.code, 0);
+  assert.equal(r.out.trim(), 'The question is answered and the decision is recorded.');
+  assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'questions', 'designer.md'), 'utf8'),
+    '- [answered] 01: Is a booking ever longer than two hours? → No, two hours at most.\n- [open] 01: Weekends too?\n');
+  assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'questions', 'engineer.md'), 'utf8').split('\n')[0],
+    '- [open] 02: Is a booking ever longer than two hours?');
+  const today = new Date().toLocaleDateString('en-CA');
+  assert.equal(fs.readFileSync(p.file, 'utf8'),
+    `- ${today} 01: No, two hours at most. [Is a booking ever longer than two hours?]\n`);
+  assert.equal(p.run('verify').code, 0);
+});
+
+test('answer refuses when no open question or several match, writing nothing', () => {
+  const questions = '- [open] 01: Is a booking ever longer than two hours?\n- [open] 01: Is a refund ever partial?\n- [open] all: Which currency?\n';
+  const p = project({ 'questions/designer.md': questions });
+  const none = p.run('answer', '01', 'currency', 'Euro.');
+  assert.equal(none.code, 1);
+  assert.equal(none.out.trim(), 'No open question for 01 contains "currency". Run decide.js questions 01 to see them.');
+  const two = p.run('answer', '01', 'is a', 'Yes.');
+  assert.equal(two.code, 1);
+  assert.equal(two.out.trim(), '"is a" fits 2 open questions for 01:\n- [open] 01: Is a booking ever longer than two hours?\n- [open] 01: Is a refund ever partial?');
+  assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'questions', 'designer.md'), 'utf8'), questions);
+  assert.equal(fs.existsSync(p.file), false);
 });

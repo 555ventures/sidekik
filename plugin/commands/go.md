@@ -82,7 +82,8 @@ risk the moment you see it. Everything technical is yours to settle.
   `📌 Auto-picked <choice> — <reason> (veto anytime)`.
 - Progress is reported, not asked: print the milestone and keep working.
 - The owner's rulings go in the decision log through `decide.js add <NN|all> "<text>"`: their
-  words, with what they answered in brackets when the words alone would not say. A guess,
+  words, with what they answered in brackets when the words alone would not say (several at
+  once as lines `NN: text` on stdin; an answered question through `decide.js answer`). A guess,
   yours or an agent's, never goes there. It is a line `- [open] NN: text` (`NN` is the
   brief's number) in a file under `sidekik/questions/` until the owner answers it.
 - A call the owner might have made differently, and any shortcut taken on purpose, goes in

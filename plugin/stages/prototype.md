@@ -41,10 +41,15 @@ docs, and says unknown where it finds nothing. Use what works, and what the owne
 - `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
   with no style blocks, and an inline style may set only position and size.
 
-Then one finished reference example per area (a part of the product a user would name),
-each in the product's primary language, with any other language shown by one example
-later: the heart of the product by you, the rest by makers against the kit as it stands. Look at
-them all yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After that only you change the kit, and you freeze again.
+Then the heart of the product as one finished reference example, by you. The moment it
+exists, hand it to the owner: one line with how to open it and what to look at, and end
+your turn. Every reaction they give, now and all through the prototype, is a ruling:
+record it with `decide.js add`, apply it to the kit and the examples, and note it in
+`handoff.md`. Then one finished reference example for each other area (a part of the
+product a user would name), by makers against the kit as it stands, each in the product's
+primary language, with any other language shown by one example later. Look at them all
+yourself in a browser, settle their kit requests, and run `proto-check.js freeze`. After
+that only you change the kit, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes starts as a saved copy of how the product behaves today, kept beside the
@@ -69,7 +74,10 @@ sees only `[open]`.
    locally if it refuses file addresses, saving screenshots under
    `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns what is
    broken, empty or at odds with the rest. Fix that, and look yourself only there.
-3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
+3. Hand the owner the flows: one line with how to open them and what to look at, and end
+   your turn. A flow they change makes a walk worthless, so this comes before the walkers.
+   Apply their reactions as rulings.
+4. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic. They inform you. Only the owner
    approves.
 

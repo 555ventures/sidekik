@@ -5,6 +5,12 @@ alone). Learn describes them here with a recommendation; the owner decides.
 
 ## The owner sees the heart of the prototype before the makers start
 
+**Decided 2026-11-09, applied in 0.3.0** in this form: three questions up front that words can
+answer (voice, products whose feel they like, what to avoid), one best-guess heart screen
+handed to the owner the moment it exists, every reaction a recorded ruling, the flows shown
+before the walkers run. Not two or three built directions: options are asked in words, only
+when the partner is torn.
+
 From sumglass, 2026-11-09, prototype stage (feedback lines 12, 13, 14, 16). The owner first
 saw screens two hours after the reference examples existed, asked twice why they were not
 offered a look, had no moment to pick type, colour, density or voice before 81 examples

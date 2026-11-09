@@ -56,6 +56,14 @@ The `sidekik/` folder is landed with the work. You land work: makers never run g
 process you or an agent starts runs as a tracked background task, and you stop them all
 before your turn ends.
 
+When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
+can be read two ways or does not fit this product, work it demanded that produced nothing),
+add `- [open] <stage>: what happened, what you expected, what you did instead` to
+`sidekik/feedback.md` at that moment, and carry on. Never edit `sidekik/state.json` or the
+plugin's files to get past it. When you can list other sessions and one is named
+`sidekik…`, send it that line. A line there that became `[fixed]` or `[declined]` is the
+answer: read the file when you start, and try again what a fix unblocked.
+
 ## Working with the owner
 
 Come to the owner when a good partner would: to agree what is being built, to review the

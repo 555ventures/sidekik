@@ -37,15 +37,18 @@ Every project also keeps itself clean and learns: a tidy stage is scheduled by t
 and a mistake that repeats three times must get a machine check.
 
 Two commands: `/sidekik:go` continues from wherever the work stands, `/sidekik:status` shows
-where that is. `/sidekik:learn` turns lessons into one change to this plugin.
+where that is. A project also writes down where the plugin itself got in its way, and
+`/sidekik:learn`, run in this repo, turns that feedback and the lessons into one change to
+the plugin and answers in the project.
 
 ## Why it is small
 
 Its predecessors grew to tens of thousands of lines and answered every incident with a new
 rule. This one stays small by how it changes, not by a limit. It changes only for a lesson
-recorded on a real project. A change rewrites or removes before it adds. A new machine
-check is earned when the same lesson appears three times, and every tenth lesson is a
-removal. `npm test` prints its size, so growth is seen and never hidden.
+recorded on a real project. A change rewrites or removes before it adds, and a part that
+was already changed once is reshaped, not patched again. A new machine check is earned when
+the same lesson appears three times, and every fifth change is a tidy of the plugin itself.
+`npm test` prints its size, so growth is seen and never hidden.
 
 ## Contract (for whoever builds or changes the plugin)
 
@@ -63,6 +66,7 @@ sidekik/
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas
   lessons.md            - 01: [cause] text   - fix: [cause] text   - guard: [cause] text
+  feedback.md           where the plugin itself got in the way:  - [open] stage: text
   prototype/
     INDEX.md            what this is and the rules for anyone adding to it
     kit/                what every example shares, frozen once the foundation is done
@@ -85,6 +89,9 @@ Line formats, exactly:
   `- guard: [cause] text` for the machine check that now refuses that cause. A cause is a
   short tag such as `built-twice`. `[none]` is the cause of a lesson with nothing to change
   and is never counted.
+- Feedback: `- [open] stage: text`, later `- [fixed] stage: text → what changed` or
+  `- [declined] stage: text → why`. No script reads it: the project's session writes the
+  line, and `/sidekik:learn` answers it.
 
 `state.json`:
 

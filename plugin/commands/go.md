@@ -50,8 +50,11 @@ means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the project r
 2. Read `sidekik/handoff.md` if it exists, then the stage file `next` names, and do the
    stage. It ends in a mark. A refused mark says what is missing: do that.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
-   together. Before you stop mid-stage, overwrite `sidekik/handoff.md` with where things
-   stand, for a session with no memory.
+   together. A stage often spans several sessions; `sidekik/` is the memory, not the
+   window. At every mark, at every commit, and before you stop mid-stage, overwrite
+   `sidekik/handoff.md` with where things stand and tell the owner in one line that it is
+   safe to `/clear` and run `/sidekik:go`. While a maker, walker or scout is in flight it is
+   not safe, because its report lands only in this window: say that instead.
 
 The `sidekik/` folder is landed with the work. You land work: makers never run git. Every
 process you or an agent starts runs as a tracked background task, and you stop them all

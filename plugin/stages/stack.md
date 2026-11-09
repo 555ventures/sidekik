@@ -3,12 +3,16 @@
 The whole prototype is confirmed, so every choice here is made against what the product
 really needs.
 
-1. **Needs.** From the confirmed examples, list what the product needs to be built and
-   released: language and framework, data, login, payments, messages, hosting, and how it
-   reaches users on its platform.
-2. **Options.** Where there is a real choice, give two or three options ranked for this
-   product, each with its cost, how hard it is to leave later, and why it ranks there.
-   Where there is no real choice, take the simplest and note it in `sidekik/calls.md`.
+1. **What shapes the architecture.** One owner batch before anything is chosen: the
+   platforms now and later (web, native mobile, desktop), who else will call the backend,
+   where the users are and how many, the budget per month, and the team's skills. Then,
+   from the answers and the confirmed examples, list what the product needs to be built
+   and released.
+2. **Options.** The picks that shape the product always go to the owner, each with two or
+   three options ranked for this product, their cost, how hard each is to leave later,
+   and why it ranks there: framework, database and its access layer, login, hosting,
+   storage, email, outside feeds, error tracking. Only tooling with no effect on the
+   product is a call, noted in `sidekik/calls.md`.
 3. **The owner picks,** in the same stop as step 6. Never pick for them.
 4. **Try the risky pieces.** Where a confirmed example depends on what an outside service
    can do, run a small real test against it before anyone commits, and show the result.

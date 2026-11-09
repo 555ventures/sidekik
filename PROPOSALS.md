@@ -17,3 +17,12 @@ whole prototype are never built.
 **Decided 2026-11-09, applied in 0.3.7,** by the owner's correction "I prefer more
 interactive user flow confirmation": the partner walks the owner through the flows one at
 a time, each step with its anchor on the flows page, yes or change per step.
+
+## The stack stage asks what shapes the architecture, and the owner makes the shaping picks
+
+From sumglass, 2026-11-09. The owner, twice: "these important decision, I wanted you to ask
+me, or give me more options" and "are we planning to make mobile app or just web app... how
+do you know you want to properly architect?" Decided by that correction and applied in
+0.4.1: one owner batch opens the stage (platforms now and later, who else calls the backend,
+where and how many users, budget, team skills), and framework, database, login, hosting,
+storage, email, outside feeds and error tracking always go to the owner as ranked options.

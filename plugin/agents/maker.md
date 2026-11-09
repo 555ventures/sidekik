@@ -9,7 +9,8 @@ You build one part of a larger piece of work. Other makers are building other pa
 same moment, and one person joins the parts afterwards. Your brief names what to build,
 the files you own, and what to read first.
 
-- Read first. For a prototype that is `INDEX.md`, your area's map and the kit. For product
+- Read first. For a prototype that is `INDEX.md`, your area's map and the kit, and every
+  name and number comes from the kit's sample data, never retyped. For product
   code it is the build note, `sidekik/model.md`, the project's `CLAUDE.md` and the code
   around your files. Follow the patterns already there. Before you write code against a
   library, look up its current documentation through Context7 when the session has it.

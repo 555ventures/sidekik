@@ -23,21 +23,25 @@ lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 
 ## Foundation (when there is no kit yet)
 
-You write the foundation and the key examples yourself. Meanwhile a scout checks how
-three good current products handle the same thing. Use what works, and what the owner
+You write what every example shares yourself, so it has one hand. Meanwhile a scout checks
+how three good current products handle the same thing. Use what works, and what the owner
 gave you.
 
-- `kit/`: what every example shares. For screens, one stylesheet with the tokens and every
-  shared class, and one small script with a way for an action to visibly change the
-  screen. Otherwise the shared names, formats and sample data. Nothing from the internet.
-- One finished reference example per area (a part of the product a user would name). Look
-  at them the way step 2 below says before you freeze.
+- `kit/`: for screens, one stylesheet with the tokens and every shared class, and one
+  small script with a way for an action to visibly change the screen. Otherwise the shared
+  names and formats. Nothing from the internet.
+- `kit/sample.*`: the people, figures and rows every example draws from, in one file, and
+  a small script that prints them as markup when examples repeat rows. Nobody retypes a
+  number.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`, under 40 lines: what this is and its rules. Screens use only kit classes,
   with no style blocks, and an inline style may set only position and size.
 
-Then run `proto-check.js freeze`. After that only you change the kit, and you freeze again.
+Then one finished reference example per area (a part of the product a user would name):
+the heart of the product by you, the rest by makers against the kit as it stands. Look at
+them all the way step 2 below says, settle their kit requests, and run
+`proto-check.js freeze`. After that only you change the kit, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes starts as a saved copy of how the product behaves today, kept beside the
@@ -52,7 +56,6 @@ areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its
 - An existing example that can do the job with a small change is changed, not copied.
 - A desktop screen is a real desktop layout.
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
-- Sample data agrees across examples: the same people, the same totals.
 
 ## Check
 

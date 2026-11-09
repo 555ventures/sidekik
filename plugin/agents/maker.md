@@ -17,7 +17,10 @@ the files you own, and what to read first.
 - Touch only the files you own. Never edit the kit, a shared part, or
   `sidekik/decisions.md`, which holds only what the product owner said. When you need a
   shared part changed, say so in your report and use the closest thing meanwhile.
-- Never run git, and stop every server or process you started before you report.
+- Never run git, and stop every server or process you started before you report. In a
+  prototype, run `proto-check.js` on your work before you report; a problem in a file you
+  do not own, or a link to another area's file that is not there yet, is the partner's:
+  name it in one line and leave it.
 - Before you write something new, check whether something that exists can do the job with
   a small change. Where a document and the code disagree, the code is right.
 - Build what the brief asks and nothing more: no extra examples, options, tests or files.

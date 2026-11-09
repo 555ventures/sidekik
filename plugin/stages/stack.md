@@ -8,11 +8,15 @@ really needs.
    where the users are and how many, the budget per month, and the team's skills. Then,
    from the answers and the confirmed examples, list what the product needs to be built
    and released.
-2. **Options.** The picks that shape the product always go to the owner, each with two or
-   three options ranked for this product, their cost, how hard each is to leave later,
-   and why it ranks there: framework, database and its access layer, login, hosting,
-   storage, email, outside feeds, error tracking. Only tooling with no effect on the
-   product is a call, noted in `sidekik/calls.md`.
+2. **Options.** The picks that shape the product are the owner's: framework, the UI
+   toolkit the kit becomes and whether it reaches a native app, database and its access
+   layer, login, hosting, storage, email, payments when the product charges, analytics,
+   outside feeds, error tracking. Brief each the way a consultant briefs a company's
+   technical people, so the owner or someone they trust can decide from the brief alone:
+   two or three options, what each means for the product and its users, the monthly cost,
+   how hard it is to leave, your recommendation first and why, and what fact would change
+   it. All in one stop, so one word can take every recommendation. Only tooling with no
+   effect on the product is a call, noted in `sidekik/calls.md`.
 3. **The owner picks,** in the same stop as step 6. Never pick for them.
 4. **Try the risky pieces.** Where a confirmed example depends on what an outside service
    can do, run a small real test against it before anyone commits, and show the result.

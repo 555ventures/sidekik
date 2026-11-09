@@ -75,10 +75,12 @@ sees only `[open]`.
    locally if it refuses file addresses, saving screenshots under
    `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns what is
    broken, empty or at odds with the rest. Fix that, and look yourself only there.
-3. Walk the owner through the flows, one flow at a time: each step in words with its
-   screen or exchange named, the owner answering yes or change per step, four steps to a
-   question batch. A flow they change makes a walk worthless, so this comes before the
-   walkers. Apply their reactions as rulings.
+3. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
+   flow in step order, every step with its screenshot or the spoken lines of its exchange,
+   one anchor per step. Then ask one flow at a time, each step in words with its anchor,
+   the owner answering yes or change per step, four steps to a question batch. A flow they
+   change makes a walk worthless, so this comes before the walkers. Apply their reactions
+   as rulings.
 4. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic. They inform you. Only the owner
    approves.

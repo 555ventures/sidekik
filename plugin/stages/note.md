@@ -21,9 +21,11 @@ example cannot show. Use these headings:
 - **Reuse.** Run the project's index command and read the signatures of the areas this
   brief touches. Copy in the ones it must use, and name what will be changed in place and
   what will be deleted.
-- **Done when.** Three to six things a user can do or see. Each gets a test that can be
-  run again wherever that is cheap, and always where money or data is at stake. A
-  confirmed exchange or case becomes its test directly. Only what cannot be automated is
-  left to a walk by hand, and the note says which.
+- **Done when.** Three to six things a user can do or see, and each rule or number from
+  Behind them that this brief makes true. Each gets a test that can be run again wherever
+  that is cheap, and always where money or data is at stake; a number is read back from
+  the running system, never from the setting meant to set it. A confirmed exchange or case
+  becomes its test directly. Only what cannot be automated is left to a walk by hand, and
+  the note says which.
 
 Run `state.js mark <NN> noted`.

@@ -12,6 +12,11 @@
       "name": "sidekik",
       "source": "./plugin",
       "description": "Prototype-first building: Claude designs the product with you as product designer, then builds it as technical partner with a small agent team, one review per brief and your sign-off before anything goes live"
+    },
+    {
+      "name": "style",
+      "source": "./style",
+      "description": "Optional reading style: outcome-first, emoji-anchored, plain-English replies with a work queue at the end, applied wherever the plugin is enabled"
     }
   ]
 }

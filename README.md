@@ -15,6 +15,9 @@ Install:
 /plugin install sidekik@sidekik-tools
 ```
 
+The same marketplace holds `style`, an optional plugin that makes Claude reply outcome
+first, in plain English, with a work queue at the end: `/plugin install style@sidekik-tools`.
+
 ```
 idea → briefs → prototype → stack → build note → build → review → close → ship
 ```

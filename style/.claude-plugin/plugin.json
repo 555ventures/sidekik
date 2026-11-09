@@ -1,0 +1,9 @@
+{
+  "name": "style",
+  "version": "1.10.0",
+  "description": "The owner's reading style: an output style (outcome first, emoji anchors, plain English, a work queue at the end) that applies wherever this plugin is enabled",
+  "author": {
+    "name": "JJ",
+    "email": "jj@555.ventures"
+  }
+}

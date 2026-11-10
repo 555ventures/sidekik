@@ -249,7 +249,9 @@ function nextStep(root, state) {
     return open ? withBrief(open) : { stage: 'stack', also: [] };
   }
   const done = doneBriefs(root, state).length;
-  if (done - state.tidied >= 5 || state.tidyBase) return { stage: 'tidy', also: [] };
+  // A tidy comes between briefs, never over a half-built one.
+  const midBuild = briefs.some((b) => rank(state, b) >= MARKS.indexOf('noted') && state.briefs[b.nn] !== 'done');
+  if ((done - state.tidied >= 5 && !midBuild) || state.tidyBase) return { stage: 'tidy', also: [] };
   const brief = briefs.find((b) => state.briefs[b.nn] !== 'done');
   if (brief) return withBrief(brief);
   if (state.tidied < done) return { stage: 'tidy', also: [] };

@@ -62,6 +62,8 @@ test('next answers every row of the table', () => {
     [{ stack: true, briefs: { '01': 'done' }, tidyBase: 'abc123' }, {}, 'tidy', 'none'],
     [{ stack: true, briefs: { '01': 'done', '02': 'done', '03': 'done', '04': 'done', '05': 'done' } },
       { 'briefs.md': ['01', '02', '03', '04', '05', '06'].map((nn) => `- ${nn} b: B.\n`).join('') }, 'tidy', 'none'],
+    [{ stack: true, briefs: { '01': 'done', '02': 'done', '03': 'done', '04': 'done', '05': 'done', '07': 'noted', '09': 'built' } },
+      { 'briefs.md': ['01', '02', '03', '04', '05', '07', '09'].map((nn) => `- ${nn} b: B.\n`).join('') }, 'build', '07 b: B.'],
     [{ stack: true, briefs: { '01': 'prototyped' } }, {}, 'look', B1],
     [{ stack: true, briefs: { '01': 'confirmed' } }, {}, 'note', B1],
     [{ stack: true, briefs: { '01': 'noted', '02': 'noted' }, bases: { '01': 'abc123' } }, {}, 'build', B1, { also: '02', base: 'abc123' }],

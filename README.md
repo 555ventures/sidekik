@@ -181,7 +181,7 @@ What `next` answers:
 | `stack` false and some brief has no mark | `prototype` (the lowest such brief) |
 | `stack` false, every brief has a mark, some brief is not `confirmed` | `look` (the lowest such brief) |
 | `stack` false and every brief is `confirmed` | `stack` |
-| `stack` true, and five or more briefs became `done` since the last tidy, or `tidyBase` is set | `tidy` (no brief) |
+| `stack` true, and `tidyBase` is set, or five or more briefs became `done` since the last tidy and no brief is `noted`, `built` or `reviewed` | `tidy` (no brief) |
 | `stack` true: the lowest brief that is not `done` | by its mark: none `prototype`, `prototyped` `look`, `confirmed` `note`, `noted` `build`, `built` `review`, `reviewed` `close` |
 | every brief is `done`, and `tidied` is less than the number of `done` briefs | `tidy` (no brief) |
 | every brief is `done`, some are not in `shipped` | `ship` (no brief) |

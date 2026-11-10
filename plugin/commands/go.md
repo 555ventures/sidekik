@@ -29,8 +29,8 @@ Size it first, and tell the owner which size you chose:
   because of it and fix the cause, run the check, and have one `sidekik:reviewer` look at
   the fix, and once more at what a rework after its findings touched. One you cannot
   reproduce: say so, have a maker make the next occurrence name itself (a log line, and
-  the test that will catch it), and record it as unproven in `sidekik/calls.md`. Add `-
-  fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`.
+  the test that will catch it), and record it as unproven in `sidekik/calls.md`.
+  Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`.
 - **A small tweak** that changes no behaviour (a label, a colour, a limit): a maker changes
   exactly what was asked, and you run the check.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.

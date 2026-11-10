@@ -16,21 +16,19 @@ really needs.
    outside feeds, error tracking. Brief each the way a consultant briefs a company's
    technical people, so the owner or someone they trust can decide from the brief alone:
    two or three options, the monthly cost and how hard each is to leave, why you recommend
-   one and what fact would change that. They go in one stop with step 5's questions, so one
+   one and what fact would change that. They go in one stop with step 4's questions, so one
    word can take every recommendation. Only tooling with no effect on the product is a call,
    noted in `sidekik/calls.md`.
-3. **Try the risky pieces.** Where a confirmed example depends on what an outside service
-   can do, run a small real test against it before anyone commits, and show the result.
-4. **Data design and areas.** Write `sidekik/model.md`: what the whole product stores, the
+3. **Data design and areas.** Write `sidekik/model.md`: what the whole product stores, the
    rules every brief shares, and the product's areas with what each is responsible for.
    Do not list there what an area contains: that is read from the code.
-5. **One batch of questions.** Walk every example for what it cannot show: who may do
+4. **One batch of questions.** Walk every example for what it cannot show: who may do
    what, money rules, limits, what happens when something fails, what cannot be undone.
-6. **Release readiness.** Write what this product needs before real people use it under
+5. **Release readiness.** Write what this product needs before real people use it under
    `## Before release` in `sidekik/stack.md`: secrets and personal data kept safe,
    backups, knowing when it breaks, legal pages, platform or store rules, real wording and
    images, the brand mark, favicon and app icon.
-7. **Their steps.** Every step only a person can do (accounts, keys, billing) goes in one
+6. **Their steps.** Every step only a person can do (accounts, keys, billing) goes in one
    numbered list, given once, so the build never stops to wait for one. A secret never
    passes through the chat, a command argument or a committed file: the skeleton carries a
    small env utility in the product's own language that takes a key from a hidden prompt or
@@ -39,10 +37,10 @@ really needs.
    product needs as missing, present, or failing a cheap live test, never the value. Each
    step that needs a key tells the owner to run it; the report tells you which steps are
    done.
-8. **Best practice for the picks.** Read each pick's current documentation through
+7. **Best practice for the picks.** Read each pick's current documentation through
    Context7: the recommended layout, the patterns it advises, what its current version
    changed, its known traps. Write what a builder must follow into `CLAUDE.md`, briefly.
-9. **Skeleton.** The smallest product that runs on the chosen stack, laid out as those
+8. **Skeleton.** The smallest product that runs on the chosen stack, laid out as those
    documents recommend, that can be tried without going live. A product with screens gets
    its one design system here, from the prototype kit: the same tokens, and one shared
    component per kit piece that has structure or behaviour, under the same name. Plain
@@ -52,6 +50,10 @@ really needs.
    which, no raw colours or sizes outside the design system, no secrets, no to-do notes.
    Add an index command that prints, from the code, the names and signatures each area
    exposes. Put the layout and all commands in `CLAUDE.md`.
+9. **Try the risky pieces** on the running skeleton: where a confirmed example depends on
+   what an outside service can do, run a small real test against it and show the result.
+   Write it, or "not tried" and which briefs wait on it, into `sidekik/stack.md`. Step 6
+   came first, so the keys are there.
 
 Write `sidekik/stack.md` with `## Picks` (each pick and its reason) and `## Your steps`. Run
 `state.js set-check "<command>"`, then `state.js set-deps "<a command that prints one library

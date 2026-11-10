@@ -24,8 +24,8 @@ test you write to prove something goes in a temporary folder outside the project
 cannot make it happen, do not report it. Stop every process you started.
 
 These are not findings: style, naming, missing tests, possible improvements, anything that
-might matter one day, and a fault that needs an attacker or a damaged input, unless the
-product picture at the top of `sidekik/briefs.md` says the product must be careful there.
+might matter one day, and a fault no one outside the machine can reach; one reachable from
+the network or a connected client is a finding, attacker or not.
 
 Then check reuse. Run the index command and compare it with what the change adds. Name
 code the change wrote that already existed, and code it made unnecessary, when you can

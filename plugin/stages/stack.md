@@ -27,8 +27,9 @@ really needs.
 5. **One batch of questions.** Walk every example for what it cannot show: who may do
    what, money rules, limits, what happens when something fails, what cannot be undone.
 6. **Release readiness.** Write what this product needs before real people use it under
-   `## Before release` in `sidekik/stack.md`: secrets and personal data kept safe, backups,
-   knowing when it breaks, legal pages, platform or store rules, real wording and images.
+   `## Before release` in `sidekik/stack.md`: secrets and personal data kept safe,
+   backups, knowing when it breaks, legal pages, platform or store rules, real wording and
+   images, the brand mark, favicon and app icon.
 7. **Their steps.** Every step only a person can do (accounts, keys, billing) goes in one
    numbered list, given once, so the build never stops to wait for one. A secret never
    passes through the chat, a command argument or a committed file: the skeleton carries a

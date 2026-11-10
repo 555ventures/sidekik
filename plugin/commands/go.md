@@ -33,14 +33,15 @@ Size it first, and tell the owner which size you chose:
   exactly what was asked, and you run the check.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 
-A bug fix or tweak is landed and reported in one line. Taking it live needs the owner's
-yes when that is a separate step. If a request goes against an earlier decision or would
-hurt the product, say so first.
+A bug fix or tweak is landed and reported in one line. When taking it live is a separate
+step, ask for both at once: approve and put it live? If a request goes against an earlier
+decision or would hurt the product, say so first.
 
 ## Continue
 
-Scripts live in `${CLAUDE_PLUGIN_ROOT}/scripts`. Stage files name them bare: `state.js next`
-means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the project root.
+Scripts live in `${CLAUDE_PLUGIN_ROOT}/scripts`. Stage files name them bare:
+`state.js next` means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the
+project root or with `--root <dir>`.
 
 1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. For an existing
    product, learn how it runs, how it is checked and how it behaves, then run its check
@@ -53,9 +54,9 @@ means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the project r
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
    together. A stage often spans several sessions; `sidekik/` is the memory, not the
    window. At every mark and every commit with no agent in flight, and before you stop
-   mid-stage, overwrite `sidekik/handoff.md` with where things stand and tell the owner in
-   one line that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing
-   otherwise.
+   mid-stage, overwrite `sidekik/handoff.md` with where things stand, send any `[open]`
+   feedback lines of this stretch not yet sent, and tell the owner in one line that it is
+   safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
 
 The `sidekik/` folder is landed with the work. You land work: makers never run git. Every
 process you or an agent starts runs as a tracked background task, and you stop them all

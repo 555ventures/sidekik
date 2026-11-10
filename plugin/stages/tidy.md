@@ -1,15 +1,14 @@
 # Tidy
 
-The owner is not needed.
-
 Run `state.js mark tidying` first. Then:
 
 - Dispatch one `sidekik:reviewer` per area, at the highest effort, over everything built
   since the last tidy, for what only shows across briefs: the same thing built twice,
   parts that no longer fit together, dead code, security holes, tests that protect
   nothing, and prototype examples with nothing built for them.
-- Makers merge the duplicates, delete the dead code and fix what the reviewers proved, in
-  one round.
+- Makers fix what the reviewers proved: shared pieces first by one maker, then areas in
+  parallel, each owning its files. A finding that is a product decision goes to the owner
+  in one batch while the rest proceeds.
 - Read `sidekik/lessons.md` and give the same cause the same tag. A cause that has appeared
   three times gets a machine check in the project's check command, a test or a lint rule,
   recorded as `- guard: [cause] what now refuses it`.

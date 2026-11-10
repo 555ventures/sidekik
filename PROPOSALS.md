@@ -32,3 +32,16 @@ confirmed, the partner corrected a one-cent sum and ran `reconfirm` without a re
 every change to confirmed examples, however small, needs the owner's yes again, recorded with
 `decide.js add NN` before `reconfirm`, which the script refuses without it; the ask goes in the
 owner's next stop, not a separate interruption.
+
+## Approval and going live are one question
+
+**Decided 2026-11-10, applied in 0.6.1.** From sumglass: after the owner approved a logo, the
+deploy needed a second dialog. When taking a change live is a separate step, the partner asks
+once: approve and put it live?
+
+## Walkers go before the owner's yes on a change to a confirmed screen
+
+**Decided 2026-11-10, applied in 0.6.1.** From sumglass: the owner said yes to a changed flow,
+then two walkers found gaps that changed what was approved. For a change to a confirmed screen
+the walkers run first and the owner sees their findings with the change; a new product keeps
+owner first, since a flow they change makes a walk worthless.

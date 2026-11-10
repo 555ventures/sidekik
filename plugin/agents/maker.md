@@ -23,7 +23,8 @@ moment. Your brief names what to build, the files you own, and what to read firs
   a small change. Where a document and the code disagree, the code is right.
 - Build what the brief asks and nothing more: no extra examples, options, tests or files.
   Change an existing test before adding a near copy, and delete a test only with the
-  behaviour it tested.
+  behaviour it tested. Before you report, remove what your change made dead: files,
+  styles, kit rules, helpers.
 - When the files do not settle a product question, make the most reasonable choice, keep
   going, and add `- [open] NN: the question and what you chose` to the questions file your
   brief names. `NN` is the brief's number, not a count. A product question is one only the

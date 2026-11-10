@@ -27,31 +27,38 @@ It lives in `sidekik/prototype/`, built so a session with no memory can extend i
 
 While the foundation is built, a scout checks how three good current products handle the
 same thing, from their help centres and public docs, and says unknown where it finds
-nothing. Use what works, and what the owner gave you.
+nothing. Steps a user takes inside another company's product come from that company's own
+pages, with source and date on the example; when they cannot be read, the step is marked
+unverified for the owner to try. Use what works, and what the owner gave you.
 
-- `kit/`: for screens, one stylesheet with the tokens and every shared class, and one
-  small script with a way for an action to visibly change the screen. Otherwise the shared
-  names and formats.
+- `kit/`: for screens, one stylesheet with the tokens and every shared class, naming the
+  widths the product is used at (phone, tablet, laptop, as the product picture says), and
+  one small script with a way for an action to visibly change the screen; a frame that
+  only shows a screen on a desktop is not a kit class. Otherwise the shared names and
+  formats.
 - `kit/sample.*`: the people, figures and rows every example draws from, in one file, and
   a small script that prints them as markup when examples repeat rows.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`, under 40 lines: what this is and its rules.
 
-Then the heart of the product as two or three candidate screens, in the kit's tokens but
-before the kit is frozen. The moment they exist, hand them to the owner as images: one
-line with what differs and what to look at, and end your turn. Their pick becomes the one
-reference example and the kit follows it. Variants of one screen early are cheap; variants
-of a prototype are waste. Every reaction they give is applied to the kit and the examples.
-Then one finished reference example for each other area (a part of the product a user
-would name), by makers against the kit as it stands, each in the product's primary
-language, with any other language shown by one example later. Look at them all yourself in
-a browser, settle their kit requests, and run `proto-check.js freeze`. After that the kit
-changes only on your decision, and you freeze again.
+Then the heart of the product as two or three candidate screens under `shots/candidates/`,
+which the checker and the freeze ignore, in the kit's tokens. The moment they exist, hand
+them to the owner as images: one line with what differs and what to look at, and end your
+turn. Their pick becomes the one reference example and the kit follows it. Variants of one
+screen early are cheap; variants of a prototype are waste. Every reaction they give is
+applied to the kit and the examples. Then one finished reference example for each other
+area (a part of the product a user would name), by makers against the kit as it stands,
+each in the product's primary language, with any other language shown by one example
+later. Look at them all yourself in a browser, settle their kit requests, and run
+`proto-check.js freeze`. After that the kit changes only on your decision, and you freeze
+again.
 
-For an existing product the kit is what the product really uses, and each example a
-brief changes starts as a saved copy of how the product behaves today, kept beside the
-changed version. A small change needs no more foundation.
+For an existing product the kit is what the product really uses, and each example a brief
+changes starts as a saved copy of how the product behaves today, kept beside the changed
+version. A brief that changes a shared piece maps, in its own map file, every example it
+redraws, even one another brief owns; each confirmed brief among them is shown again and
+reconfirmed. A small change needs no more foundation.
 
 ## Examples
 
@@ -64,16 +71,18 @@ that are yours rather than the owner's as `[settled] NN: … → what you chose`
 
 ## Check
 
-1. A scout uses the real thing: it clicks every screen in a browser (serving the folder
-   locally if it refuses file addresses, saving screenshots under
-   `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns what is
-   broken, empty or at odds with the rest. A maker fixes that, and you look yourself only
-   there.
+1. A scout uses the real thing: it clicks every screen in a browser at each width the kit
+   names (serving the folder locally if it refuses file addresses, saving screenshots
+   under `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and returns
+   what is broken, empty or at odds with the rest. A maker fixes that, and you look
+   yourself only there.
 2. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
    flow in step order, every step with its screenshot or the spoken lines of its exchange,
    one anchor per step. Then ask one flow at a time, each step in words with its anchor,
    the owner answering yes or change per step. A flow they change makes a walk worthless,
-   so this comes before the walkers.
+   so this comes before the walkers. For a change to a confirmed screen the order flips:
+   the walkers go first and the owner sees their findings with the change, so the yes is
+   final.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic.
 

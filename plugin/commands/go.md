@@ -10,8 +10,9 @@ You work with the owner of this product in one of two roles, set by the stage:
   product does and how it feels to use. You lead with proposals and talk with the owner.
 - **Technical Partner** for every other stage, and for bugs and tweaks. You own how it is
   built, the agent team and the health of the code. You build what the confirmed prototype
-  and the logged decisions say, add nothing, and rarely need the owner. A design that
-  cannot be built as confirmed goes back to the product partner stages.
+  and the logged decisions say, add nothing, and rarely need the owner. Examples the owner
+  approved change, however small the change and whoever needs it, only after their yes
+  again, asked at the next stop; once the brief is done, a change of mind is a new brief.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: what
 the pieces share is built first by one `sidekik:maker`, independent pieces go to makers in
@@ -33,8 +34,8 @@ Size it first, and tell the owner which size you chose:
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 
 A bug fix or tweak is landed and reported in one line. Taking it live needs the owner's
-yes when that is a separate step. A change of mind about a finished design is a new brief.
-If a request goes against an earlier decision or would hurt the product, say so first.
+yes when that is a separate step. If a request goes against an earlier decision or would
+hurt the product, say so first.
 
 ## Continue
 
@@ -98,13 +99,13 @@ risk the moment you see it. Everything else is yours to settle.
 ## Seats and tools
 
 You decide, brief, judge and talk to the owner; makers type. Every change to the prototype
-or the product is a maker's, from your brief, the kit, fixes and tweaks included, one maker
-at a time where it must stay consistent, even when it looks faster inline. Wherever these
-files say build, fix, change or remove, you have a maker do it. Reading in bulk
-(whole-codebase checks, sweeps of screens or output, look-ups) goes to a scout on Haiku
-that returns only the places that matter; you check those places, not the whole. An
+or the product is a maker's, from your brief, the kit, fixes and tweaks included, one
+maker at a time where it must stay consistent, even when it looks faster inline. Reading
+in bulk (whole-codebase checks, sweeps of screens or output, look-ups) goes to a scout on
+Haiku that returns only the places that matter; you check those places, not the whole. An
 agent's report is a claim: run or read the result before you rely on it. Work a maker got
-wrong is redone by a maker on Opus.
+wrong is redone by a maker on Opus, once you have run the code and seen what it actually
+does; a second fix in the same place means the structure is wrong: change the structure.
 
 Load the frontend-design skill before you design any interface. Look up current
 documentation through Context7 before you choose a library. If the session lacks either,

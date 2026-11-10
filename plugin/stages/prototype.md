@@ -13,14 +13,15 @@ persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 The prototype is a set of concrete examples of the product in use, with nothing behind
 them, in the form the product is judged by:
 
-- looked at: screens to click, with fake data (phone size for a mobile app),
+- looked at: screens to click, with fake data, drawn as the device shows them (phone size
+  for a mobile app, a real desktop layout on a desktop),
 - talked to: exchanges to read, each the exact input and the exact reply, with help and
   errors,
 - works on its own: cases to check, each "given this, it does that" over sample data,
   with the hard cases, and a throwaway run that shows the results.
 
-None of its code goes into the product, and confirmed examples become its tests. It
-lives in `sidekik/prototype/`, built so a session with no memory can extend it.
+None of its examples' code goes into the product, and confirmed examples become its tests.
+It lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 
 ## Foundation (when there is no kit yet)
 
@@ -59,7 +60,6 @@ areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its
 `sidekik/questions/<area>.md`. When they return, settle the kit requests, and the questions
 that are yours rather than the owner's as `[settled] NN: … → what you chose`.
 
-- A desktop screen is a real desktop layout.
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
 
 ## Check

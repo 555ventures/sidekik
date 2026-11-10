@@ -25,14 +25,10 @@ me, or give me more options" and "are we planning to make mobile app or just web
 do you know you want to properly architect?" Decided by that correction and applied in
 0.4.1: the owner batch and the shaping picks in stack.md steps 1 and 2.
 
-## A small correction to confirmed examples: the owner's yes, or the partner's call
+## Every change to confirmed examples needs the owner's yes again, enforced
 
-From sumglass, 2026-11-10. After brief 07 was confirmed, the partner corrected a one-cent
-sum (458.74 to 458.75) and a wording in its examples, judged that too small to ask, ran
-`reconfirm`, and the owner approved afterwards. look.md says every later change needs the
-yes first, and the script accepts the original yes, so nothing stopped it. Two ways: keep
-the rule, say "however small" in look.md, and once the lesson repeats make `reconfirm`
-refuse without a yes recorded after the last approval; or name a class of corrections
-(arithmetic, spelling) the partner may make alone and only report. Recommendation: the
-first. The yes costs the owner one word, and the partner's sense of "small" is the judgment
-that just failed. 0.5.3 says "however small"; the script check waits for the owner's word.
+**Decided 2026-11-10, applied in 0.5.3 and 0.5.5.** From sumglass: after brief 07 was
+confirmed, the partner corrected a one-cent sum and ran `reconfirm` without a recorded yes. Now
+every change to confirmed examples, however small, needs the owner's yes again, recorded with
+`decide.js add NN` before `reconfirm`, which the script refuses without it; the ask goes in the
+owner's next stop, not a separate interruption.

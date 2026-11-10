@@ -9,7 +9,7 @@ const { checkPrototype, screensFor } = require('./proto-check');
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 // An older state file may lack the later fields; each counts as its empty value.
-const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {},
+const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
 const has = (text, re) => text !== null && re.test(text);
@@ -52,7 +52,7 @@ function sizeSince(root, base) {
 // A hash of the brief's mapped files, paths and contents, so an approval covers exactly what was shown.
 const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, read(root, `prototype/${screen}`)])));
 const changedSinceApproval = (root, state, nn) => state.approved[nn] !== briefHash(root, nn)
-  && `The prototype of brief ${nn} changed after the owner approved it, so it must be shown to them again. After their yes, run state.js reconfirm ${nn}.`;
+  && `The prototype of brief ${nn} changed after the owner approved it, so it must be shown to them again. After their yes, record it with decide.js add ${nn} "<their words>", then run state.js reconfirm ${nn}.`;
 
 // How often each cause appears on brief and fix lessons; [none] is never counted.
 function lessonCauses(root) {
@@ -161,6 +161,12 @@ const REQUIRES = {
   },
 };
 
+// An approval covers the prototype as it stands and the decisions recorded so far; a later reconfirm needs a yes beyond them.
+function approve(root, state, nn) {
+  state.approved[nn] = briefHash(root, nn);
+  state.approvals[nn] = decisionsFor(root, nn).length;
+}
+
 function markBrief(root, state, nn, mark) {
   const brief = readBriefs(root).find((b) => b.nn === nn);
   if (!brief) return `There is no brief ${nn} in the briefs file.`;
@@ -172,7 +178,7 @@ function markBrief(root, state, nn, mark) {
   const problem = REQUIRES[mark](root, state, brief);
   if (problem) return problem;
   state.briefs[nn] = mark;
-  if (mark === 'confirmed') state.approved[nn] = briefHash(root, nn);
+  if (mark === 'confirmed') approve(root, state, nn);
   if (mark === 'noted') state.bases[nn] = git(root, 'rev-parse', 'HEAD');
   const size = mark === 'built' && sizeSince(root, state.bases[nn]);
   if (size) {
@@ -302,7 +308,11 @@ function main(root, [cmd, a, b]) {
     if (rank(state, brief) < 0) return `Brief ${a} has no prototype ready yet, so there is nothing to approve again.`;
     const problem = REQUIRES.confirmed(root, state, brief);
     if (problem) return problem;
-    state.approved[a] = briefHash(root, a);
+    // An older state file has no count; the original yes then stands, as it did before the count existed.
+    if (decisionsFor(root, a).length <= (state.approvals[a] ?? 0)) {
+      return `Brief ${a} changed after the owner approved it, and no new yes is recorded. Record it first with decide.js add ${a} "<their words>", then run state.js reconfirm ${a}.`;
+    }
+    approve(root, state, a);
     writeState(root, state);
     console.log(`The owner's approval of brief ${a} now covers the prototype as it stands.`);
   } else if (cmd === 'mark' && a) {

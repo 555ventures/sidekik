@@ -85,7 +85,7 @@ test('next answers every row of the table', () => {
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);
-  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {},
+  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
     bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
   p.run('set-check', 'npm test');
   assert.match(p.run('init', '--existing', 'make test').out, /nothing was changed/);
@@ -149,7 +149,15 @@ test('confirmed binds the approval to the mapped files, so noted and built refus
   p.write('sidekik/questions/pm.md', '- [open] 01: Bigger button?\n');
   p.refused(['reconfirm', '01'], /open question/);
   p.write('sidekik/questions/pm.md', '');
+  const before = p.read().approved['01'];
+  const noYes = /changed after the owner approved it, and no new yes is recorded\. Record it first with decide\.js add 01 "<their words>", then run state\.js reconfirm 01\./;
+  p.refused(['reconfirm', '01'], noYes);
+  assert.equal(spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, 'add', '01', 'Bigger button is fine.']).status, 0);
   assert.equal(p.run('reconfirm', '01').code, 0);
+  assert.notEqual(p.read().approved['01'], before);
+  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book today</button>\n');
+  p.refused(['reconfirm', '01'], noYes);
+  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book now</button>\n');
   assert.equal(p.read().briefs['01'], 'confirmed');
   assert.equal(p.run('mark', '01', 'noted').code, 0);
   p.write('sidekik/prototype/book/start.html', '<button class="btn">Book</button>\n');

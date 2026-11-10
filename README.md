@@ -106,7 +106,7 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false,
-  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" },
+  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": 1 },
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
@@ -121,7 +121,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | mark | requires |
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) dated on or after the day of its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents |
+| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) dated on or after the day of its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the brief has |
 | `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, is at most 60 lines, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the brief's mapped files still match `approved`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size, and moves the base of every brief still at `noted` to the current commit |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; the check command exits 0 |
@@ -130,7 +130,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 When mapped files no longer match `approved`, the refusal says the prototype changed after
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`. A brief's marks depend only on that brief, so briefs at the
+requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (`approvals` holds how many it had then), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, so briefs at the
 same stage can move in parallel.
 
 Project marks:

@@ -289,6 +289,13 @@ test('reviewed needs every bug in the review resolved', () => {
   assert.equal(p.read().briefs['01'], 'reviewed');
 });
 
+test('reviewed runs the check only when the review fixed or cut something', () => {
+  const state = { check: 'false', stack: true, briefs: { '01': 'built' } };
+  assert.equal(project(state, { 'reviews/01.md': 'No proven bugs.\n' }).run('mark', '01', 'reviewed').code, 0);
+  project(state, { 'reviews/01.md': '- [fixed] a bug\n' }).refused(['mark', '01', 'reviewed'], /did not pass/);
+  project(state, { 'reviews/01.md': '- [cut] dead code\n' }).refused(['mark', '01', 'reviewed'], /did not pass/);
+});
+
 test('done needs a lesson with a cause for the brief, and every attempt joins the history', () => {
   const p = project({ stack: true, briefs: { '01': 'reviewed' } }, { 'lessons.md': '- 02: [late] Another brief.\n- 01: Prototype the edge cases first.\n' });
   p.refused(['mark', '01', 'done'], /no lesson for brief 01 yet, written as "- 01: \[cause\]/);

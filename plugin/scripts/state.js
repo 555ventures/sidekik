@@ -155,7 +155,8 @@ const REQUIRES = {
     const review = read(root, `reviews/${b.nn}.md`);
     if (review === null) return `The review file sidekik/reviews/${b.nn}.md does not exist yet.`;
     if (has(review, /^- \[bug\]/m)) return `The review of brief ${b.nn} still has bugs that are not fixed.`;
-    return checkProblem(root, state);
+    // A clean review changed nothing, and its commit passed the check at built; fixes and cuts are checked where they stand.
+    return has(review, /^- \[(fixed|cut)\]/m) ? checkProblem(root, state) : null;
   },
   done(root, state, b) {
     return has(read(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null

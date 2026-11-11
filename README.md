@@ -106,7 +106,7 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false,
-  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": 1 },
+  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": { "count": 1, "on": "2026-11-09" } },
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
@@ -115,13 +115,17 @@ Line formats, exactly:
 ```
 
 A missing field in an older state file counts as its empty value.
+A state file with `approved` for a brief but no `approvals` entry, or a bare number from an
+older version, gets `{ count, on }` the first time any `state.js` command reads it: the
+brief's decision count then, and the day of its latest `confirmed` mark in `history`
+(`0000-00-00` when none); `next` says so once.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 
 | mark | requires |
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) dated on or after the day of its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the brief has |
+| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) dated on or after the day of its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the brief has and the day |
 | `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, is at most 60 lines, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the brief's mapped files still match `approved`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size, and moves the base of every brief still at `noted` to the current commit |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; the check command exits 0 |
@@ -130,7 +134,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 When mapped files no longer match `approved`, the refusal says the prototype changed after
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (`approvals` holds how many it had then), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, so briefs at the
+requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, so briefs at the
 same stage can move in parallel.
 
 Project marks:
@@ -192,6 +196,9 @@ the absolute path of the stage file (`none` for idle), `Also at this stage: 02, 
 the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.
+When any brief with an `approved` hash has mapped files that no longer match it (finished
+briefs included), `next` adds a last line `Changed since approval: 01, 02`, and `status.js`
+shows the same list on its own `⚠️` line before the next step.
 
 `scripts/status.js` is the progress screen. It derives everything from the same functions
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:

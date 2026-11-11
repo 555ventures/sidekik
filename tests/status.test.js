@@ -86,3 +86,9 @@ test('a tidy comes next once every brief is finished and the codebase is not yet
   const { out } = status({ stack: true, briefs: { '01': 'done' } }, { 'briefs.md': '- 01 a: One.\n' });
   assert.match(out, /\n🎯 Next   tidy the codebase — needs you\n$/);
 });
+
+test('a brief whose examples changed after approval gets one line before the next step', () => {
+  const { out } = status({ stack: true, approved: { '01': 'old-hash', '02': 'old-hash' }, briefs: { '01': 'done', '02': 'confirmed' } },
+    { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
+  assert.match(out, /\n\n⚠️ Changed since approval: 01, 02 — show them again, record the yes, then reconfirm\n\n🎯 Next/);
+});

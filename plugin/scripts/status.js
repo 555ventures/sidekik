@@ -3,7 +3,7 @@
 const path = require('path');
 const { readState, read, rootFrom } = require('./lib/store');
 const { openQuestions } = require('./decide');
-const { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses } = require('./state');
+const { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses, changedBriefs } = require('./state');
 const { screensFor } = require('./proto-check');
 
 const LOOK = {
@@ -84,6 +84,8 @@ function screen(root) {
   out.push('');
   if (!waiting.length) out.push('🙋 Nothing is waiting on you.');
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));
+  const changed = changedBriefs(root, state);
+  if (changed.length) out.push('', `⚠️ Changed since approval: ${changed.join(', ')} — show them again, record the yes, then reconfirm`);
 
   const what = brief && stage !== 'look' ? `${NEXT[stage]} ${name(brief)}` : NEXT[stage];
   const ending = stage === 'idle' ? '' : waiting.length || NEEDS_YOU.includes(stage) ? ' — needs you' : ' — nothing needed from you';

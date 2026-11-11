@@ -53,6 +53,8 @@ function sizeSince(root, base) {
 const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, read(root, `prototype/${screen}`)])));
 const changedSinceApproval = (root, state, nn) => state.approved[nn] !== briefHash(root, nn)
   && `The prototype of brief ${nn} changed after the owner approved it, so it must be shown to them again. After their yes, record it with decide.js add ${nn} "<their words>", then run state.js reconfirm ${nn}.`;
+// The briefs with an approval whose mapped files no longer match it, done ones included.
+const changedBriefs = (root, state) => readBriefs(root).map((b) => b.nn).filter((nn) => state.approved[nn] && changedSinceApproval(root, state, nn));
 
 // How often each cause appears on brief and fix lessons; [none] is never counted.
 function lessonCauses(root) {
@@ -161,10 +163,10 @@ const REQUIRES = {
   },
 };
 
-// An approval covers the prototype as it stands and the decisions recorded so far; a later reconfirm needs a yes beyond them.
+// An approval covers the prototype as it stands, the decisions recorded so far and the day; a later reconfirm needs a yes beyond them.
 function approve(root, state, nn) {
   state.approved[nn] = briefHash(root, nn);
-  state.approvals[nn] = decisionsFor(root, nn).length;
+  state.approvals[nn] = { count: decisionsFor(root, nn).length, on: day() };
 }
 
 function markBrief(root, state, nn, mark) {
@@ -273,6 +275,8 @@ function printNext(root, state) {
   console.log(`Also at this stage: ${also.join(', ') || 'none'}`);
   console.log(`Open questions for ${brief ? 'this brief' : 'all briefs'}: ${openQuestions(root, brief?.nn).length}`);
   console.log(`Base: ${(brief && state.bases[brief.nn]) || 'none'}`);
+  const changed = changedBriefs(root, state);
+  if (changed.length) console.log(`Changed since approval: ${changed.join(', ')}`);
 }
 
 function main(root, [cmd, a, b]) {
@@ -289,7 +293,19 @@ function main(root, [cmd, a, b]) {
   const stored = readState(root);
   if (!stored) return 'This project has no sidekik setup yet; run init first.';
   const state = { ...fresh(), ...stored };
-  if (cmd === 'next') printNext(root, state);
+  // An older state file lacks the approval records (count and day); they are completed once from the decisions as they stand.
+  // A bare number was written by an earlier version and is completed the same way. The day is that of the brief's last confirmed mark.
+  const uncounted = Object.keys(state.approved).filter((nn) => typeof state.approvals[nn] !== 'object');
+  if (uncounted.length) {
+    const since = (nn) => state.history.findLast((h) => h.brief === nn && h.mark === 'confirmed' && !h.refused)?.at;
+    state.approvals = { ...state.approvals, ...Object.fromEntries(uncounted.map((nn) => [nn, { count: decisionsFor(root, nn).length, on: since(nn) ? day(since(nn)) : '0000-00-00' }])) };
+    stored.approvals = state.approvals;
+    writeState(root, state);
+  }
+  if (cmd === 'next') {
+    printNext(root, state);
+    if (uncounted.length) console.log(`Approval records completed for ${uncounted.join(', ')} (older state file).`);
+  }
   else if (cmd === 'set-check' && a) {
     if (a.includes(';')) return SEMICOLON;
     writeState(root, { ...state, check: a });
@@ -308,8 +324,10 @@ function main(root, [cmd, a, b]) {
     if (rank(state, brief) < 0) return `Brief ${a} has no prototype ready yet, so there is nothing to approve again.`;
     const problem = REQUIRES.confirmed(root, state, brief);
     if (problem) return problem;
-    // An older state file has no count; the original yes then stands, as it did before the count existed.
-    if (decisionsFor(root, a).length <= (state.approvals[a] ?? 0)) {
+    // A new yes is one more decision than at the approval, or one dated after its day. A brief never approved has neither.
+    const { count, on } = state.approvals[a] ?? { count: 0, on: '0000-00-00' };
+    const decisions = decisionsFor(root, a);
+    if (decisions.length <= count && !decisions.some((d) => d.date > on)) {
       return `Brief ${a} changed after the owner approved it, and no new yes is recorded. Record it first with decide.js add ${a} "<their words>", then run state.js reconfirm ${a}.`;
     }
     approve(root, state, a);
@@ -342,4 +360,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses, changedBriefs };

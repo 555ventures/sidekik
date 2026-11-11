@@ -82,6 +82,39 @@ test('next answers every row of the table', () => {
   }
 });
 
+test('next lists the briefs whose examples changed after approval, and counts an older approval once so only a new yes reconfirms it', () => {
+  const decide = (p, ...args) => spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, ...args]).status;
+  const p = project({ briefs: { '01': 'prototyped' } }, proto('done'));
+  assert.equal(p.run('mark', '01', 'confirmed').code, 0);
+  assert.doesNotMatch(p.run('next').out, /Changed since approval/);
+  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book now</button>\n');
+  assert.match(p.run('next').out, /Base: none\nChanged since approval: 01\n$/);
+
+  // The state files below were written by older versions: no approvals, or a bare count. The day is that of the confirmed mark.
+  const confirmed = [{ brief: '01', mark: 'confirmed', at: new Date().toISOString() }];
+  const old = project({ briefs: { '01': 'confirmed' }, approved: { '01': 'old-hash' }, approvals: { '01': 1 }, history: confirmed });
+  const completed = 'Approval records completed for 01 (older state file).\n';
+  assert.ok(old.run('next').out.endsWith(`Changed since approval: 01\n${completed}`));
+  assert.deepEqual(old.read().approvals['01'], { count: 1, on: new Date().toLocaleDateString('en-CA') });
+  assert.equal(old.run('next').out.includes('Approval records'), false);
+  old.refused(['reconfirm', '01'], /no new yes is recorded/);
+  assert.equal(decide(old, 'add', '01', 'Still fine.'), 0);
+  assert.equal(old.run('reconfirm', '01').code, 0);
+  assert.equal(old.read().approvals['01'].count, 2);
+});
+
+test('reconfirm passes on a decision dated after the approval day even when the count did not grow', () => {
+  const state = { briefs: { '01': 'confirmed' }, approved: { '01': 'old-hash' } };
+  const later = { 'decisions.md': `${YES}${YES_01}- 2026-01-02 01: Fine after the change.\n` };
+  project({ ...state, approvals: { '01': { count: 2, on: '2026-01-02' } } }, later).refused(['reconfirm', '01'], /no new yes is recorded/);
+  const p = project({ ...state, approvals: { '01': { count: 2, on: '2026-01-01' } } }, later);
+  assert.equal(p.run('reconfirm', '01').code, 0);
+  assert.equal(p.read().approvals['01'].count, 2);
+  const sameDay = { 'decisions.md': `${YES}${YES_01}- 2026-01-01 01: Second yes, same day.\n` };
+  assert.equal(project({ ...state, approvals: { '01': { count: 1, on: '2026-01-01' } } }, sameDay).run('reconfirm', '01').code, 0);
+  project({ ...state, approvals: { '01': { count: 2, on: '2026-01-01' } } }, sameDay).refused(['reconfirm', '01'], /no new yes is recorded/);
+});
+
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);

@@ -34,6 +34,11 @@ Size it first, and tell the owner which size you chose:
 - **A small tweak** that changes no behaviour (a label, a colour, a limit): a maker changes
   exactly what was asked, and you run the check.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
+- **A question**: scouts research it and you answer; a finding that would change an
+  approved brief goes to the owner as a ruling, never applied on its own.
+- **A question** (is this the best way, how do others do it): scouts research it and you
+  answer from what they found. A finding that would change an approved brief goes to the
+  owner as a choice, never into the work on its own.
 
 A bug fix or tweak is landed and reported in one line. When taking it live is a separate
 step, ask for both at once: approve and put it live? If a request goes against an earlier

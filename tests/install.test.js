@@ -9,8 +9,9 @@ const { spawnSync } = require('child_process');
 const script = path.join(__dirname, '..', 'plugin', 'scripts', 'install.js');
 const sidekikJs = path.join(__dirname, '..', 'plugin', 'scripts', 'sidekik.js');
 const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-install-'));
-// A PATH without Node's folder, so the wrapper goes to <home>/.local/bin whatever the machine looks like.
-const noNode = (...dirs) => [...dirs, '/usr/bin', '/bin'].filter((d) => path.resolve(d) !== path.dirname(process.execPath)).join(path.delimiter);
+// A PATH with no folder that holds a `node` file, so the wrapper goes to <home>/.local/bin whatever the machine looks like.
+const hasNode = (d) => fs.existsSync(path.join(d, 'node'));
+const noNode = (...dirs) => [...dirs, '/usr/bin', '/bin'].filter((d) => !hasNode(d)).join(path.delimiter);
 const install = (home, pathVar) => spawnSync(process.execPath, [script], { encoding: 'utf8', env: { ...process.env, HOME: home, PATH: pathVar } });
 
 test('the installer writes an executable wrapper, silently, and leaves it alone the second time', () => {
@@ -58,4 +59,16 @@ test('the installer leaves an npm-style symlink alone, silently', () => {
   assert.equal(r.stdout, '');
   assert.ok(fs.lstatSync(file).isSymbolicLink());
   assert.equal(fs.readFileSync(real, 'utf8'), 'x');
+});
+
+test('the installer writes into the first folder on the PATH that holds a node file', () => {
+  const home = tmp();
+  const bin = tmp();
+  fs.writeFileSync(path.join(bin, 'node'), `#!/bin/sh\nexec "${process.execPath}" "$@"\n`);
+  fs.chmodSync(path.join(bin, 'node'), 0o755);
+  const r = install(home, [bin, noNode()].join(path.delimiter));
+  assert.equal(r.status, 0);
+  assert.equal(r.stdout, '');
+  assert.ok(fs.existsSync(path.join(bin, 'sidekik')));
+  assert.ok(!fs.existsSync(path.join(home, '.local', 'bin', 'sidekik')));
 });

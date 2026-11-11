@@ -18,7 +18,7 @@ function walk(base, sub = '') {
   return out.sort();
 }
 
-const exampleFiles = (root) => walk(protoDir(root)).filter((f) => f !== 'INDEX.md' && !/^(kit|map|shots)\//.test(f));
+const exampleFiles = (root) => walk(protoDir(root)).filter((f) => f !== 'INDEX.md' && !/^(kit|map|shots|sample)\//.test(f));
 
 function kitHash(root) {
   const kit = kitDir(root);

@@ -33,9 +33,9 @@ nothing. Use what works, and what the owner gave you.
   one small script with a way for an action to visibly change the screen; a frame that
   only shows a screen on a desktop is not a kit class. Otherwise the shared names and
   formats.
-- `kit/sample.*`: the people and figures every example draws from, in one file, and a
-  small script that prints rows as markup. The rows and words one area alone needs live
-  beside its examples, outside the kit, so the freeze does not stop them.
+- `sample/`: the people, figures and rows the examples draw from: `shared.*` for everyone,
+  `<area>.*` for what one area alone needs; outside the kit, so the freeze does not stop
+  them, and outside the map. The kit carries the small script that prints rows as markup.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`, under 40 lines: what this is and its rules.
@@ -44,14 +44,12 @@ Then the heart of the product as two or three candidate screens under `shots/can
 which the checker and the freeze ignore, in the kit's tokens. The moment they exist, hand
 them to the owner as images: one line with what differs and what to look at, and end your
 turn. Their pick becomes the one reference example and the kit follows it. Variants of one
-screen early are cheap; variants of a prototype are waste. Every reaction they give is
-applied to the kit and the examples, and to the brief's own sentence when it changes what
-the brief does. Then one finished reference example for each other
-area (a part of the product a user would name), by makers against the kit as it stands,
-each in the product's primary language, with any other language shown by one example
-later. Look at them all yourself in a browser, settle their kit requests, and run
-`proto-check.js freeze`. After that the kit changes only on your decision, and you freeze
-again.
+screen early are cheap; variants of a prototype are waste. Then one finished reference
+example for each other area (a part of the product a user would name), by makers against
+the kit as it stands, each in the product's primary language, with any other language
+shown by one example later. Look at them all yourself in a browser, settle their kit
+requests, and run `proto-check.js freeze`. After that the kit changes only on your
+decision, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a brief
 changes is drawn beside a saved copy of how the product behaves today; the product's tests
@@ -81,11 +79,7 @@ that are yours rather than the owner's as `[settled] NN: … → what you chose`
    yourself only there.
 2. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
    flow in step order, every step with its screenshot or the spoken lines of its exchange,
-   one anchor per step. Then one stop: the page, the calls and open questions grouped
-   by flow, and one yes for all or the changes by step (`F3.4: …`); a flow they want
-   walked gets its steps one at a time. On a new product this comes before the walkers,
-   because a flow the owner changes makes a walk worthless; every later brief goes to the
-   walkers first and to the owner once, at the look stage, with their findings.
+   one anchor per step.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic.
 

@@ -48,10 +48,9 @@ stages: it is fixed directly and reported in one line.
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
 and a mistake that repeats three times must get a machine check.
 
-Two commands: `/sidekik:go` continues from wherever the work stands, `/sidekik:status` shows
-where that is. A project also writes down where the plugin itself got in its way, and
-`/sidekik:learn`, run in this repo, turns that feedback and the lessons into one change to
-the plugin and answers in the project.
+A project also writes down where the plugin itself got in its way, and `/sidekik:learn`,
+run in this repo, turns that feedback and the lessons into one change to the plugin and
+answers in the project.
 
 ## Why it is small
 
@@ -84,6 +83,7 @@ sidekik/
     kit/                what every example shares, frozen once the foundation is done
     <area>/<example>    a screen (.html), an exchange or a case (any other file type)
     map/<area>.md       | example | brief | status | purpose | links |
+    sample/             shared and per-area sample data, neither kit nor example
     shots/              screenshots, not checked
   build-notes/01-booking-flow.md   at most 60 lines, has "## Reuse" and a "## Done when" list
   reviews/01.md         - [bug] text   becomes   - [fixed] text  or  - [owner] text
@@ -143,8 +143,9 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 When mapped files no longer match `approved`, the refusal says the prototype changed after
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, so briefs at the
-same stage can move in parallel.
+requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, apart from the
+prototype check at `prototyped`, which covers the whole prototype; briefs at the same
+stage can move in parallel.
 
 Project marks:
 
@@ -266,11 +267,8 @@ approval`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
-The shell command installs itself: at the start of every session the plugin writes
-the `sidekik` command, which runs the plugin's scripts from wherever the plugin is installed,
-into Node's own bin folder when that is on your PATH and writable (so it works at once, like an
-npm command), else into `~/.local/bin`, saying so once if that folder is not on your PATH
-(`npm install -g <checkout>` is the alternative). Then `sidekik status`, `sidekik next`,
+The shell command appears by itself after the first session with the plugin (see
+`scripts/install.js` below; `npm install -g <checkout>` is the alternative). Then `sidekik status`, `sidekik next`,
 `sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
 `sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
 `--root <dir>` goes after the word. `sidekik status` clears the terminal first when its
@@ -297,14 +295,14 @@ output is one; piped output is left plain.
   plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
 - `scripts/install.js` is the SessionStart hook: it writes the `sidekik` command (a `sh`
-  wrapper that runs `sidekik.js`) into Node's bin folder when that is on your PATH and
-  writable, else `~/.local/bin`, and leaves an `npm install -g` link alone. It prints one line
-  only when `~/.local/bin` is used and is not on your PATH. It never fails the session, and
-  does nothing on Windows.
+  wrapper that runs `sidekik.js`) into the folder on your PATH that holds `node` when it is
+  writable (so it works at once, like an npm command), else into `~/.local/bin`, and says
+  so when that folder is not on your PATH. It leaves an `npm install -g` link alone, never
+  fails the session, and does nothing on Windows.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
-`kit/`, `map/` and `shots/` folders. It fails on: a file with no map row (the message shows
-what a map row looks like); a `done` map row with no file; kit files that differ from the
+`kit/`, `map/`, `shots/` and `sample/` folders. It fails on: a file with no map row (the
+message shows what a map row looks like; `sample/` is exempt); a `done` map row with no file; kit files that differ from the
 frozen hash; a kit stylesheet with an `@import` or a `url(` that points at `http`. For
 `.html` files it also fails on: a class the kit css does not define; a `<style>` block; an
 inline `style` that sets anything but `top`, `left`, `width`, `height`, `grid-*` or a

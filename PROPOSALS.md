@@ -13,11 +13,32 @@ flows shown before the walkers run. Amended the same day in 0.3.1: the heart scr
 as two or three candidate images before the kit is frozen, the owner picks, then one kit;
 variants of a whole prototype are never built.
 
-## The owner confirms flows interactively, not from a one-line hand-off
+## How the flows are confirmed
 
 **Decided 2026-11-09, applied in 0.3.7,** by the owner's correction "I prefer more
 interactive user flow confirmation": the partner walks the owner through the flows one at
 a time, each step with its anchor on the flows page, yes or change per step.
+
+**Narrowed 2026-11-11, applied in 0.7.4 and 0.8.0,** from sumglass, where three small
+briefs produced 21 per-step questions in seven dialogs on top of 8 real decisions, and 20
+of the 21 came back "Yes (Recommended)": "Why so many confirmations you are asking? I am
+getting tired.. I thought Sidekik plugin will have partners that only escalate for things
+that needed." And, asked to pick between three options already judged: "I am not even pay
+attention anymore, just checking recommended or whatever... I thought you will act as a
+partner." The partner never asks what it would recommend without doubt: a yes it can
+predict is a call, listed at the next stop. From here, learn makes owner-treatment changes
+it would recommend and reports them here; the owner undoes what they disagree with.
+
+**Decided 2026-11-11, applied in 0.9.4,** from Poolyst, where the first walk meant twelve
+stops and the owner said yes to all twelve after reading the page once: "when you show me
+all the prototype screens, I usually go through in one go.. I don't really check one by
+one."
+
+The rule as it now stands: every brief, a new product's included, goes to the walkers
+first and to the owner once, at the look stage, with the flows page, the walkers'
+findings, the calls and open questions grouped by flow, and one yes for all or the changes
+by step; a flow the owner wants walked gets its steps one at a time (0.3.7, 0.7.4, 0.8.0,
+0.9.4, tidied in 0.10.0).
 
 ## The stack stage asks what shapes the architecture, and the owner makes the shaping picks
 
@@ -73,38 +94,3 @@ foundation is built before anything is confirmed, and `next` would stop gating t
 prototype stage), and renaming the early list (the confusion came from the stop text, not
 the word). A firm description after the prototype already exists: the build note of the
 note stage, written per brief from the confirmed examples.
-
-## The per-step flow walk is for a new product's first walk; a later brief gets one stop
-
-**Decided 2026-11-11 by the owner's correction, applied in 0.7.4.** From sumglass: Three
-small briefs produced 21 per-step questions in seven dialogs on top of 8 real decisions;
-20 of the 21 came back "Yes (Recommended)" and the owner stopped the last one: "Why so
-many confirmations you are asking? I am getting tired.. I thought Sidekik plugin will have
-partners that only escalate for things that needed."
-
-This amends the 0.3.7 decision ("I prefer more interactive user flow confirmation"), which
-made every flow a step-by-step walk. Both corrections hold when the walk fits the size of
-the change: a new product's first walk is step by step, because every screen is new and a
-flow the owner changes makes a walker's walk worthless; a later brief, whose screens mostly
-stand already, gets one stop: the flows page, what changed in a few lines, the questions
-only the owner can rule, and one yes that covers the rest.
-
-Applied as a phrase edit in prototype.md's check step 2, with the rule behind it in go.md:
-the partner never asks what it would recommend without doubt; a yes it can predict is a
-call, listed at the next stop. The owner's words on the same day, when asked to pick
-between three options already judged: "I am not even pay attention anymore, just checking
-recommended or whatever... I thought you will act as a partner." From here, learn makes
-owner-treatment changes it would recommend and reports them here; the owner undoes what
-they disagree with.
-
-Tidied in 0.8.0: a later brief no longer has a flow stop of its own before the look stage; every brief after a new product's first walk goes to the walkers first and to the owner once, at the look stage, with their findings. The 0.6.1 rule for changes to a confirmed screen is now the rule for every later brief.
-
-## The flows are confirmed in one stop, the first walk included
-
-**Decided 2026-11-11 by the owner's words, applied in 0.9.4.** From Poolyst, where the first
-walk meant twelve stops and the owner said yes to all twelve after reading the page once:
-"when you show me all the prototype screens, I usually go through in one go.. I don't really
-check one by one." Supersedes the step-by-step first walk (0.3.7, narrowed in 0.7.4): every
-walk is one stop with the flows page, the calls and open questions grouped by flow, and one
-yes for all or the changes by step; a flow the owner wants walked gets its steps one at a
-time. The order around the walkers (before them on a new product, after them later) stays.

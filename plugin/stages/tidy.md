@@ -8,8 +8,7 @@ Run `state.js mark tidying` first. Then:
   nothing, and prototype examples with nothing built for them.
 - Makers fix what the reviewers proved. A finding that is a product decision is drawn
   first, beside the approved example it changes, and goes to the owner in one batch while
-  the rest proceeds; their yes is recorded per brief and `reconfirm` run, and a new thing
-  the product does takes the next brief number.
+  the rest proceeds; their yes is recorded per brief and `reconfirm` run.
 - Read `sidekik/lessons.md` and give the same cause the same tag. A cause that has appeared
   three times gets a machine check in the project's check command, a test or a lint rule,
   recorded as `- guard: [cause] what now refuses it`.

@@ -112,6 +112,15 @@ test('an example of any file type with no map row fails', () => {
   fails(project({ 'bookings/orphan.json': '{}' }), /^bookings\/orphan\.json is not listed in any map file\. A map row looks like: \| area\/file\.ext \| NN \| planned or done \| purpose \| area\/other\.ext, \.\.\. \|$/);
 });
 
+test('sample data beside the examples needs no map row and is not part of the kit', () => {
+  const root = project({ 'sample/bookings.js': 'module.exports = [];\n' });
+  assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
+  writeState(root, { check: 'npm test', kitHash: null });
+  freezeKit(root);
+  fs.appendFileSync(path.join(root, 'sidekik', 'prototype', 'sample', 'bookings.js'), 'module.exports.push(1);\n');
+  assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
+});
+
 test('freezing records the kit hash and a later kit change fails', () => {
   const root = project();
   writeState(root, { check: 'npm test', kitHash: null });

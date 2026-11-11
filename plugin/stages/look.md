@@ -10,9 +10,9 @@ Show every brief that is prototyped and waiting, in one stop:
   what it costs to build. Smaller ones are calls,
 - the open questions (`decide.js questions`).
 
-End your turn.
+Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
+steps one at a time. End your turn.
 
-When they react, a maker changes the examples to match, and you run `proto-check.js`.
 Something they accepted that needs a new example gets one before you call the brief
 confirmed.
 

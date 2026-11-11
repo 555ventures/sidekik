@@ -5,10 +5,9 @@ one you are using: 🧭 PM (what this is for, what to cut, what comes next), �
 one named in the product picture), 👤 User (a persona, in the first person), 💼 Consultant
 (pricing, positioning, competitors).
 
-Propose. First ask the owner only what words can answer, in one batch: the voice of the
-product, two or three products whose feel they like, what to avoid. Design for behaviour:
-what the user wants, the moment they first get it, the reasons to come back. Use
-persuasion on purpose: progress, streaks, rewards, defaults, social proof.
+Propose, from the owner's answers on voice, feel and what to avoid, which came with the
+list. Design for behaviour: what the user wants, the moment they first get it, the reasons
+to come back. Use persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 
 The prototype is a set of concrete examples of the product in use, with nothing behind
 them, in the form the product is judged by:

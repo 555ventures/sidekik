@@ -33,8 +33,9 @@ nothing. Use what works, and what the owner gave you.
   one small script with a way for an action to visibly change the screen; a frame that
   only shows a screen on a desktop is not a kit class. Otherwise the shared names and
   formats.
-- `kit/sample.*`: the people, figures and rows every example draws from, in one file, and
-  a small script that prints them as markup when examples repeat rows.
+- `kit/sample.*`: the people and figures every example draws from, in one file, and a
+  small script that prints rows as markup. The rows and words one area alone needs live
+  beside its examples, outside the kit, so the freeze does not stop them.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`, under 40 lines: what this is and its rules.

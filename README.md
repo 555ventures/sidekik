@@ -209,45 +209,26 @@ approval`.
 
 ```
 🗺️ Split the bill
-   ✅ 01 even-split          ▓▓▓▓▓▓▓  live                           306 code · 60 tests
-   🔨 02 drinks-separately   ▓▓▓▓░░░  built                          71 code · 15 tests
-   🎨 03 history             ▓▓░░░░░  design approved
-   🎨 04 share-link          ░░░░░░░  prototyping                    1 of 2 examples
-   📦 05 tip-jar             ▓▓▓▓▓▓░  finished
-
-📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live
-   Today      02 built · 03 design approved
-   So far     2 finished · 38 min from approval to finished · 9 decisions from you · 3 refused steps · 1 bug escaped
-   Repeating  built-twice ×3 · wrong-library ×2
 
 🙋 Waiting on you
+   ├─ 1 question on the whole product
    ├─ 2 questions on 03 history
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
-🎯 Next   review 02 drinks-separately — needs you
+🎯 Next   review 02 drinks-separately · runs without you
+
+✅ Live             01
+📦 Finished         05
+🔨 Built            02
+🎨 Design approved  03
+🎨 Prototyping      04 (1 of 2 examples)
+
+📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live · 38 min from your yes to finished
 ```
 
-- Title: the first `# ` heading in `briefs.md`, else the project folder's name.
-- Bar: seven cells, one per step reached: `prototyped`, `confirmed`, `noted`, `built`,
-  `reviewed`, `done`, and shipped. Slugs are padded to the longest slug and labels to the
-  longest possible label, so the columns line up.
-- Icon and label: no mark ⬜ `not started`, or 🎨 `prototyping` when the prototype map has rows for the brief
-  (the size column then reads `N of M examples`, done rows of all rows); `prototyped` 🎨 `prototype ready for your look`;
-  `confirmed` 🎨 `design approved`; `noted` 🛠️ `ready to build`; `built` 🔨 `built`;
-  `reviewed` 🔍 `reviewed`; `done` 📦 `finished`; shipped ✅ `live`.
-- Size is shown once recorded.
-- Progress: designed counts briefs at `confirmed` or later, built counts `built` or later,
-  live counts shipped briefs. With no briefs the roadmap and progress are replaced by one
-  line: `🗺️ No briefs yet.`
-- Today: each brief's latest successful mark in `history` dated today (local time), as
-  `NN label`, joined by ` · `; `nothing yet` when there are none.
-- So far, shown once a brief is `done`: the number of `done` briefs; the median whole
-  minutes between a brief's `confirmed` and `done` entries in `history`; the number of
-  lines in `decisions.md`; the number of refused entries in `history`; the number of
-  `- fix:` lines in `lessons.md`.
-- Repeating, shown when a cause other than `none` appears twice or more in `lessons.md` on
-  brief and fix lines: each such cause with its count, most frequent first.
+- Title: the first `# ` heading in `briefs.md`, else the project folder's name. With no briefs
+  the screen is `🗺️ No briefs yet.`, then Waiting on you and Next, with no groups or Progress.
 - Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
   whole product`), counted once; one line per brief with open questions filed under that
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
@@ -256,12 +237,22 @@ approval`.
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any; `your yes again on 01, 02, changed since approval` when approved briefs changed. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
-- Next is the last line: `agree the brief list`, `prototype NN slug`, `your look at the
+- Next comes after Waiting on you: `agree the brief list`, `prototype NN slug`, `your look at the
   prototype`, `choose the stack`, `build note for NN slug`, `build NN slug`, `review NN
   slug`, `report NN slug`, `tidy the codebase`, `your sign-off to go live`, or `nothing to
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
-  It ends ` — needs you` when the Waiting on you block has a line, else ` — nothing needed
-  from you` (idle has no ending).
+  It ends ` · needs you` when the stage is `brief`, `look`, `stack` or `ship`, else
+  ` · runs without you` (idle has no ending).
+- Groups: one line per state that has at least one brief, from closest to live down: ✅ `Live`
+  (shipped), 📦 `Finished` (`done`), 🔍 `Reviewed`, 🔨 `Built`, 🛠️ `Ready to build` (`noted`),
+  🎨 `Design approved` (`confirmed`), 🎨 `Prototype ready for your look` (`prototyped`),
+  🎨 `Prototyping`, ⬜ `Not started`. Each line is the icon, the label padded to the longest
+  label shown, and the brief numbers. A brief with no mark but rows on the prototype map is
+  `Prototyping`, and its number is followed by `(D of M examples)`, done rows of all rows.
+- Progress: designed counts briefs at `confirmed` or later, built counts `built` or later,
+  live counts shipped briefs. Once a `done` brief has both `confirmed` and `done` entries in
+  `history`, it adds ` · 38 min from your yes to finished`: the median whole minutes between
+  them, written `5 h 34 min` from 60 minutes up.
 
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.

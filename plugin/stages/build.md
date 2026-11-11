@@ -12,8 +12,7 @@ that depends on another waits for it.
 The walk through the product against its prototype is the reviewer's, at the next stage,
 so that fresh eyes do it once.
 
-Run the check. When it is green, commit the brief as one commit of its own and run
-`state.js mark <NN> built` before you commit the next brief of the wave: the mark measures
+Commit the brief as one commit of its own and run `state.js mark <NN> built` before you commit the next brief of the wave: the mark measures
 what was committed since the one before it. The mark prints the brief's size. Tests larger
 than the code, or a brief far larger than its examples suggest, means something was built
 twice: find out what. Land the commit the way the project lands changes. Landing is not

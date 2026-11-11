@@ -12,8 +12,6 @@ const MOTION = {
   prototyping: ['🎨'], prototyped: ['🎨', 'prototype ready for your look'], confirmed: ['🎨', 'design approved'],
   noted: ['🛠️', 'ready to build'], built: ['🔨', 'built'], reviewed: ['🔍', 'reviewed'],
 };
-// The stages that wait on the owner; every other stage runs without them.
-const OWNER_STAGES = ['brief', 'look', 'stack', 'ship'];
 const NEXT = {
   brief: 'agree the brief list', prototype: 'prototype', look: 'your look at the prototype', stack: 'choose the stack',
   note: 'build note for', build: 'build', review: 'review', close: 'report', tidy: 'tidy the codebase', ship: 'your sign-off to go live',
@@ -54,8 +52,7 @@ function screen(root) {
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));
 
   const what = brief && stage !== 'look' ? `${NEXT[stage]} ${name(brief)}` : NEXT[stage];
-  const ending = stage === 'idle' ? '' : OWNER_STAGES.includes(stage) ? ' · needs you' : ' · runs without you';
-  out.push('', `🎯 Next   ${what}${also.length ? ` (with ${also.join(', ')})` : ''}${ending}`);
+  out.push('', `🎯 Next   ${what}${also.length ? ` (with ${also.join(', ')})` : ''}`);
   if (!briefs.length) return [...out, '', '🗺️ No briefs yet.'].join('\n');
 
   // Consecutive briefs at the same resting state share one row; every brief in motion has its own.
@@ -73,7 +70,7 @@ function screen(root) {
       return [icon, `${first.nn}–${members[members.length - 1].nn}`, `${word} (${members.length} briefs)`];
     }
     const [icon, word] = MOTION[k];
-    const cells = k === 'prototyping' ? 0 : rank(state, first) + 1;
+    const cells = rank(state, first) + 1;
     const examples = screensFor(root, first.nn);
     const label = k === 'prototyping' ? `prototyping, ${examples.filter((r) => r.status === 'done').length} of ${examples.length} examples` : word;
     return [icon, name(first), `${'▓'.repeat(cells)}${'░'.repeat(MARKS.length - cells)}  ${label}`];

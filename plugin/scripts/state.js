@@ -371,4 +371,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, rank, nextStep, lessonCauses, changedBriefs };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep, changedBriefs };

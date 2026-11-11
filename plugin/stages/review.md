@@ -10,8 +10,7 @@ Then:
   the line to `- [fixed]`. A finding you will not fix, or that is really a product
   decision, becomes `- [owner]`.
 - Apply a `- [cut]` only if the check command still passes afterwards.
-- Run the check command. If you fixed anything, dispatch the reviewer once more over only
-  what the fixes changed, with the affected "Done when" items, and a maker fixes what it
-  proves. Nothing else in the brief is reviewed again or can block.
+- If you fixed anything, dispatch the reviewer once more over only what the fixes changed,
+  with the affected "Done when" items, and a maker fixes what it proves. Nothing else in the brief is reviewed again or can block.
 
 Run `state.js mark <NN> reviewed`, then land the fixes.

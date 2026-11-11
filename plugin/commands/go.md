@@ -34,7 +34,7 @@ Size it first, and tell the owner which size you chose:
   the test that will catch it), and record it as unproven in `sidekik/calls.md`.
   Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`.
 - **A small tweak** that changes no behaviour (a label, a colour): a maker changes
-  exactly what was asked, and you run the check.
+  exactly what was asked.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 - **A question** (is this the best way, how do others do it): scouts research it and you
   answer.

@@ -34,8 +34,9 @@ engine, a pipeline). Confirmed examples become the tests.
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are held by the scripts, each needing the owner's yes
 recorded as a decision: the brief list and each brief's prototype need a decision for
-them; the stack picks and going live need an `all` decision dated on or after the latest
-`confirmed` or `done` mark (the marks table says exactly what each accepts). The build
+them; the stack picks need an `all` decision dated on or after the latest
+`confirmed` mark, and going live a decision for the brief or for `all` dated on or after its
+own `done` mark (the marks table says exactly what each accepts). The build
 between them runs unattended and reports as it goes. A bug or a small tweak skips the
 stages: it is fixed directly and reported in one line.
 
@@ -212,7 +213,7 @@ approval`.
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
-🎯 Next   review 02 drinks-separately · runs without you
+🎯 Next   review 02 drinks-separately
 
 🗺️ Split the bill
    ✅ 01 even-split         live
@@ -225,9 +226,8 @@ approval`.
 ```
 
 - Order: Waiting on you, a blank line, Next, a blank line, the roadmap (a title line, then
-  one row per brief or run of briefs), a blank line, Progress. The screen starts with the
-  Waiting block. With no briefs the roadmap is the single line `🗺️ No briefs yet.` and there is
-  no Progress line.
+  one row per brief or run of briefs), a blank line, Progress. With no briefs the roadmap is
+  the single line `🗺️ No briefs yet.` and there is no Progress line.
 - Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
   whole product`), counted once; one line per brief with open questions filed under that
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
@@ -236,12 +236,10 @@ approval`.
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any; `your yes again on 01, 02, changed since approval` when approved briefs changed. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
-- Next comes after Waiting on you: `agree the brief list`, `prototype NN slug`, `your look at the
+- Next: `agree the brief list`, `prototype NN slug`, `your look at the
   prototype`, `choose the stack`, `build note for NN slug`, `build NN slug`, `review NN
   slug`, `report NN slug`, `tidy the codebase`, `your sign-off to go live`, or `nothing to
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
-  It ends ` · needs you` when the stage is `brief`, `look`, `stack` or `ship`, else
-  ` · runs without you` (idle has no ending).
 - Roadmap: the title line is `🗺️` and the first `# ` heading in `briefs.md`, else the project
   folder's name. Rows follow the brief order: three spaces, the icon, the label padded to the
   longest label shown, two spaces, the tail. A resting state collapses: ✅ `live` (shipped),
@@ -284,7 +282,7 @@ output is one; piped output is left plain.
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
-  `nextStep(root, state)`, `lessonCauses(root)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+  `nextStep(root, state)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `set-check "<cmd>"`,
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.

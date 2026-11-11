@@ -46,7 +46,7 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
-🎯 Next   review 02 drinks-separately · runs without you
+🎯 Next   review 02 drinks-separately
 
 🗺️ Split the bill
    ✅ 01 even-split         live
@@ -60,7 +60,7 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
 });
 
 test('an empty project says there are no briefs and that the brief list comes next', () => {
-  assert.equal(status(null).out, '🙋 Waiting on you\n   └─ your yes on the brief list\n\n🎯 Next   agree the brief list · needs you\n\n🗺️ No briefs yet.\n');
+  assert.equal(status(null).out, '🙋 Waiting on you\n   └─ your yes on the brief list\n\n🎯 Next   agree the brief list\n\n🗺️ No briefs yet.\n');
 });
 
 test('with nothing waiting the section is one line, and the title falls back to the folder name', () => {
@@ -68,7 +68,7 @@ test('with nothing waiting the section is one line, and the title falls back to 
     { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
   assert.equal(out, `🙋 Nothing is waiting on you.
 
-🎯 Next   build 01 a (with 02) · runs without you
+🎯 Next   build 01 a (with 02)
 
 🗺️ ${path.basename(root)}
    🛠️ 01 a   ▓▓▓░░░  ready to build
@@ -91,7 +91,7 @@ test('runs of briefs in the same resting state collapse to one row, and a brief 
 
 test('a tidy comes next once every brief is finished and the codebase is not yet tidied', () => {
   const { out } = status({ stack: true, briefs: { '01': 'done' } }, { 'briefs.md': '- 01 a: One.\n' });
-  assert.match(out, /🎯 Next   tidy the codebase · runs without you\n/);
+  assert.match(out, /🎯 Next   tidy the codebase\n/);
 });
 
 test('a brief whose examples changed after approval is listed under Waiting on you', () => {

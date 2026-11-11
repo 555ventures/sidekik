@@ -44,7 +44,8 @@ which the checker and the freeze ignore, in the kit's tokens. The moment they ex
 them to the owner as images: one line with what differs and what to look at, and end your
 turn. Their pick becomes the one reference example and the kit follows it. Variants of one
 screen early are cheap; variants of a prototype are waste. Every reaction they give is
-applied to the kit and the examples. Then one finished reference example for each other
+applied to the kit and the examples, and to the brief's own sentence when it changes what
+the brief does. Then one finished reference example for each other
 area (a part of the product a user would name), by makers against the kit as it stands,
 each in the product's primary language, with any other language shown by one example
 later. Look at them all yourself in a browser, settle their kit requests, and run

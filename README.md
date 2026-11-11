@@ -206,8 +206,6 @@ approval`.
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:
 
 ```
-🗺️ Split the bill
-
 🙋 Waiting on you
    ├─ 1 question on the whole product
    ├─ 2 questions on 03 history
@@ -216,17 +214,20 @@ approval`.
 
 🎯 Next   review 02 drinks-separately · runs without you
 
-✅ Live             01
-📦 Finished         05
-🔨 Built            02
-🎨 Design approved  03
-🎨 Prototyping      04 (1 of 2 examples)
+🗺️ Split the bill
+   ✅ 01 even-split         live
+   🔨 02 drinks-separately  ▓▓▓▓░░  built
+   🎨 03 history            ▓▓░░░░  design approved
+   🎨 04 share-link         ░░░░░░  prototyping, 1 of 2 examples
+   📦 05 tip-jar            finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live · 38 min from your yes to finished
 ```
 
-- Title: the first `# ` heading in `briefs.md`, else the project folder's name. With no briefs
-  the screen is `🗺️ No briefs yet.`, then Waiting on you and Next, with no groups or Progress.
+- Order: Waiting on you, a blank line, Next, a blank line, the roadmap (a title line, then
+  one row per brief or run of briefs), a blank line, Progress. The screen starts with the
+  Waiting block. With no briefs the roadmap is the single line `🗺️ No briefs yet.` and there is
+  no Progress line.
 - Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
   whole product`), counted once; one line per brief with open questions filed under that
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
@@ -241,12 +242,18 @@ approval`.
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
   It ends ` · needs you` when the stage is `brief`, `look`, `stack` or `ship`, else
   ` · runs without you` (idle has no ending).
-- Groups: one line per state that has at least one brief, from closest to live down: ✅ `Live`
-  (shipped), 📦 `Finished` (`done`), 🔍 `Reviewed`, 🔨 `Built`, 🛠️ `Ready to build` (`noted`),
-  🎨 `Design approved` (`confirmed`), 🎨 `Prototype ready for your look` (`prototyped`),
-  🎨 `Prototyping`, ⬜ `Not started`. Each line is the icon, the label padded to the longest
-  label shown, and the brief numbers. A brief with no mark but rows on the prototype map is
-  `Prototyping`, and its number is followed by `(D of M examples)`, done rows of all rows.
+- Roadmap: the title line is `🗺️` and the first `# ` heading in `briefs.md`, else the project
+  folder's name. Rows follow the brief order: three spaces, the icon, the label padded to the
+  longest label shown, two spaces, the tail. A resting state collapses: ✅ `live` (shipped),
+  📦 `finished` (`done`) and ⬜ `not started` (no mark). A run of two or more consecutive briefs
+  in the same resting state is one row labelled `NN–MM` with the tail `live (11 briefs)`,
+  `finished (2 briefs)` or `not started (4 briefs)`; a run of one is a normal `NN slug` row with
+  the bare tail. Every brief in motion gets its own row: 🎨 `prototyping`, 🎨 `prototype ready
+  for your look` (`prototyped`), 🎨 `design approved` (`confirmed`), 🛠️ `ready to build`
+  (`noted`), 🔨 `built`, 🔍 `reviewed`. Its tail is a six-cell bar, one ▓ for each mark reached
+  (prototyped, confirmed, noted, built, reviewed, done), padded with ░, then two spaces and the
+  label. A brief with no mark but rows on the prototype map is `prototyping`: its bar is six
+  ░ and its label is `prototyping, D of M examples`, done rows of all rows.
 - Progress: designed counts briefs at `confirmed` or later, built counts `built` or later,
   live counts shipped briefs. Once a `done` brief has both `confirmed` and `done` entries in
   `history`, it adds ` · 38 min from your yes to finished`: the median whole minutes between

@@ -6,11 +6,12 @@ const { openQuestions } = require('./decide');
 const { MARKS, fresh, readBriefs, rank, nextStep, changedBriefs } = require('./state');
 const { screensFor } = require('./proto-check');
 
-// From closest to live down; each state's icon and label on the screen.
-const GROUPS = [
-  ['live', '✅', 'Live'], ['done', '📦', 'Finished'], ['reviewed', '🔍', 'Reviewed'], ['built', '🔨', 'Built'], ['noted', '🛠️', 'Ready to build'],
-  ['confirmed', '🎨', 'Design approved'], ['prototyped', '🎨', 'Prototype ready for your look'], ['prototyping', '🎨', 'Prototyping'], ['none', '⬜', 'Not started'],
-];
+// Each state's icon and label on the roadmap. Resting states collapse into runs and carry no bar.
+const RESTING = { live: ['✅', 'live'], done: ['📦', 'finished'], none: ['⬜', 'not started'] };
+const MOTION = {
+  prototyping: ['🎨'], prototyped: ['🎨', 'prototype ready for your look'], confirmed: ['🎨', 'design approved'],
+  noted: ['🛠️', 'ready to build'], built: ['🔨', 'built'], reviewed: ['🔍', 'reviewed'],
+};
 // The stages that wait on the owner; every other stage runs without them.
 const OWNER_STAGES = ['brief', 'look', 'stack', 'ship'];
 const NEXT = {
@@ -33,9 +34,6 @@ function screen(root) {
   const perBrief = (count, word) => briefs.map((b) => [b, count(b)]).filter(([, n]) => n).map(([b, n]) => `${plural(n, word)} on ${name(b)}`);
   const out = [];
 
-  if (!briefs.length) out.push('🗺️ No briefs yet.');
-  else out.push(`🗺️ ${/^# (.+)$/m.exec((read(root, 'briefs.md') ?? ''))?.[1] ?? path.basename(root)}`);
-
   const { stage, brief, also } = nextStep(root, state);
   const prototyped = briefs.filter((b) => state.briefs[b.nn] === 'prototyped').map((b) => b.nn);
   const unshipped = briefs.filter((b) => state.briefs[b.nn] === 'done' && !live(b)).map((b) => b.nn);
@@ -52,23 +50,37 @@ function screen(root) {
     ...(unshipped.length ? [`your sign-off to take ${unshipped.join(', ')} live`] : []),
     ...(changed.length ? [`your yes again on ${changed.join(', ')}, changed since approval`] : []),
   ];
-  out.push('');
   if (!waiting.length) out.push('🙋 Nothing is waiting on you.');
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));
 
   const what = brief && stage !== 'look' ? `${NEXT[stage]} ${name(brief)}` : NEXT[stage];
   const ending = stage === 'idle' ? '' : OWNER_STAGES.includes(stage) ? ' · needs you' : ' · runs without you';
   out.push('', `🎯 Next   ${what}${also.length ? ` (with ${also.join(', ')})` : ''}${ending}`);
-  if (!briefs.length) return out.join('\n');
+  if (!briefs.length) return [...out, '', '🗺️ No briefs yet.'].join('\n');
 
-  const groups = GROUPS.map(([k, icon, label]) => [icon, label, briefs.filter((b) => key(b) === k)]).filter(([, , members]) => members.length);
-  const width = Math.max(...groups.map(([, label]) => label.length));
-  const detail = (b) => {
-    if (key(b) !== 'prototyping') return b.nn;
-    const rows = screensFor(root, b.nn);
-    return `${b.nn} (${rows.filter((r) => r.status === 'done').length} of ${rows.length} examples)`;
-  };
-  out.push('', ...groups.map(([icon, label, members]) => `${icon} ${label.padEnd(width)}  ${members.map(detail).join(' ')}`));
+  // Consecutive briefs at the same resting state share one row; every brief in motion has its own.
+  const rows = [];
+  for (const b of briefs) {
+    const k = key(b);
+    if (RESTING[k] && rows[rows.length - 1]?.k === k) rows[rows.length - 1].members.push(b);
+    else rows.push({ k, members: [b] });
+  }
+  const lines = rows.map(({ k, members }) => {
+    const [first] = members;
+    if (RESTING[k]) {
+      const [icon, word] = RESTING[k];
+      if (members.length === 1) return [icon, name(first), word];
+      return [icon, `${first.nn}–${members[members.length - 1].nn}`, `${word} (${members.length} briefs)`];
+    }
+    const [icon, word] = MOTION[k];
+    const cells = k === 'prototyping' ? 0 : rank(state, first) + 1;
+    const examples = screensFor(root, first.nn);
+    const label = k === 'prototyping' ? `prototyping, ${examples.filter((r) => r.status === 'done').length} of ${examples.length} examples` : word;
+    return [icon, name(first), `${'▓'.repeat(cells)}${'░'.repeat(MARKS.length - cells)}  ${label}`];
+  });
+  const width = Math.max(...lines.map(([, label]) => label.length));
+  const title = /^# (.+)$/m.exec(read(root, 'briefs.md') ?? '')?.[1] ?? path.basename(root);
+  out.push('', `🗺️ ${title}`, ...lines.map(([icon, label, tail]) => `   ${icon} ${label.padEnd(width)}  ${tail}`));
 
   const count = (test) => `${briefs.filter(test).length} of ${briefs.length}`;
   const marks = state.history.filter((h) => h.brief && !h.refused);

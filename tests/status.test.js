@@ -19,7 +19,7 @@ function status(state, files = {}) {
   return { root, out: r.stdout };
 }
 
-test('the screen shows what waits on the owner, what comes next, the briefs grouped by state and the progress', () => {
+test('the screen shows what waits on the owner, what comes next, the roadmap and the progress', () => {
   const now = new Date().toISOString();
   const day = (time, brief, mark, refused) => ({ brief, mark, at: `2020-01-01T${time}:00.000Z`, ...(refused && { refused }) });
   const { out } = status({
@@ -40,9 +40,7 @@ test('the screen shows what waits on the owner, what comes next, the briefs grou
     'lessons.md': '- 01: [wrong-library] a\n- 05: [built-twice] b\n- fix: [built-twice] c\n- 02: [built-twice] d\n- 03: [wrong-library] e\n'
       + '- 01: [none] f\n- 05: [none] g\n- guard: [built-twice] h\n- guard: [solo] i\n- guard: [solo] j\n',
   });
-  assert.equal(out, `🗺️ Split the bill
-
-🙋 Waiting on you
+  assert.equal(out, `🙋 Waiting on you
    ├─ 1 question on the whole product
    ├─ 2 questions on 03 history
    ├─ 1 review question on 02 drinks-separately
@@ -50,33 +48,45 @@ test('the screen shows what waits on the owner, what comes next, the briefs grou
 
 🎯 Next   review 02 drinks-separately · runs without you
 
-✅ Live             01
-📦 Finished         05
-🔨 Built            02
-🎨 Design approved  03
-🎨 Prototyping      04 (1 of 2 examples)
+🗺️ Split the bill
+   ✅ 01 even-split         live
+   🔨 02 drinks-separately  ▓▓▓▓░░  built
+   🎨 03 history            ▓▓░░░░  design approved
+   🎨 04 share-link         ░░░░░░  prototyping, 1 of 2 examples
+   📦 05 tip-jar            finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live · 38 min from your yes to finished
 `);
 });
 
 test('an empty project says there are no briefs and that the brief list comes next', () => {
-  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Waiting on you\n   └─ your yes on the brief list\n\n🎯 Next   agree the brief list · needs you\n');
+  assert.equal(status(null).out, '🙋 Waiting on you\n   └─ your yes on the brief list\n\n🎯 Next   agree the brief list · needs you\n\n🗺️ No briefs yet.\n');
 });
 
 test('with nothing waiting the section is one line, and the title falls back to the folder name', () => {
   const { root, out } = status({ stack: true, shipped: [], briefs: { '01': 'noted', '02': 'noted' } },
     { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
-  assert.equal(out, `🗺️ ${path.basename(root)}
-
-🙋 Nothing is waiting on you.
+  assert.equal(out, `🙋 Nothing is waiting on you.
 
 🎯 Next   build 01 a (with 02) · runs without you
 
-🛠️ Ready to build  01 02
+🗺️ ${path.basename(root)}
+   🛠️ 01 a   ▓▓▓░░░  ready to build
+   🛠️ 02 bb  ▓▓▓░░░  ready to build
 
 📈 Progress   2 of 2 designed · 0 of 2 built · 0 of 2 live
 `);
+});
+
+test('runs of briefs in the same resting state collapse to one row, and a brief in motion keeps its own', () => {
+  const { out } = status({ stack: true, shipped: ['01', '02', '03'], briefs: { '01': 'done', '02': 'done', '03': 'done', '04': 'done', '07': 'noted' } },
+    { 'briefs.md': [...'abcdefgh'].map((c, i) => `- 0${i + 1} ${c}: x.\n`).join('') });
+  assert.ok(out.includes(`   ✅ 01–03  live (3 briefs)
+   📦 04 d   finished
+   ⬜ 05–06  not started (2 briefs)
+   🛠️ 07 g   ▓▓▓░░░  ready to build
+   ⬜ 08 h   not started
+`), out);
 });
 
 test('a tidy comes next once every brief is finished and the codebase is not yet tidied', () => {

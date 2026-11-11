@@ -259,7 +259,8 @@ From a shell inside a project, install the short command once with `npm install 
 /path/to/sidekik` (or `npm link` in the repo). Then `sidekik status`, `sidekik next`,
 `sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
 `sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
-`--root <dir>` goes after the word.
+`--root <dir>` goes after the word. `sidekik status` clears the terminal first when its
+output is one; piped output is left plain.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,

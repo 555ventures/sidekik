@@ -19,5 +19,7 @@ const ROUTES = {
 if (word === undefined || word === 'help') { console.log(USAGE); process.exit(0); }
 if (!ROUTES[word]) { console.error(USAGE); process.exit(1); }
 const [script, ...fixed] = ROUTES[word];
+// A status glance starts from a clean terminal; piped output stays plain.
+if (word === 'status' && process.stdout.isTTY) process.stdout.write('\x1b[2J\x1b[3J\x1b[H');
 const run = spawnSync(process.execPath, [path.join(__dirname, script), ...fixed, ...rest], { stdio: 'inherit' });
 process.exit(run.status ?? 1);

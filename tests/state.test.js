@@ -333,29 +333,33 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   assert.equal(p.read().stack, true);
 });
 
-test('the shipped mark needs a done brief not yet shipped and a passing check, and joins the history with no brief', () => {
-  const state = { check: IN_ROOT, stack: true, tidied: 1, briefs: { '01': 'done', '02': 'built' } };
-  project({ ...state, shipped: ['01'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
-  project({ ...state, check: 'exit 1' }).refused(['mark', 'shipped'], /did not pass/);
+test('the shipped mark records named done briefs, or every done brief not yet shipped, on the owner\'s yes for each, joins the history with no brief', () => {
+  const state = { stack: true, briefs: { '01': 'done', '02': 'done', '03': 'built' } };
   const at = new Date(2026, 5, 15, 12).toISOString();
-  const refusal = /no decision recording the owner's yes to go live\. After their yes, run decide\.js add all "<their words>" and mark again\./;
-  project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': YES_01 }).refused(['mark', 'shipped'], refusal);
-  project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped'], refusal);
-  assert.equal(project({ ...state, history: [{ brief: '01', mark: 'done', at }] }, { 'decisions.md': '- 2026-06-15 all: Go live.\n' }).run('mark', 'shipped').code, 0);
-  const p = project(state);
-  assert.equal(p.run('mark', 'shipped').code, 0);
+  const history = [{ brief: '01', mark: 'done', at }, { brief: '02', mark: 'done', at }];
+  project({ ...state, shipped: ['01', '02'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
+  project(state).refused(['mark', 'shipped', '03'], /Brief 03 is not finished/);
+  const refusal = /no decision recording the owner's yes to take brief 01 live\. After their yes, run decide\.js add 01 "<their words>" \(or add all\), and mark again\./;
+  project({ ...state, history }, { 'decisions.md': YES_01 }).refused(['mark', 'shipped'], refusal);
+  project({ ...state, history }, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped', '01'], refusal);
+  project({ ...state, history }, { 'decisions.md': '- 2026-06-15 02: Go live.\n' }).refused(['mark', 'shipped', '01', '02'], refusal);
+  const p = project({ ...state, history, tidied: 0 }, { 'decisions.md': '- 2026-06-15 all: Go live.\n' });
+  const first = p.run('mark', 'shipped', '01');
+  assert.equal(first.code, 0);
+  assert.match(first.out, /now live: 01\./);
   assert.deepEqual(p.read().shipped, ['01']);
-  assert.deepEqual(p.read().history.map(({ brief, mark }) => ({ brief, mark })), [{ brief: null, mark: 'shipped' }]);
+  assert.equal(p.run('mark', 'shipped').code, 0);
+  assert.deepEqual(p.read().shipped, ['01', '02']);
+  assert.deepEqual(p.read().history.slice(-2).map(({ brief, mark }) => ({ brief, mark })), [{ brief: null, mark: 'shipped' }, { brief: null, mark: 'shipped' }]);
 });
 
-test('the tidy stage: tidied needs tidying first, a passing check and a guard for a cause seen three times; shipped needs it', () => {
+test('the tidy stage: tidied needs tidying first, a passing check and a guard for a cause seen three times', () => {
   const lessons = '- 01: [built-twice] a\n- fix: [built-twice] b\n- fix: [built-twice] c\n- 02: [none] d\n- fix: [none] e\n- fix: [none] f\n';
   const p = project({ check: IN_ROOT, stack: true, briefs: { '01': 'done', '02': 'done' } }, { 'lessons.md': lessons });
   p.write('a.js', 'a\nb\n');
   p.git('init', '-q');
   p.git('add', '.');
   p.git('commit', '-qm', 'start');
-  p.refused(['mark', 'shipped'], /not been tidied/);
   p.refused(['mark', 'tidied'], /mark tidying first/);
   assert.equal(p.run('mark', 'tidying').code, 0);
   assert.equal(p.read().tidyBase, p.git('rev-parse', 'HEAD'));
@@ -371,5 +375,4 @@ test('the tidy stage: tidied needs tidying first, a passing check and a guard fo
   p.write('sidekik/lessons.md', `${lessons}- guard: [built-twice] state.js refuses a second build.\n`);
   assert.equal(p.run('mark', 'tidied').out, 'The tidy is finished. It added 1 lines and removed 1.\n');
   assert.deepEqual([p.read().tidied, p.read().tidyBase], [2, null]);
-  assert.equal(p.run('mark', 'shipped').code, 0);
 });

@@ -17,4 +17,4 @@ The owner is needed here. Nothing goes live without their yes.
    confirm it is up by using it. An agent that touches production names the project,
    environment and service on every command, prints no value and deletes nothing.
 
-Run `state.js mark shipped`.
+Run `state.js mark shipped <NN ...>`, naming the briefs the owner's yes covers.

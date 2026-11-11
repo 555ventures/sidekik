@@ -153,9 +153,7 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped`: some `done` brief is not yet in `shipped`; `tidied` equals the number of `done`
-  briefs; an `all` decision is dated on or after the day of the latest `done` mark; the check
-  command exits 0. It sets `shipped` to every `done` brief.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it or for `all` dated on or after the day of its `done` mark. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at }` to `history` (`brief` is
 null for a project mark), with `refused: true` when it was refused.
@@ -279,7 +277,7 @@ From a shell inside a project, install the short command once with `npm install 
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
   `nextStep(root, state)`, `lessonCauses(root)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
-  `mark briefed|stack|tidying|tidied|shipped`, `reconfirm <NN>`, `set-check "<cmd>"`,
+  `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `set-check "<cmd>"`,
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.

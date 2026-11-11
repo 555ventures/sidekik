@@ -239,16 +239,16 @@ function markTidied(root, state) {
   return null;
 }
 
-function markShipped(root, state) {
+function markShipped(root, state, named = []) {
   const done = doneBriefs(root, state);
-  if (done.every((nn) => state.shipped.includes(nn))) return 'There is no finished brief waiting to be shipped.';
-  if (state.tidied !== done.length) return 'The codebase has not been tidied since the last briefs were finished, so the tidy comes first.';
-  if (!decidedSince(root, state, 'all', 'done')) {
-    return 'There is no decision recording the owner\'s yes to go live. After their yes, run decide.js add all "<their words>" and mark again.';
-  }
-  const problem = checkProblem(root, state);
-  if (problem) return problem;
-  state.shipped = done;
+  const briefs = named.length ? named : done.filter((nn) => !state.shipped.includes(nn));
+  if (!briefs.length) return 'There is no finished brief waiting to be shipped.';
+  const notDone = briefs.find((nn) => !done.includes(nn));
+  if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
+  // The owner's yes to take a brief live is a decision for it, or for all, after it was finished.
+  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done', nn) && !decidedSince(root, state, 'all', 'done', nn));
+  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>" (or add all), and mark again.`;
+  state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;
 }
 
@@ -290,7 +290,7 @@ function printNext(root, state) {
   if (changed.length) console.log(`Changed since approval: ${changed.join(', ')}`);
 }
 
-function main(root, [cmd, a, b]) {
+function main(root, [cmd, a, b, ...more]) {
   if (cmd === 'init') {
     const existing = a === '--existing' ? b : null;
     if (existing?.includes(';')) return SEMICOLON;
@@ -346,7 +346,7 @@ function main(root, [cmd, a, b]) {
     console.log(`The owner's approval of brief ${a} now covers the prototype as it stands.`);
   } else if (cmd === 'mark' && a) {
     const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
-    const problem = markProject ? markProject(root, state) : markBrief(root, state, a, b);
+    const problem = markProject ? markProject(root, state, [b, ...more].filter(Boolean)) : markBrief(root, state, a, b);
     const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), ...(problem && { refused: true }) };
     // A refused attempt leaves the stored state as it was, apart from the history.
     writeState(root, { ...(problem ? stored : state), history: [...state.history, entry] });
@@ -354,10 +354,10 @@ function main(root, [cmd, a, b]) {
     const size = b === 'built' && state.sizes[a];
     const tidy = a === 'tidied' && sizeSince(root, stored.tidyBase);
     console.log({ briefed: 'The brief list is now agreed.', stack: 'The stack is now settled.', tidying: 'The tidy has started.', tidied: `The tidy is finished.${tidy ? ` It added ${tidy.code + tidy.tests} lines and removed ${tidy.removed}.` : ''}`,
-      shipped: `The finished briefs are now shipped: ${state.shipped.join(', ')}.` }[a]
+      shipped: `The finished briefs are now live: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped, reconfirm <NN>, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
   }
   return null;
 }

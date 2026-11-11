@@ -1,6 +1,9 @@
 {
   "name": "sidekik-tests",
   "private": true,
+  "bin": {
+    "sidekik": "plugin/scripts/sidekik.js"
+  },
   "engines": {
     "node": ">=22"
   },

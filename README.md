@@ -255,6 +255,11 @@ named), and `Base: <sha>` or `Base: none`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
+From a shell inside a project, install the short command once with `npm install -g
+/path/to/sidekik` (or `npm link` in the repo). Then `sidekik status`, `sidekik next`,
+`sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and `sidekik state|decide|proto-check <...>`
+passes the rest to that script. `sidekik help` lists them; `--root <dir>` works as before.
+
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,
   `day(at?) → YYYY-MM-DD` (local time), `rootFrom(argv) → { root, args }` (`args` without

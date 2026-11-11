@@ -31,4 +31,4 @@ the heart of the product come next. Ask once whether anything is missing or wron
 new product, in the same stop, what the prototype needs words for: the voice of the product,
 two or three products whose feel they like, what to avoid; never what the conversation
 already said. Change it as they say, then record their yes with `decide.js add all
-"<their words>"`.
+"<their words>"` and run `state.js mark briefed`.

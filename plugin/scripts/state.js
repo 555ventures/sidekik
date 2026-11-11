@@ -9,7 +9,7 @@ const { checkPrototype, screensFor } = require('./proto-check');
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 // An older state file may lack the later fields; each counts as its empty value.
-const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
+const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
 const has = (text, re) => text !== null && re.test(text);
@@ -192,6 +192,15 @@ function markBrief(root, state, nn, mark) {
   return null;
 }
 
+function markBriefed(root, state) {
+  if (!readBriefs(root).length) return 'The briefs file has no brief lines yet.';
+  if (decisionsFor(root, 'all').length === 0) {
+    return 'The list has no decision recording the owner\'s yes on it. After their yes, run decide.js add all "<their words>" and mark again.';
+  }
+  state.briefed = true;
+  return null;
+}
+
 function markStack(root, state) {
   const briefs = readBriefs(root);
   if (!briefs.length || briefs.some((b) => rank(state, b) < 1)) return 'Every brief must be confirmed before the stack is settled.';
@@ -249,9 +258,8 @@ function nextStep(root, state) {
   const briefs = readBriefs(root);
   const withBrief = (brief) => ({ stage: stageOf(state, brief), brief,
     also: briefs.filter((b) => b.nn !== brief.nn && stageOf(state, b) === stageOf(state, brief)).map((b) => b.nn) });
-  // The brief list stands once the owner's yes on it is in the decision log, or work on it has begun.
-  const unmarked = briefs.every((b) => rank(state, b) < 0);
-  if (!briefs.length || (unmarked && !has(read(root, 'decisions.md'), /^- /m))) return { stage: 'brief', also: [] };
+  // The brief list stands once it is marked briefed, or work on a brief has begun (an older project).
+  if (!briefs.length || (!state.briefed && briefs.every((b) => rank(state, b) < 0))) return { stage: 'brief', also: [] };
   if (!state.stack) {
     const open = briefs.find((b) => rank(state, b) < 0) ?? briefs.find((b) => rank(state, b) < 1);
     return open ? withBrief(open) : { stage: 'stack', also: [] };
@@ -334,7 +342,7 @@ function main(root, [cmd, a, b]) {
     writeState(root, state);
     console.log(`The owner's approval of brief ${a} now covers the prototype as it stands.`);
   } else if (cmd === 'mark' && a) {
-    const markProject = { stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
+    const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
     const problem = markProject ? markProject(root, state) : markBrief(root, state, a, b);
     const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), ...(problem && { refused: true }) };
     // A refused attempt leaves the stored state as it was, apart from the history.
@@ -342,11 +350,11 @@ function main(root, [cmd, a, b]) {
     if (problem) return problem;
     const size = b === 'built' && state.sizes[a];
     const tidy = a === 'tidied' && sizeSince(root, stored.tidyBase);
-    console.log({ stack: 'The stack is now settled.', tidying: 'The tidy has started.', tidied: `The tidy is finished.${tidy ? ` It added ${tidy.code + tidy.tests} lines and removed ${tidy.removed}.` : ''}`,
+    console.log({ briefed: 'The brief list is now agreed.', stack: 'The stack is now settled.', tidying: 'The tidy has started.', tidied: `The tidy is finished.${tidy ? ` It added ${tidy.code + tidy.tests} lines and removed ${tidy.removed}.` : ''}`,
       shipped: `The finished briefs are now shipped: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark stack|tidying|tidied|shipped, reconfirm <NN>, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped, reconfirm <NN>, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
   }
   return null;
 }

@@ -105,7 +105,7 @@ Line formats, exactly:
 `state.json`:
 
 ```json
-{ "check": "npm test", "depsCommand": null, "deps": null, "stack": false,
+{ "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
   "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": { "count": 1, "on": "2026-11-09" } },
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
@@ -139,6 +139,7 @@ same stage can move in parallel.
 
 Project marks:
 
+- `briefed`: `briefs.md` has brief lines and an `all` decision exists (the owner's yes on the list). It sets `briefed` true.
 - `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and `## Your steps`;
   `model.md` exists; an `all` decision is dated on or after the day of the latest `confirmed`
   mark of any brief; a check command is set and exits 0; the project has a commit and
@@ -181,7 +182,7 @@ What `next` answers:
 
 | situation | stage |
 |---|---|
-| no `briefs.md`, or it has no brief lines, or no brief has a mark and `decisions.md` has no line (the owner's yes on the list is its first decision) | `brief` |
+| no `briefs.md`, or it has no brief lines, or `briefed` is false and no brief has a mark | `brief` |
 | `stack` false and some brief has no mark | `prototype` (the lowest such brief) |
 | `stack` false, every brief has a mark, some brief is not `confirmed` | `look` (the lowest such brief) |
 | `stack` false and every brief is `confirmed` | `stack` |

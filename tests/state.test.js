@@ -54,7 +54,8 @@ test('next answers every row of the table', () => {
     [{}, { 'briefs.md': null }, 'brief', 'none'],
     [{}, { 'briefs.md': '# Briefs\n' }, 'brief', 'none'],
     [{}, { 'decisions.md': null }, 'brief', 'none'],
-    [{}, {}, 'prototype', B1, { also: '02' }],
+    [{ briefed: false }, {}, 'brief', 'none'],
+    [{ briefed: true }, {}, 'prototype', B1, { also: '02' }],
     [{ briefs: { '01': 'prototyped' } }, {}, 'prototype', B2],
     [{ briefs: { '01': 'prototyped', '02': 'confirmed' } }, { 'questions/pm.md': '- [open] 01: Weekly?\n- [open] 02: Text?\n' }, 'look', B1, { open: 1 }],
     [{ briefs: { '01': 'confirmed', '02': 'confirmed' } }, {}, 'stack', 'none'],
@@ -80,6 +81,19 @@ test('next answers every row of the table', () => {
       `Stage: ${stage}\nBrief: ${brief}\nRead: ${read}\nAlso at this stage: ${also}\nOpen questions for ${questions}: ${open}\nBase: ${base}\n`,
       `${stage} ${JSON.stringify(state)}`);
   }
+});
+
+test('mark briefed needs brief lines and an all decision', () => {
+  project({}, { 'briefs.md': '# Briefs\n' }).refused(['mark', 'briefed'], /no brief lines/);
+  const p = project({}, { 'decisions.md': YES_01 });
+  p.refused(['mark', 'briefed'], /no decision recording the owner's yes on it/);
+  assert.match(p.run('next').out, /^Stage: brief\n/);
+  const q = project();
+  const r = q.run('mark', 'briefed');
+  assert.equal(r.code, 0, r.out);
+  assert.equal(r.out, 'The brief list is now agreed.\n');
+  assert.equal(q.read().briefed, true);
+  assert.match(q.run('next').out, /^Stage: prototype\n/);
 });
 
 test('next lists the briefs whose examples changed after approval, and counts an older approval once so only a new yes reconfirms it', () => {
@@ -118,7 +132,7 @@ test('reconfirm passes on a decision dated after the approval day even when the 
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);
-  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
+  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
     bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
   p.run('set-check', 'npm test');
   assert.match(p.run('init', '--existing', 'make test').out, /nothing was changed/);

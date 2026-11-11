@@ -268,7 +268,9 @@ function nextStep(root, state) {
   // A tidy comes between briefs, never over a half-built one.
   const midBuild = briefs.some((b) => rank(state, b) >= MARKS.indexOf('noted') && state.briefs[b.nn] !== 'done');
   if ((done - state.tidied >= 5 && !midBuild) || state.tidyBase) return { stage: 'tidy', also: [] };
-  const brief = briefs.find((b) => state.briefs[b.nn] !== 'done');
+  // The brief furthest along goes first, so approved work reaches live before new work is prototyped; ties by number.
+  const open = briefs.filter((b) => state.briefs[b.nn] !== 'done');
+  const brief = open.reduce((best, b) => (rank(state, b) > rank(state, best) ? b : best), open[0]);
   if (brief) return withBrief(brief);
   if (state.tidied < done) return { stage: 'tidy', also: [] };
   return { stage: briefs.some((b) => !state.shipped.includes(b.nn)) ? 'ship' : 'idle', also: [] };

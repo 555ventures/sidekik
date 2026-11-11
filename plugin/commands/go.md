@@ -64,7 +64,8 @@ project root or with `--root <dir>`.
    feedback lines of this stretch not yet sent, and tell the owner in one line that it is
    safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
 
-The `sidekik/` folder is landed with the work. You land work: makers never run git. Every
+The `sidekik/` folder is landed with the work. You land work: makers never run git, and on
+a product with a check command every commit passes it first, whatever the stage. Every
 process you or an agent starts runs as a tracked background task, and you stop them all
 before your turn ends.
 

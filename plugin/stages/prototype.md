@@ -52,8 +52,9 @@ later. Look at them all yourself in a browser, settle their kit requests, and ru
 again.
 
 For an existing product the kit is what the product really uses, and each example a brief
-changes starts as a saved copy of how the product behaves today, kept beside the changed
-version. A brief that changes a shared piece maps, in its own map file, every example it
+changes is drawn beside a saved copy of how the product behaves today; the product's tests
+keep reading the copy, so its check stays green until the build moves them to the new
+example. A brief that changes a shared piece maps, in its own map file, every example it
 redraws, even one another brief owns. A small change needs no more foundation.
 
 ## Examples

@@ -8,12 +8,17 @@ want through a prototype, and Claude works with you in one of two roles:
 - **Technical Partner** while it is built: it owns how it is built, the agent team and the
   health of the code, talks to you in plain words, and rarely needs you.
 
-Install:
+Install, in Claude Code:
 
 ```
 /plugin marketplace add 555ventures/sidekik
 /plugin install sidekik@sidekik-tools
 ```
+
+Then, in any project folder, `/sidekik:go <your idea>` starts the work and `/sidekik:go`
+continues it. From a shell, `sidekik status` shows where things stand; the command appears
+by itself after the first session with the plugin. On a machine that already has the
+plugin, `/plugin marketplace update sidekik-tools` brings the newest version.
 
 The same marketplace holds `style`, an optional plugin that makes Claude reply outcome
 first, in plain English, with a work queue at the end: `/plugin install style@sidekik-tools`.
@@ -262,9 +267,10 @@ Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (defaul
 current directory) for the project root that holds `sidekik/`.
 
 The shell command installs itself: at the start of every session the plugin writes
-`~/.local/bin/sidekik`, which runs the plugin's scripts from wherever the plugin is installed,
-and says so once if that folder is not on your PATH (`npm install -g <checkout>` is the
-alternative). Then `sidekik status`, `sidekik next`,
+the `sidekik` command, which runs the plugin's scripts from wherever the plugin is installed,
+into Node's own bin folder when that is on your PATH and writable (so it works at once, like an
+npm command), else into `~/.local/bin`, saying so once if that folder is not on your PATH
+(`npm install -g <checkout>` is the alternative). Then `sidekik status`, `sidekik next`,
 `sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
 `sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
 `--root <dir>` goes after the word. `sidekik status` clears the terminal first when its
@@ -290,10 +296,11 @@ output is one; piped output is left plain.
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
-- `scripts/install.js` is the SessionStart hook: it writes `~/.local/bin/sidekik` (a `sh`
-  wrapper that runs `sidekik.js` from the plugin's folder) when the file is missing or
-  different, and prints one line only when `~/.local/bin` is not on your PATH. It never fails
-  the session, and does nothing on Windows.
+- `scripts/install.js` is the SessionStart hook: it writes the `sidekik` command (a `sh`
+  wrapper that runs `sidekik.js`) into Node's bin folder when that is on your PATH and
+  writable, else `~/.local/bin`, and leaves an `npm install -g` link alone. It prints one line
+  only when `~/.local/bin` is used and is not on your PATH. It never fails the session, and
+  does nothing on Windows.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
 `kit/`, `map/` and `shots/` folders. It fails on: a file with no map row (the message shows

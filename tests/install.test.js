@@ -9,12 +9,14 @@ const { spawnSync } = require('child_process');
 const script = path.join(__dirname, '..', 'plugin', 'scripts', 'install.js');
 const sidekikJs = path.join(__dirname, '..', 'plugin', 'scripts', 'sidekik.js');
 const tmp = () => fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-install-'));
+// A PATH without Node's folder, so the wrapper goes to <home>/.local/bin whatever the machine looks like.
+const noNode = (...dirs) => [...dirs, '/usr/bin', '/bin'].filter((d) => path.resolve(d) !== path.dirname(process.execPath)).join(path.delimiter);
 const install = (home, pathVar) => spawnSync(process.execPath, [script], { encoding: 'utf8', env: { ...process.env, HOME: home, PATH: pathVar } });
 
 test('the installer writes an executable wrapper, silently, and leaves it alone the second time', () => {
   const home = tmp();
   const bin = path.join(home, '.local', 'bin');
-  const pathVar = [bin, path.dirname(process.execPath), '/usr/bin', '/bin'].join(path.delimiter);
+  const pathVar = noNode(bin);
   const first = install(home, pathVar);
   assert.equal(first.status, 0);
   assert.equal(first.stdout, '');
@@ -32,13 +34,28 @@ test('the installer writes an executable wrapper, silently, and leaves it alone 
   fs.mkdirSync(path.join(proj, 'sidekik'));
   fs.writeFileSync(path.join(proj, 'sidekik', 'briefs.md'), '- 01 a: One.\n');
   fs.writeFileSync(path.join(proj, 'sidekik', 'state.json'), '{}');
-  const run = spawnSync(file, ['next', '--root', proj], { encoding: 'utf8', shell: false, env: { ...process.env, PATH: pathVar } });
+  const run = spawnSync(file, ['next', '--root', proj], { encoding: 'utf8', shell: false, env: { ...process.env, PATH: [pathVar, path.dirname(process.execPath)].join(path.delimiter) } });
   assert.equal(run.status, 0);
   assert.match(run.stdout, /Stage: brief/);
 });
 
 test('the installer says once that ~/.local/bin is not on the PATH', () => {
-  const r = install(tmp(), ['/usr/bin', '/bin'].join(path.delimiter));
+  const r = install(tmp(), noNode());
   assert.equal(r.status, 0);
   assert.equal(r.stdout, 'sidekik: the sidekik command is installed in ~/.local/bin, which is not on your PATH; add it to use it from a shell.\n');
+});
+
+test('the installer leaves an npm-style symlink alone, silently', () => {
+  const home = tmp();
+  const bin = path.join(home, '.local', 'bin');
+  fs.mkdirSync(bin, { recursive: true });
+  const real = path.join(home, 'real-sidekik');
+  fs.writeFileSync(real, 'x');
+  const file = path.join(bin, 'sidekik');
+  fs.symlinkSync(real, file);
+  const r = install(home, noNode(bin));
+  assert.equal(r.status, 0);
+  assert.equal(r.stdout, '');
+  assert.ok(fs.lstatSync(file).isSymbolicLink());
+  assert.equal(fs.readFileSync(real, 'utf8'), 'x');
 });

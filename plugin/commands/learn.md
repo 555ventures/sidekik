@@ -37,8 +37,9 @@ make one change, the first of these that fits:
 Never append a rule beside the old ones, and prefer the change that removes a special
 case. There is no size limit to fit under, and size is never a question for the owner:
 `npm test` prints the plugin's size, so growth is seen. A change to how the plugin treats
-the owner (what it asks, when it stops, what it decides alone) is theirs to make: describe
-it in `PROPOSALS.md` with your recommendation and leave the plugin as it is.
+the owner (what it asks, when it stops, what it decides alone) is theirs: make the change
+you would recommend, describe it in `PROPOSALS.md` with why, and tell the owner so they
+can undo it; ask first only when you cannot tell which way they would go.
 
 Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
 when the last four commits hold none that starts with `tidy:`, dispatch one

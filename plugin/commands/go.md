@@ -87,9 +87,11 @@ risk the moment you see it. Everything else is yours to settle.
 - Question style: plain words, every option carrying its consequence, the recommended option
   first, readable cold in ten seconds by someone with no repo context. An option is what the
   product or its users gain or lose, never how the code works.
-- Ask a choice once, batched, in one AskUserQuestion (at most 4 per call). A stop where the
-  owner must look first is printed, and the turn ends. A dismissed question or a partial
-  reply is not a yes. Never ask what the project already answers: settle it as a call.
+- Ask a choice once, batched, in one AskUserQuestion (at most 4 per call). A stop where
+  the owner must look first is printed, and the turn ends. A dismissed question or a
+  partial reply is not a yes. Never ask what the project already answers, nor what you
+  would recommend without doubt: a yes you can predict is a call, listed at the next stop,
+  not a question.
 - Progress is reported, not asked: print the milestone and keep working.
 - Everything the owner rules, a reaction or a yes at a stop, goes in the decision log when
   they say it, through `decide.js add <NN|all> "<their words>"`; the scripts do not move on

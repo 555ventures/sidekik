@@ -98,3 +98,13 @@ owner-treatment changes it would recommend and reports them here; the owner undo
 they disagree with.
 
 Tidied in 0.8.0: a later brief no longer has a flow stop of its own before the look stage; every brief after a new product's first walk goes to the walkers first and to the owner once, at the look stage, with their findings. The 0.6.1 rule for changes to a confirmed screen is now the rule for every later brief.
+
+## The flows are confirmed in one stop, the first walk included
+
+**Decided 2026-11-11 by the owner's words, applied in 0.9.4.** From Poolyst, where the first
+walk meant twelve stops and the owner said yes to all twelve after reading the page once:
+"when you show me all the prototype screens, I usually go through in one go.. I don't really
+check one by one." Supersedes the step-by-step first walk (0.3.7, narrowed in 0.7.4): every
+walk is one stop with the flows page, the calls and open questions grouped by flow, and one
+yes for all or the changes by step; a flow the owner wants walked gets its steps one at a
+time. The order around the walkers (before them on a new product, after them later) stays.

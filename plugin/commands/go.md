@@ -82,8 +82,9 @@ became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 
 Come to the owner when a good partner would: to agree what is being built, to review the
 design, for money, accounts and any new library or outside service, for anything that
-cannot be undone, when scope or time changes, and for sign-off before going live. Raise a
-risk the moment you see it. Everything else is yours to settle.
+cannot be undone, when scope or time changes, and for sign-off before going live. Raise a risk the moment you see it, and a finding that overturns something they ruled:
+one question, drawn beside the approved example it changes, before anything is redrawn
+on it. Everything else is yours to settle.
 
 - Question style: plain words, every option carrying its consequence, the recommended option
   first, readable cold in ten seconds by someone with no repo context. An option is what the

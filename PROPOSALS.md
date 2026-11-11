@@ -68,6 +68,14 @@ flow, then two walkers found gaps that changed what was approved. For a change t
 confirmed screen the walkers run first and the owner sees their findings with the change;
 a new product keeps owner first, since a flow they change makes a walk worthless.
 
+**Decided 2026-11-11, applied in 0.10.1.** From sumglass brief 12: both walkers refused a
+sentence the owner had ruled ("the rate is fixed when it saves"), and the fix put a
+required field on every save, redrawing 17 approved exchanges. Waiting for the look stage
+would have meant drawing them twice. A finding that overturns something the owner ruled
+goes to them at once as one question, drawn beside the approved example it changes,
+before anything is redrawn on it; the same sentence now serves the tidy stage, which had
+its own copy.
+
 ## The brief stop is short, says what comes next, and carries the prototype's word questions
 
 **Decided 2026-11-11, applied in 0.7.2.** From Sumaro: the owner typed "make prototype for

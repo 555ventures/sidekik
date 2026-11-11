@@ -85,7 +85,8 @@ sidekik/
 ```
 
 A PreToolUse hook (`hooks/hooks.json`, `scripts/guard.js`) refuses Write and Edit on
-`state.json` and `decisions.md`; edits made through the shell are not caught.
+`state.json` and `decisions.md`; edits made through the shell are not caught. `hooks.json`
+also runs `scripts/install.js` at session start.
 
 Line formats, exactly:
 
@@ -260,8 +261,10 @@ approval`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
-From a shell inside a project, install the short command once with `npm install -g
-/path/to/sidekik` (or `npm link` in the repo). Then `sidekik status`, `sidekik next`,
+The shell command installs itself: at the start of every session the plugin writes
+`~/.local/bin/sidekik`, which runs the plugin's scripts from wherever the plugin is installed,
+and says so once if that folder is not on your PATH (`npm install -g <checkout>` is the
+alternative). Then `sidekik status`, `sidekik next`,
 `sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
 `sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
 `--root <dir>` goes after the word. `sidekik status` clears the terminal first when its
@@ -287,6 +290,10 @@ output is one; piped output is left plain.
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
+- `scripts/install.js` is the SessionStart hook: it writes `~/.local/bin/sidekik` (a `sh`
+  wrapper that runs `sidekik.js` from the plugin's folder) when the file is missing or
+  different, and prints one line only when `~/.local/bin` is not on your PATH. It never fails
+  the session, and does nothing on Windows.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
 `kit/`, `map/` and `shots/` folders. It fails on: a file with no map row (the message shows

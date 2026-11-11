@@ -8,12 +8,12 @@ const USAGE = `sidekik status             where the work stands
 sidekik next               what comes next
 sidekik questions [NN]     open questions
 sidekik check [freeze]     check the prototype
-sidekik state|decide|proto-check <...>   run that script with the rest
+sidekik state|decide <...>  run that script with the rest
 Every form takes --root <dir> (default: the current directory).`;
 const [word, ...rest] = process.argv.slice(2);
 const ROUTES = {
   status: ['status.js'], next: ['state.js', 'next'], questions: ['decide.js', 'questions'], check: ['proto-check.js'],
-  state: ['state.js'], decide: ['decide.js'], 'proto-check': ['proto-check.js'],
+  state: ['state.js'], decide: ['decide.js'],
 };
 
 if (word === undefined || word === 'help') { console.log(USAGE); process.exit(0); }

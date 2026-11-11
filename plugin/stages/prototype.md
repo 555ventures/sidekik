@@ -13,8 +13,8 @@ persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 The prototype is a set of concrete examples of the product in use, with nothing behind
 them, in the form the product is judged by:
 
-- looked at: screens to click, with fake data, drawn as the device shows them (phone size
-  for a mobile app, a real desktop layout on a desktop),
+- looked at: screens to click, with fake data, drawn as the device shows them at each
+  width the kit names,
 - talked to: exchanges to read, each the exact input and the exact reply, with help and
   errors,
 - works on its own: cases to check, each "given this, it does that" over sample data,
@@ -23,14 +23,11 @@ them, in the form the product is judged by:
 None of its examples' code goes into the product, and confirmed examples become its tests.
 It lives in `sidekik/prototype/`, built so a session with no memory can extend it.
 
-## Foundation (when there is no kit yet)
+## Foundation
 
 While the foundation is built, a scout checks how three good current products handle the
 same thing, from their help centres and public docs, and says unknown where it finds
-nothing. Steps a user takes inside another company's product come from that company's own
-pages, after a look for a link or listing that makes the steps unnecessary, with source
-and date on the example; when they cannot be read, the step is marked unverified for the
-owner to try. Use what works, and what the owner gave you.
+nothing. Use what works, and what the owner gave you.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, naming the
   widths the product is used at (phone, tablet, laptop, as the product picture says), and
@@ -58,8 +55,7 @@ again.
 For an existing product the kit is what the product really uses, and each example a brief
 changes starts as a saved copy of how the product behaves today, kept beside the changed
 version. A brief that changes a shared piece maps, in its own map file, every example it
-redraws, even one another brief owns; each confirmed brief among them is shown again and
-reconfirmed. A small change needs no more foundation.
+redraws, even one another brief owns. A small change needs no more foundation.
 
 ## Examples
 
@@ -69,6 +65,10 @@ areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its
 that are yours rather than the owner's as `[settled] NN: … → what you chose`.
 
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
+- What a user does inside another company's product comes from that company's own pages,
+  with source and date on the example: first a link or listing that makes the steps
+  unnecessary, else the steps; what cannot be read is marked unverified for the owner to
+  try.
 
 ## Check
 

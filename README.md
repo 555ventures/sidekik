@@ -257,8 +257,9 @@ current directory) for the project root that holds `sidekik/`.
 
 From a shell inside a project, install the short command once with `npm install -g
 /path/to/sidekik` (or `npm link` in the repo). Then `sidekik status`, `sidekik next`,
-`sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and `sidekik state|decide|proto-check <...>`
-passes the rest to that script. `sidekik help` lists them; `--root <dir>` works as before.
+`sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
+`sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
+`--root <dir>` goes after the word.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,

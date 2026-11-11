@@ -52,8 +52,7 @@ really needs.
    exposes. Put the layout and all commands in `CLAUDE.md`.
 9. **Try the risky pieces** on the running skeleton: where a confirmed example depends on
    what an outside service can do, run a small real test against it and show the result.
-   Write it, or "not tried" and which briefs wait on it, into `sidekik/stack.md`. Step 6
-   came first, so the keys are there.
+   Write it, or "not tried" and which briefs wait on it, into `sidekik/stack.md`.
 
 Write `sidekik/stack.md` with `## Picks` (each pick and its reason) and `## Your steps`. Run
 `state.js set-check "<command>"`, then `state.js set-deps "<a command that prints one library

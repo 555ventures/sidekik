@@ -1,5 +1,5 @@
 {
-  "name": "sidekik-tests",
+  "name": "sidekik",
   "private": true,
   "bin": {
     "sidekik": "plugin/scripts/sidekik.js"

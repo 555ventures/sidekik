@@ -30,8 +30,7 @@ same thing, from their help centres and public docs, and says unknown where it f
 nothing. Steps a user takes inside another company's product come from that company's own
 pages, after a look for a link or listing that makes the steps unnecessary, with source
 and date on the example; when they cannot be read, the step is marked unverified for the
-owner to try. Look there first for a shortcut that makes the steps unnecessary, such as a
-prefilled link or a directory listing. Use what works, and what the owner gave you.
+owner to try. Use what works, and what the owner gave you.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, naming the
   widths the product is used at (phone, tablet, laptop, as the product picture says), and

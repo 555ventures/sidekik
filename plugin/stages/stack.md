@@ -17,8 +17,7 @@ really needs.
    technical people, so the owner or someone they trust can decide from the brief alone:
    two or three options, the monthly cost and how hard each is to leave, why you recommend
    one and what fact would change that. They go in one stop with step 4's questions, so one
-   word can take every recommendation. Only tooling with no effect on the product is a call,
-   noted in `sidekik/calls.md`.
+   word can take every recommendation. Only tooling with no effect on the product is a call.
 3. **Data design and areas.** Write `sidekik/model.md`: what the whole product stores, the
    rules every brief shares, and the product's areas with what each is responsible for.
    Do not list there what an area contains: that is read from the code.

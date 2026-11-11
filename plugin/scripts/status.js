@@ -16,7 +16,6 @@ const NEXT = {
   note: 'build note for', build: 'build', review: 'review', close: 'report', tidy: 'tidy the codebase', ship: 'your sign-off to go live',
   idle: 'nothing to do, everything is live',
 };
-const NEEDS_YOU = ['brief', 'look', 'stack', 'ship'];
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
@@ -73,22 +72,23 @@ function screen(root) {
   const unshipped = briefs.filter((b) => state.briefs[b.nn] === 'done' && !live(b)).map((b) => b.nn);
   // Questions filed under `all` belong to no one brief, so they get one line of their own.
   const wholeProduct = openQuestions(root, 'all').length;
+  const changed = changedBriefs(root, state);
   const waiting = [
+    ...(stage === 'brief' ? ['your yes on the brief list'] : []),
     ...(wholeProduct ? [`${plural(wholeProduct, 'question')} on the whole product`] : []),
     ...perBrief((b) => openQuestions(root, b.nn).filter((line) => line.startsWith(`- [open] ${b.nn}:`)).length, 'question'),
     ...(stage === 'look' ? [`your look at the prototype (${prototyped.join(', ')})`] : []),
     ...(stage === 'stack' ? ['your stack picks'] : []),
     ...perBrief((b) => ((read(root, `reviews/${b.nn}.md`) ?? '').match(/^- \[owner\]/gm) ?? []).length, 'review question'),
     ...(unshipped.length ? [`your sign-off to take ${unshipped.join(', ')} live`] : []),
+    ...(changed.length ? [`your yes again on ${changed.join(', ')}, changed since approval`] : []),
   ];
   out.push('');
   if (!waiting.length) out.push('🙋 Nothing is waiting on you.');
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));
-  const changed = changedBriefs(root, state);
-  if (changed.length) out.push('', `⚠️ Changed since approval: ${changed.join(', ')} — show them again, record the yes, then reconfirm`);
 
   const what = brief && stage !== 'look' ? `${NEXT[stage]} ${name(brief)}` : NEXT[stage];
-  const ending = stage === 'idle' ? '' : waiting.length || NEEDS_YOU.includes(stage) ? ' — needs you' : ' — nothing needed from you';
+  const ending = stage === 'idle' ? '' : waiting.length ? ' — needs you' : ' — nothing needed from you';
   out.push('', `🎯 Next   ${what}${also.length ? ` (with ${also.join(', ')})` : ''}${ending}`);
   return out.join('\n');
 }

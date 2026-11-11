@@ -96,3 +96,5 @@ between three options already judged: "I am not even pay attention anymore, just
 recommended or whatever... I thought you will act as a partner." From here, learn makes
 owner-treatment changes it would recommend and reports them here; the owner undoes what
 they disagree with.
+
+Tidied in 0.8.0: a later brief no longer has a flow stop of its own before the look stage; every brief after a new product's first walk goes to the walkers first and to the owner once, at the look stage, with their findings. The 0.6.1 rule for changes to a confirmed screen is now the rule for every later brief.

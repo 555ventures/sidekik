@@ -4,9 +4,8 @@
 
 Briefs listed under `Also at this stage` that touch separate files and do not need each
 other's results are built at the same time, one maker per brief. Give each its build note,
-its prototype examples, the decision log, `sidekik/model.md` and the files it owns. What
-they share (stored data, shared components, navigation) is built before they start. A
-brief that depends on another waits for it.
+its prototype examples, the decision log, `sidekik/model.md` and the files it owns. A brief
+that depends on another waits for it.
 
 ## Prove it
 

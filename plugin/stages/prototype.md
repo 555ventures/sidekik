@@ -78,13 +78,10 @@ that are yours rather than the owner's as `[settled] NN: … → what you chose`
    yourself only there.
 2. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
    flow in step order, every step with its screenshot or the spoken lines of its exchange,
-   one anchor per step. A new product's first walk goes one flow at a time, each step in
-   words with its anchor, the owner answering yes or change per step, because every screen
-   is new. A later brief is one stop: the flows page, what changed in a few lines, the
-   questions only the owner can rule, and one yes that covers the rest. A flow they change
-   makes a walk worthless, so this comes before the walkers. For a change to a confirmed
-   screen the order flips: the walkers go first and the owner sees their findings with the
-   change, so the yes is final.
+   one anchor per step. On a new product's first walk, ask one flow at a time, each step
+   in words with its anchor, the owner answering yes or change per step, before the
+   walkers: a flow they change makes a walk worthless. Every later brief goes to the
+   walkers first and to the owner once, at the look stage, with their findings.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic.
 

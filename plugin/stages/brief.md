@@ -22,13 +22,13 @@ usually one, and takes the next number. Format: `- 01 booking-flow: Clients book
 appointment in under a minute.`
 
 Work all of this out from what the owner said and from the project. Do not interview. Ask
-only what you cannot work out and what would change the list.
+only what you cannot work out: what would change the list and, for a new product, the words
+the prototype needs (the voice of the product, two or three products whose feel they like,
+what to avoid).
 
 Show the owner the list, with the two or three lines that say what the product is and for
 whom; the picture stays in the file. Say that this yes fixes only what the product will do,
-that how each thing looks is decided in the prototype, and that two or three candidates for
-the heart of the product come next. Ask once whether anything is missing or wrong, and for a
-new product, in the same stop, what the prototype needs words for: the voice of the product,
-two or three products whose feel they like, what to avoid; never what the conversation
-already said. Change it as they say, then record their yes with `decide.js add all
-"<their words>"` and run `state.js mark briefed`.
+that how each thing looks is decided in the prototype and, for a new product, that two or
+three candidates for the heart of the product come next. Ask once whether anything is
+missing or wrong, with those questions. Change it as they say, then record their yes with
+`decide.js add all "<their words>"` and run `state.js mark briefed`.

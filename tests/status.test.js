@@ -63,7 +63,7 @@ test('the screen shows the roadmap, progress, today, so far, repeating causes, w
 });
 
 test('an empty project says there are no briefs and that the brief list comes next', () => {
-  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Nothing is waiting on you.\n\n🎯 Next   agree the brief list — needs you\n');
+  assert.equal(status(null).out, '🗺️ No briefs yet.\n\n🙋 Waiting on you\n   └─ your yes on the brief list\n\n🎯 Next   agree the brief list — needs you\n');
 });
 
 test('with nothing waiting the section is one line, and the title falls back to the folder name', () => {
@@ -87,8 +87,9 @@ test('a tidy comes next once every brief is finished and the codebase is not yet
   assert.match(out, /\n🎯 Next   tidy the codebase — needs you\n$/);
 });
 
-test('a brief whose examples changed after approval gets one line before the next step', () => {
-  const { out } = status({ stack: true, approved: { '01': 'old-hash', '02': 'old-hash' }, briefs: { '01': 'done', '02': 'confirmed' } },
+test('a brief whose examples changed after approval is listed under Waiting on you', () => {
+  const { out } = status({ stack: true, approved: { '01': 'old-hash' }, briefs: { '01': 'done', '02': 'confirmed' } },
     { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
-  assert.match(out, /\n\n⚠️ Changed since approval: 01, 02 — show them again, record the yes, then reconfirm\n\n🎯 Next/);
+  assert.match(out, /\n   └─ your yes again on 01, changed since approval\n\n🎯 Next.* — needs you\n$/);
+  assert.doesNotMatch(out, /⚠️/);
 });

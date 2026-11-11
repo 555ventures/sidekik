@@ -7,7 +7,7 @@ Show every brief that is prototyped and waiting, in one stop:
 - `shots/flows.html` as it now stands, and any example no flow reaches,
 - one way to open it and try it, and a few lines on what to try,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
-  what it costs to build. Smaller ones are calls, listed in `sidekik/calls.md`,
+  what it costs to build. Smaller ones are calls,
 - the open questions (`decide.js questions`).
 
 End your turn.

@@ -33,9 +33,11 @@ engine, a pipeline). Confirmed examples become the tests.
 
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are held by the scripts, each needing the owner's yes
-recorded as a decision: the brief list, the prototype, the stack picks and going live. The
-build between them runs unattended and reports as it goes. A bug or a
-small tweak skips the stages: it is fixed directly and reported in one line.
+recorded as a decision: the brief list and each brief's prototype need a decision for
+them; the stack picks and going live need an `all` decision dated on or after the latest
+`confirmed` or `done` mark (the marks table says exactly what each accepts). The build
+between them runs unattended and reports as it goes. A bug or a small tweak skips the
+stages: it is fixed directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
 and a mistake that repeats three times must get a machine check.
@@ -198,8 +200,9 @@ the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.
 When any brief with an `approved` hash has mapped files that no longer match it (finished
-briefs included), `next` adds a last line `Changed since approval: 01, 02`, and `status.js`
-shows the same list on its own `⚠️` line before the next step.
+briefs included), `next` adds a last line `Changed since approval: 01, 02`, and
+`status.js` lists them under Waiting on you as `your yes again on 01, 02, changed since
+approval`.
 
 `scripts/status.js` is the progress screen. It derives everything from the same functions
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:
@@ -245,20 +248,20 @@ shows the same list on its own `⚠️` line before the next step.
   `- fix:` lines in `lessons.md`.
 - Repeating, shown when a cause other than `none` appears twice or more in `lessons.md` on
   brief and fix lines: each such cause with its count, most frequent first.
-- Waiting on you, in this order: one line for open questions filed under `all` (`N question(s) on the
+- Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
   whole product`), counted once; one line per brief with open questions filed under that
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
   `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief whose
   review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
-  take 01, 02 live` listing `done` briefs not yet shipped, when there are any. Tree
+  take 01, 02 live` listing `done` briefs not yet shipped, when there are any; `your yes again on 01, 02, changed since approval` when approved briefs changed. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
 - Next is the last line: `agree the brief list`, `prototype NN slug`, `your look at the
   prototype`, `choose the stack`, `build note for NN slug`, `build NN slug`, `review NN
   slug`, `report NN slug`, `tidy the codebase`, `your sign-off to go live`, or `nothing to
   do, everything is live`. When other briefs are at the same stage it adds ` (with 02, 03)`.
-  It ends ` — needs you` for the brief, look, stack and ship stages or whenever
-  something waits on the owner, ` — nothing needed from you` when nothing waits, and nothing for idle.
+  It ends ` — needs you` when the Waiting on you block has a line, else ` — nothing needed
+  from you` (idle has no ending).
 
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
@@ -284,8 +287,8 @@ From a shell inside a project, install the short command once with `npm install 
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
-  `nextStep(root, state)` and `lessonCauses(root)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
-  `mark stack|tidying|tidied|shipped`, `reconfirm <NN>`, `set-check "<cmd>"`,
+  `nextStep(root, state)`, `lessonCauses(root)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+  `mark briefed|stack|tidying|tidied|shipped`, `reconfirm <NN>`, `set-check "<cmd>"`,
   `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
   plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.

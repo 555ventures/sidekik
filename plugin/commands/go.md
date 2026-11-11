@@ -33,7 +33,7 @@ Size it first, and tell the owner which size you chose:
   reproduce: say so, have a maker make the next occurrence name itself (a log line, and
   the test that will catch it), and record it as unproven in `sidekik/calls.md`.
   Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`.
-- **A small tweak** that changes no behaviour (a label, a colour, a limit): a maker changes
+- **A small tweak** that changes no behaviour (a label, a colour): a maker changes
   exactly what was asked, and you run the check.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 - **A question** (is this the best way, how do others do it): scouts research it and you
@@ -89,9 +89,9 @@ risk the moment you see it. Everything else is yours to settle.
   product or its users gain or lose, never how the code works.
 - Ask a choice once, batched, in one AskUserQuestion (at most 4 per call). A stop where
   the owner must look first is printed, and the turn ends. A dismissed question or a
-  partial reply is not a yes. Never ask what the project already answers, nor what you
-  would recommend without doubt: a yes you can predict is a call, listed at the next stop,
-  not a question.
+  partial reply is not a yes. Apart from the yeses above that are theirs, never ask what
+  the project already answers, nor what you would recommend without doubt: a yes you can
+  predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
 - Everything the owner rules, a reaction or a yes at a stop, goes in the decision log when
   they say it, through `decide.js add <NN|all> "<their words>"`; the scripts do not move on

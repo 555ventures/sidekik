@@ -66,9 +66,9 @@ project root or with `--root <dir>`.
    safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
 
 The `sidekik/` folder is landed with the work. You land work: makers never run git, and on
-a product with a check command every commit passes it first, whatever the stage. Every
-process you or an agent starts runs as a tracked background task, and you stop them all
-before your turn ends.
+a product with a check command every commit passes it first, whatever the stage. Every process you or an agent starts runs as a tracked background task, and you stop them
+all before your turn ends, except one the owner needs for a stop (a prototype they talk
+to live): the stop and `handoff.md` name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),

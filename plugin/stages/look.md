@@ -14,8 +14,8 @@ Show every brief that is prototyped and waiting, in one stop:
 Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
 steps one at a time. End your turn.
 
-Something they accepted that needs a new example gets one before you call the brief
-confirmed.
+Something they accepted that needs a new or changed example gets it first, and no brief
+whose example it changes is confirmed until then, whichever brief asked for it.
 
 Repeat, using the real thing again each round. Aim for every persona finishing its task
 without help and the skeptic's biggest objection answered. Then only the owner's clear yes

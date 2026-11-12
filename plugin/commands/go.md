@@ -51,7 +51,10 @@ Scripts live in `${CLAUDE_PLUGIN_ROOT}/scripts`. Stage files name them bare:
 `state.js next` means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the
 project root or with `--root <dir>`.
 
-1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. For an existing
+1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. The project is a
+   git repo with a private GitHub remote from its first commit: create what is missing
+   (`git init`, `gh repo create --private --source . --push`) and say so in one line; if
+   `gh` is not logged in, tell the owner in one line and carry on. For an existing
    product, learn how it runs, how it is checked and how it behaves, then run its check
    (make the smallest one first if it has none, and tell the owner first if it already
    fails). Then `state.js init --existing "<check command>"`. For an empty project:
@@ -68,11 +71,11 @@ project root or with `--root <dir>`.
    yours is running (no agent, no background task, no server), tell the owner in one line
    that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
 
-The `sidekik/` folder is landed with the work. You land work: makers never run git, and on
-a product with a check command every commit passes it first, whatever the stage. Every
-process you or an agent starts runs as a tracked background task, and you stop them all
-before your turn ends, except one the owner needs for a stop: the stop and `handoff.md`
-name its address and how to stop it.
+The `sidekik/` folder is landed with the work. You land work: makers never run git, every
+commit is pushed, and on a product with a check command every commit passes it first,
+whatever the stage. Every process you or an agent starts runs as a tracked background
+task, and you stop them all before your turn ends, except one the owner needs for a
+stop: the stop and `handoff.md` name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),

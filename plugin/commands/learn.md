@@ -42,7 +42,7 @@ you would recommend, describe it in `PROPOSALS.md` with why, and tell the owner 
 can undo it; ask first only when you cannot tell which way they would go.
 
 Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
-when the last four commits hold none that starts with `tidy:`, dispatch one
+when the last four versions hold none that starts with `tidy:`, dispatch one
 general-purpose agent on Opus at the highest effort over the whole plugin, for rules that
 repeat or contradict, special cases stacked on one part, and rules no lesson or the current
 model needed. It reads every file and quotes the sentences it names. The result is a

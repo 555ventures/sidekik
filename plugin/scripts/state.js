@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { readState, writeState, read, sha, day, rootFrom } = require('./lib/store');
+const { readState, writeState, read, sha, rootFrom } = require('./lib/store');
 const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
 
@@ -100,12 +100,14 @@ function doneWhenItems(note) {
   return (end === -1 ? after : after.slice(0, end)).filter((l) => l.startsWith('- ')).length;
 }
 
-// The owner's yes counts when a decision for `brief` is dated on or after the day of the last mark it must follow
-// (of `markBrief` when given). An older state file may lack that mark, and then any such decision counts.
+// The decisions file only grows, so the owner's yes is a decision for `brief` after the first `count` lines.
+const decidedAfter = (root, brief, count = 0) => decisionsFor(root).slice(count).some((d) => d.brief === brief);
+
+// The owner's yes counts when it comes after the last mark it must follow (of `markBrief` when given). A mark
+// records how many decisions there were; an older entry without that counts as 0, so any decision counts.
 function decidedSince(root, state, brief, mark, markBrief) {
   const last = state.history.findLast((h) => h.mark === mark && !h.refused && (markBrief === undefined || h.brief === markBrief));
-  const since = last && day(last.at);
-  return decisionsFor(root, brief).some((d) => !since || d.date >= since);
+  return decidedAfter(root, brief, last?.decisions);
 }
 
 const REQUIRES = {
@@ -167,10 +169,10 @@ const REQUIRES = {
   },
 };
 
-// An approval covers the prototype as it stands, the decisions recorded so far and the day; a later reconfirm needs a yes beyond them.
+// An approval covers the prototype as it stands and the decisions recorded so far; a later reconfirm needs a yes after them.
 function approve(root, state, nn) {
   state.approved[nn] = briefHash(root, nn);
-  state.approvals[nn] = { count: decisionsFor(root, nn).length, on: day() };
+  state.approvals[nn] = { count: decisionsFor(root).length };
 }
 
 function markBrief(root, state, nn, mark) {
@@ -328,10 +330,8 @@ function main(root, [cmd, a, b, ...more]) {
     if (rank(state, brief) < 0) return `Brief ${a} has no prototype ready yet, so there is nothing to approve again.`;
     const problem = REQUIRES.confirmed(root, state, brief);
     if (problem) return problem;
-    // A new yes is one more decision than at the approval, or one dated after its day. A brief never approved has neither.
-    const { count, on } = state.approvals[a] ?? { count: 0, on: '0000-00-00' };
-    const decisions = decisionsFor(root, a);
-    if (decisions.length <= count && !decisions.some((d) => d.date > on)) {
+    // A new yes is a decision for the brief after the file's length at the approval. A brief never approved counts every one.
+    if (!decidedAfter(root, a, state.approvals[a]?.count)) {
       return `Brief ${a} changed after the owner approved it, and no new yes is recorded. Record it first with decide.js add ${a} "<their words>", then run state.js reconfirm ${a}.`;
     }
     approve(root, state, a);
@@ -340,7 +340,7 @@ function main(root, [cmd, a, b, ...more]) {
   } else if (cmd === 'mark' && a) {
     const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
     const problem = markProject ? markProject(root, state, [b, ...more].filter(Boolean)) : markBrief(root, state, a, b);
-    const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), ...(problem && { refused: true }) };
+    const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), decisions: decisionsFor(root).length, ...(problem && { refused: true }) };
     // A refused attempt leaves the stored state as it was, apart from the history.
     writeState(root, { ...(problem ? stored : state), history: [...state.history, entry] });
     if (problem) return problem;

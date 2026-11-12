@@ -5,8 +5,7 @@ The owner is needed here. This is the design review.
 Show every brief that is prototyped and waiting, in one stop:
 
 - `shots/flows.html` as it now stands, every example in a flow (a maker adds a flow for
-  one no flow reaches first); an exchange is seen as its spoken lines, never as its
-  file, and a change is described by what the user gets, never by its mechanism,
+  one no flow reaches first),
 - one way to open it and try it, and a few lines on what to try,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
   what it costs to build. Smaller ones are calls,

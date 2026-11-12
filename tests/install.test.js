@@ -14,7 +14,7 @@ const hasNode = (d) => fs.existsSync(path.join(d, 'node'));
 const noNode = (...dirs) => [...dirs, '/usr/bin', '/bin'].filter((d) => !hasNode(d)).join(path.delimiter);
 const install = (home, pathVar) => spawnSync(process.execPath, [script], { encoding: 'utf8', env: { ...process.env, HOME: home, PATH: pathVar } });
 
-test('the installer writes an executable wrapper, silently, and leaves it alone the second time', () => {
+test('the installer writes an executable wrapper, silently', () => {
   const home = tmp();
   const bin = path.join(home, '.local', 'bin');
   const pathVar = noNode(bin);
@@ -40,7 +40,7 @@ test('the installer writes an executable wrapper, silently, and leaves it alone 
   assert.match(run.stdout, /Stage: brief/);
 });
 
-test('the installer says once that ~/.local/bin is not on the PATH', () => {
+test('the installer says when ~/.local/bin is not on the PATH', () => {
   const r = install(tmp(), noNode());
   assert.equal(r.status, 0);
   assert.equal(r.stdout, 'sidekik: the sidekik command is installed in ~/.local/bin, which is not on your PATH; add it to use it from a shell.\n');

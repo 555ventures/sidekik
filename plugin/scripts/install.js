@@ -24,8 +24,7 @@ try {
   fs.mkdirSync(bin, { recursive: true });
   const isLink = fs.lstatSync(target, { throwIfNoEntry: false })?.isSymbolicLink() ?? false;
   if (!isLink) {
-    const current = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null;
-    if (current !== wrapper) fs.writeFileSync(target, wrapper);
+    fs.writeFileSync(target, wrapper);
     fs.chmodSync(target, 0o755);
     if (bin === localBin && !onPath(bin)) console.log('sidekik: the sidekik command is installed in ~/.local/bin, which is not on your PATH; add it to use it from a shell.');
   }

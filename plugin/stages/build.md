@@ -16,4 +16,4 @@ Commit the brief as one commit of its own and run `state.js mark <NN> built` bef
 commit the next brief of the wave: the mark measures what was committed since the one
 before it. The mark prints the brief's size. Tests larger than the code, or a brief far
 larger than its examples suggest, means something was built twice: find out what. Land
-the commit the way the project lands changes. Landing is not going live.
+the commit the way the project lands changes.

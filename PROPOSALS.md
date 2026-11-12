@@ -36,7 +36,7 @@ one."
 
 The rule as it now stands: every brief, a new product's included, goes to the walkers
 first and to the owner once, at the look stage, with the flows page, the walkers'
-findings, the calls and open questions grouped by flow, and one yes for all or the changes
+findings, the calls and open questions, and one yes for all or the changes
 by step; a flow the owner wants walked gets its steps one at a time (0.3.7, 0.7.4, 0.8.0,
 0.9.4, tidied in 0.10.0).
 
@@ -54,6 +54,18 @@ confirmed, the partner corrected a one-cent sum and ran `reconfirm` without a re
 yes. Now every change to confirmed examples, however small, needs the owner's yes again,
 recorded with `decide.js add NN` before `reconfirm`, which the script refuses without it;
 the ask goes in the owner's next stop, not a separate interruption.
+
+## The gates read the decision log in order, not by day
+
+**Decided 2026-11-12, applied in 0.12.0 (tidy).** The tidy's reviewer proved in scratch
+projects that the three dated gates (a brief's `confirmed` mark, the `stack` mark and the
+`shipped` mark) passed on any decision from the same calendar day as the mark, even one
+recorded before it: a candidate pick confirmed a brief that never reached the look, the
+brief-list yes passed the stack with no picks shown, and a close-stage answer put a brief
+live with no go-live yes. Decisions carried only a day. Each mark now records how many
+decision lines existed when it was made, and a gate needs a decision for its brief
+recorded after that point; `reconfirm` works the same way. Nothing is asked that was
+not asked before; the yes is now the one given after the mark, as the guides always said.
 
 ## Approval and going live are one question
 

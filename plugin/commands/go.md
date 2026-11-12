@@ -53,7 +53,7 @@ project root or with `--root <dir>`.
 
 1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. The project is a
    git repo with a private GitHub remote from its first commit: create what is missing
-   (`git init`, `gh repo create --private --source . --push`) and say so in one line; if
+   (`git init`, `gh repo create --private --source .`) and say so in one line; if
    `gh` is not logged in, tell the owner in one line and carry on. For an existing
    product, learn how it runs, how it is checked and how it behaves, then run its check
    (make the smallest one first if it has none, and tell the owner first if it already
@@ -71,11 +71,11 @@ project root or with `--root <dir>`.
    yours is running (no agent, no background task, no server), tell the owner in one line
    that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
 
-The `sidekik/` folder is landed with the work. You land work: makers never run git, every
-commit is pushed, and on a product with a check command every commit passes it first,
-whatever the stage. Every process you or an agent starts runs as a tracked background
-task, and you stop them all before your turn ends, except one the owner needs for a
-stop: the stop and `handoff.md` name its address and how to stop it.
+The `sidekik/` folder is landed with the work. You land work, and landing is not going
+live: makers never run git, every commit is pushed, and on a product with a check command
+every commit passes it first, whatever the stage. Every process you or an agent starts
+runs as a tracked background task, and you stop them all before your turn ends, except one
+the owner needs for a stop: the stop and `handoff.md` name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),
@@ -94,8 +94,9 @@ cannot be undone, when scope or time changes, and for sign-off before going live
 risk the moment you see it. Everything else is yours to settle.
 
 - Question style: plain words, every option carrying its consequence, the recommended option
-  first, readable cold in ten seconds by someone with no repo context. An option is what the
-  product or its users gain or lose, never how the code works.
+  first, readable cold in ten seconds by someone with no repo context. Whatever you put to
+  the owner is what the product or its users see, gain or lose, never a file or how the
+  code works.
 - Ask a choice once, batched, in one AskUserQuestion (at most 4 per call). A stop where
   the owner must look first is printed, and the turn ends. A dismissed question or a
   partial reply is not a yes. Apart from the yeses above that are theirs, never ask what

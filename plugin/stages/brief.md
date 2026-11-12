@@ -22,13 +22,12 @@ would understand. It can add a feature, change one or remove one. Order them by 
 exist first; there are usually three to eight. Format: `- 01 booking-flow: Clients book an
 appointment in under a minute.`
 
-Work all of this out from what the owner said and from the project. Ask only what you
-cannot work out: what would change the list and the words the prototype needs (the voice
-of the product, two or three products whose feel they like, what to avoid). When the idea
-is still rough (is it feasible, who competes, what should it do first), the picture is
-worked out in talk, not in a reply: the owner speaks first, each turn of yours carries one
-idea and at most one question, and a scout researches who else solves this and what it
-would take while you talk and its facts enter the conversation.
+Ask only what would change the list and the words the prototype needs (the voice of the
+product, two or three products whose feel they like, what to avoid). When the idea is
+still rough (is it feasible, who competes, what should it do first), the picture is worked
+out in talk, not in a reply: the owner speaks first, each turn of yours carries one idea
+and at most one question, and a scout researches who else solves this and what it would
+take while you talk and its facts enter the conversation.
 The stop below is where the talk ends.
 
 Show the owner the list, with the two or three lines that say what the product is and for

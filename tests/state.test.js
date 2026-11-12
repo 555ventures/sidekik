@@ -106,16 +106,17 @@ test('next lists the briefs whose examples changed after approval', () => {
   assert.match(p.run('next').out, /Base: none\nChanged since approval: 01\n$/);
 });
 
-test('reconfirm passes on a decision dated after the approval day even when the count did not grow', () => {
+test('reconfirm needs a decision for the brief recorded after the approval, the same day included', () => {
   const state = { briefs: { '01': 'confirmed' }, approved: { '01': 'old-hash' } };
-  const later = { 'decisions.md': `${YES}${YES_01}- 2026-01-02 01: Fine after the change.\n` };
-  project({ ...state, approvals: { '01': { count: 2, on: '2026-01-02' } } }, later).refused(['reconfirm', '01'], /no new yes is recorded/);
-  const p = project({ ...state, approvals: { '01': { count: 2, on: '2026-01-01' } } }, later);
+  const later = { 'decisions.md': `${YES}${YES_01}- 2026-01-01 01: Fine after the change.\n` };
+  project({ ...state, approvals: { '01': { count: 3 } } }, later).refused(['reconfirm', '01'], /no new yes is recorded/);
+  const other = { 'decisions.md': `${YES}${YES_01}- 2026-01-02 02: Another brief.\n` };
+  project({ ...state, approvals: { '01': { count: 2 } } }, other).refused(['reconfirm', '01'], /no new yes is recorded/);
+  const p = project({ ...state, approvals: { '01': { count: 2 } } }, later);
   assert.equal(p.run('reconfirm', '01').code, 0);
-  assert.equal(p.read().approvals['01'].count, 2);
-  const sameDay = { 'decisions.md': `${YES}${YES_01}- 2026-01-01 01: Second yes, same day.\n` };
-  assert.equal(project({ ...state, approvals: { '01': { count: 1, on: '2026-01-01' } } }, sameDay).run('reconfirm', '01').code, 0);
-  project({ ...state, approvals: { '01': { count: 2, on: '2026-01-01' } } }, sameDay).refused(['reconfirm', '01'], /no new yes is recorded/);
+  assert.equal(p.read().approvals['01'].count, 3);
+  // An approval stored before the count was the file's length is read as it is.
+  assert.equal(project({ ...state, approvals: { '01': { count: 1, on: '2026-01-01' } } }, later).run('reconfirm', '01').code, 0);
 });
 
 test('init writes a fresh state once, and --existing settles the stack', () => {
@@ -133,7 +134,7 @@ test('init writes a fresh state once, and --existing settles the stack', () => {
 
   const joined = project(null);
   assert.match(joined.run('init', '--existing', 'lint; test').out, /cannot contain ";"/);
-  assert.equal(joined.run('init').code, 0, 'the refused init left no state behind');
+  assert.equal(joined.run('init').out, 'Sidekik is set up in this project.\n', 'the refused init left no state behind');
 });
 
 test('a failing check shows only the tail of its output', () => {
@@ -166,14 +167,18 @@ test('confirmed needs untampered decisions and no open question for the brief', 
   assert.equal(p.read().briefs['01'], 'confirmed');
 });
 
-test('confirmed needs a decision for exactly this brief dated on or after its prototyped mark', () => {
+test('confirmed needs a decision for exactly this brief recorded after its prototyped mark', () => {
   const at = new Date(2026, 5, 15, 12).toISOString();
-  const state = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at }] };
+  const state = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at, decisions: 2 }] };
   const refusal = /no decision recording the owner's yes on its prototype\. After their yes, run decide\.js add 01 "<their words>" and mark again\./;
   project(state, { 'decisions.md': YES }).refused(['mark', '01', 'confirmed'], refusal);
   project(state, { 'decisions.md': `${YES}- 2026-06-14 01: Before the prototype was done.\n` }).refused(['mark', '01', 'confirmed'], refusal);
-  const p = project(state, { 'decisions.md': `${YES}- 2026-06-15 01: Same day.\n` });
+  project(state, { 'decisions.md': `${YES}- 2026-06-15 02: Another brief, after.\n` }).refused(['mark', '01', 'confirmed'], refusal);
+  const p = project(state, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Same day, after.\n` });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
+  // A mark from before the count was kept lets any decision for the brief count.
+  const old = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at }] };
+  assert.equal(project(old).run('mark', '01', 'confirmed').code, 0);
 });
 
 test('confirmed binds the approval to the mapped files, so noted and built refuse after a change until reconfirm', () => {
@@ -299,7 +304,7 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   const stack = { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' };
   project({ ...state, briefs: { '01': 'confirmed' } }, stack).refused(['mark', 'stack'], /Every brief/);
   const at = new Date(2026, 5, 15, 12).toISOString();
-  const history = [{ brief: '01', mark: 'confirmed', at }, { brief: '02', mark: 'confirmed', at }];
+  const history = [{ brief: '01', mark: 'confirmed', at, decisions: 2 }, { brief: '02', mark: 'confirmed', at, decisions: 2 }];
   const refusal = /stack has no decision recording the owner's picks\. After their yes, run decide\.js add all "<their picks>" and mark again\./;
   project({ ...state, history }, { ...stack, 'decisions.md': YES_01 }).refused(['mark', 'stack'], refusal);
   project({ ...state, history }, { ...stack, 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'stack'], refusal);
@@ -323,14 +328,14 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
 test('the shipped mark records named done briefs, or every done brief not yet shipped, on the owner\'s yes for each, joins the history with no brief', () => {
   const state = { stack: true, briefs: { '01': 'done', '02': 'done', '03': 'built' } };
   const at = new Date(2026, 5, 15, 12).toISOString();
-  const history = [{ brief: '01', mark: 'done', at }, { brief: '02', mark: 'done', at }];
+  const history = [{ brief: '01', mark: 'done', at, decisions: 2 }, { brief: '02', mark: 'done', at, decisions: 2 }];
   project({ ...state, shipped: ['01', '02'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
   project(state).refused(['mark', 'shipped', '03'], /Brief 03 is not finished/);
   const refusal = /no decision recording the owner's yes to take brief 01 live\. After their yes, run decide\.js add 01 "<their words>", and mark again\./;
   project({ ...state, history }, { 'decisions.md': YES_01 }).refused(['mark', 'shipped'], refusal);
   project({ ...state, history }, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped', '01'], refusal);
   project({ ...state, history }, { 'decisions.md': '- 2026-06-15 02: Go live.\n' }).refused(['mark', 'shipped', '01', '02'], refusal);
-  const p = project({ ...state, history, tidied: 0 }, { 'decisions.md': '- 2026-06-15 01: Go live.\n- 2026-06-15 02: Go live.\n' });
+  const p = project({ ...state, history, tidied: 0 }, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Go live.\n- 2026-06-15 02: Go live.\n` });
   const first = p.run('mark', 'shipped', '01');
   assert.equal(first.code, 0);
   assert.match(first.out, /now live: 01\./);
@@ -338,6 +343,26 @@ test('the shipped mark records named done briefs, or every done brief not yet sh
   assert.equal(p.run('mark', 'shipped').code, 0);
   assert.deepEqual(p.read().shipped, ['01', '02']);
   assert.deepEqual(p.read().history.slice(-2).map(({ brief, mark }) => ({ brief, mark })), [{ brief: null, mark: 'shipped' }, { brief: null, mark: 'shipped' }]);
+});
+
+test('a yes recorded before the mark it must follow does not count, even on the same day', () => {
+  const at = new Date(2026, 5, 15, 12).toISOString();
+  // Confirmed: only a candidate pick for the brief, recorded before the prototyped mark.
+  const proto1 = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at, decisions: 3 }] };
+  const pick = `${YES}${YES_01}- 2026-06-15 01: Candidate B.\n`;
+  project(proto1, { 'decisions.md': pick }).refused(['mark', '01', 'confirmed'], /no decision recording the owner's yes on its prototype/);
+  assert.equal(project(proto1, { 'decisions.md': `${pick}- 2026-06-15 01: The prototype is right.\n` }).run('mark', '01', 'confirmed').code, 0);
+  // Stack: only the brief-list yes, recorded before the latest confirmed mark.
+  const stack = { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' };
+  const state = { check: IN_ROOT, briefs: { '01': 'confirmed', '02': 'confirmed' },
+    history: [{ brief: '01', mark: 'confirmed', at, decisions: 2 }, { brief: '02', mark: 'confirmed', at, decisions: 3 }] };
+  const listed = `${YES}${YES_01}- 2026-06-15 02: Looks right.\n`;
+  project(state, { ...stack, 'decisions.md': listed }).refused(['mark', 'stack'], /stack has no decision recording the owner's picks/);
+  project(state, { ...stack, 'decisions.md': `${listed}- 2026-06-15 all: Node it is.\n` }).refused(['mark', 'stack'], /nothing is committed yet/);
+  // Shipped: only a decision recorded before the done mark.
+  const done = { stack: true, briefs: { '01': 'done' }, history: [{ brief: '01', mark: 'done', at, decisions: 2 }] };
+  project(done, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped', '01'], /no decision recording the owner's yes to take brief 01 live/);
+  assert.equal(project(done, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Go live.\n` }).run('mark', 'shipped', '01').code, 0);
 });
 
 test('the tidy stage: tidied needs tidying first, a passing check and a guard for a cause seen three times', () => {

@@ -38,11 +38,9 @@ engine, a pipeline). Confirmed examples become the tests.
 
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are held by the scripts, each needing the owner's yes
-recorded as a decision: the brief list and each brief's prototype need a decision for
-them; the stack picks need an `all` decision dated on or after the latest
-`confirmed` mark, and going live a decision for the brief dated on or after its
-own `done` mark (the marks table says exactly what each accepts). The build
-between them runs unattended and reports as it goes. A bug or a small tweak skips the
+recorded as a decision: the brief list, each brief's prototype, the stack picks and going
+live (the marks table says exactly what each accepts). The build between them runs
+unattended and reports as it goes. A bug or a small tweak skips the
 stages: it is fixed directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
@@ -73,7 +71,7 @@ sidekik/
   decisions.md          the owner's rulings; written only by decide.js
   questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
   calls.md              calls Claude made, for the owner to overrule
-  handoff.md            where a half-finished stage stands, for the next session
+  handoff.md            where the work stands, for the next session
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas
   lessons.md            - 01: [cause] text   - fix: [cause] text   - guard: [cause] text
@@ -115,11 +113,11 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
-  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": { "count": 1, "on": "2026-11-09" } },
+  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": { "count": 3 } },
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
-  "history": [ { "brief": "01", "mark": "built", "at": "2026-11-09T10:20:00.000Z" } ],
+  "history": [ { "brief": "01", "mark": "built", "at": "2026-11-09T10:20:00.000Z", "decisions": 3 } ],
   "briefs": { "01": "built" } }
 ```
 
@@ -130,7 +128,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | mark | requires |
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) dated on or after the day of its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the brief has and the day |
+| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) recorded after its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the file holds |
 | `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, is at most 60 lines, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the brief's mapped files still match `approved`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size, and moves the base of every brief still at `noted` to the current commit |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
@@ -139,14 +137,15 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 When mapped files no longer match `approved`, the refusal says the prototype changed after
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. Briefs at the same stage
-can move in parallel.
+requirements as `confirmed`, and it also needs a decision for that brief recorded after the
+last approval, so a changed prototype is never approved again on the old yes. Briefs at the
+same stage can move in parallel.
 
 Project marks:
 
 - `briefed`: `briefs.md` has brief lines and an `all` decision exists (the owner's yes on the list). It sets `briefed` true.
 - `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and `## Your steps`;
-  `model.md` exists; an `all` decision is dated on or after the day of the latest `confirmed`
+  `model.md` exists; an `all` decision is recorded after the latest `confirmed`
   mark of any brief; a check command is set and exits 0; the project has a commit and
   nothing outside `sidekik/` is uncommitted, so every brief gets a base.
   `init --existing "<check command>"` sets `stack` true at once.
@@ -156,10 +155,12 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it dated on or after the day of its `done` mark. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `done` mark. Adds them to `shipped`.
 
-Every mark attempt, brief or project, appends `{ brief, mark, at }` to `history` (`brief` is
-null for a project mark), with `refused: true` when it was refused.
+Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to `history`
+(`brief` is null for a project mark; `decisions` is how many decisions the file held at that
+moment, and an older entry without it counts as 0), with `refused: true` when it was
+refused.
 
 `set-check "<command>"` refuses a command that contains `;`, saying to join the steps with
 `&&` so that a failing step fails the whole check.
@@ -197,7 +198,7 @@ What `next` answers:
 
 `next` prints six lines: `Stage:`, `Brief: NN slug: sentence` or `Brief: none`, `Read:` with
 the absolute path of the stage file (`none` for idle) and the plugin version, as
-`(sidekik 0.11.0)`, `Also at this stage: 02, 03` listing
+`(sidekik <version>)`, `Also at this stage: 02, 03` listing
 the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.

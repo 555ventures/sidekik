@@ -24,7 +24,12 @@ appointment in under a minute.`
 Work all of this out from what the owner said and from the project. Do not interview. Ask
 only what you cannot work out: what would change the list and, for a new product, the words
 the prototype needs (the voice of the product, two or three products whose feel they like,
-what to avoid).
+what to avoid). When the idea is still rough (is it feasible, who competes, what should it
+do first), the picture is worked out in talk, not in a reply: the owner speaks first, each
+turn of yours carries one idea and at most one question, a scout researches who else
+solves this and what it would take while you talk and its facts enter the conversation,
+and a `sidekik:walker` as the skeptic attacks the idea before the list is written. The stop
+below is where the talk ends.
 
 Show the owner the list, with the two or three lines that say what the product is and for
 whom; the picture stays in the file. Say that this yes fixes only what the product will do,

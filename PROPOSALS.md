@@ -76,6 +76,24 @@ goes to them at once as one question, drawn beside the approved example it chang
 before anything is redrawn on it; the same sentence now serves the tidy stage, which had
 its own copy.
 
+## A rough idea is worked out in talk, not in a reply
+
+**Decided 2026-11-12, applied in 0.10.2.** From a new product with no `sidekik/` folder
+yet, the second project after Sumaro: the owner arrived with a rough idea and questions
+(is it feasible, what is the best UX, who competes), and the brief guide's "work all of
+this out from what the owner said, do not interview" produced one long structured reply:
+"This is so long. I said I want this to be conversational!" What worked was short turns
+with one idea and at most one question, a scout researching the market in the background
+whose report changed the priorities, and the owner speaking first.
+
+Applied, guide change only: when the idea is rough, the brief stage works the picture out
+in talk, owner first, one question a turn, a scout on competitors and feasibility running
+meanwhile, a `sidekik:walker` as the skeptic on the idea before the list is written. The
+stop and the yes are the ones that already exist. Not a new command or stage: a discovery
+step would put a third stop and a third artifact in front of the owner, and the session's
+own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
+over-engineering the plugin avoids; the four sentences above are what the owner said worked.
+
 ## The brief stop is short, says what comes next, and carries the prototype's word questions
 
 **Decided 2026-11-11, applied in 0.7.2.** From Sumaro: the owner typed "make prototype for

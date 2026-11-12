@@ -1,10 +1,13 @@
 'use strict';
 // The commands that read and move a project through its marks and stages.
+const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { readState, writeState, read, sha, day, rootFrom } = require('./lib/store');
 const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
+
+const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.claude-plugin', 'plugin.json'), 'utf8')).version;
 
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
@@ -282,7 +285,7 @@ function printNext(root, state) {
   const stageFile = stage === 'idle' ? 'none' : path.join(__dirname, '..', 'stages', `${stage}.md`);
   console.log(`Stage: ${stage}`);
   console.log(`Brief: ${brief ? `${brief.nn} ${brief.slug}: ${brief.sentence}` : 'none'}`);
-  console.log(`Read: ${stageFile}`);
+  console.log(`Read: ${stageFile} (sidekik ${version})`);
   console.log(`Also at this stage: ${also.join(', ') || 'none'}`);
   console.log(`Open questions for ${brief ? 'this brief' : 'all briefs'}: ${openQuestions(root, brief?.nn).length}`);
   console.log(`Base: ${(brief && state.bases[brief.nn]) || 'none'}`);

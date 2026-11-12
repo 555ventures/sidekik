@@ -58,8 +58,9 @@ project root or with `--root <dir>`.
    `next` names, and do the stage. It ends in a mark. A refused mark says what is
    missing: do that.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
-   together. A stage often spans several sessions; `sidekik/` is the memory, not the
-   window. At every mark and every commit with no agent in flight, and before you stop
+   together. A stage often spans several sessions, and the plugin changes under them:
+   `sidekik/` is the memory, not the window, and when the version `next` prints beside
+   the stage file has moved, read this file and the stage file again first. At every mark and every commit with no agent in flight, and before you stop
    mid-stage, overwrite `sidekik/handoff.md` with where things stand, send any `[open]`
    feedback lines of this stretch not yet sent, and tell the owner in one line that it is
    safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.

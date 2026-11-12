@@ -7,6 +7,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const scripts = path.join(__dirname, '..', 'plugin', 'scripts');
+const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'plugin', '.claude-plugin', 'plugin.json'), 'utf8')).version;
 const B1 = '01 booking-flow: Clients book in under a minute.';
 const B2 = '02 reminders: Clients get a reminder the day before.';
 const NOTE = '# Booking flow\n\n## Reuse\n- The kit form.\n\n## Done when\n- A client books in under a minute.\n';
@@ -80,7 +81,7 @@ test('next answers every row of the table', () => {
     const read = stage === 'idle' ? 'none' : path.join(scripts, '..', 'stages', `${stage}.md`);
     const questions = brief === 'none' ? 'all briefs' : 'this brief';
     assert.equal(project(state, files).run('next').out,
-      `Stage: ${stage}\nBrief: ${brief}\nRead: ${read}\nAlso at this stage: ${also}\nOpen questions for ${questions}: ${open}\nBase: ${base}\n`,
+      `Stage: ${stage}\nBrief: ${brief}\nRead: ${read} (sidekik ${version})\nAlso at this stage: ${also}\nOpen questions for ${questions}: ${open}\nBase: ${base}\n`,
       `${stage} ${JSON.stringify(state)}`);
   }
 });

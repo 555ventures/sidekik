@@ -75,12 +75,12 @@ that are yours rather than the owner's as `[settled] NN: … → what you chose`
 
 1. A scout uses the real thing: it clicks every screen in a browser at each width the kit
    names (serving the folder locally if it refuses file addresses, saving screenshots
-   under `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and measures what eyes miss with a script a maker
-   writes once and that runs again before every owner stop that redraws screens: text
-   contrast in each theme, field text size at phone width, one kind of control drawn one
-   way, no card inside a card, every kit token computing to a value. It returns what is
-   broken, empty, failing the measure or at odds with the rest. A maker fixes that, and
-   you look yourself only there.
+   under `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and measures
+   what eyes miss with a script a maker writes once and that runs again before every
+   owner stop that redraws screens: text contrast in each theme, field text size at
+   phone width, one kind of control drawn one way, no card inside a card, every kit
+   token computing to a value. It returns what is broken, empty, failing the measure or
+   at odds with the rest. A maker fixes that, and you look yourself only there.
 2. Walk the owner through the flows on one page. A maker builds `shots/flows.html`: each
    flow in step order, every step with its screenshot or the spoken lines of its exchange,
    one anchor per step.

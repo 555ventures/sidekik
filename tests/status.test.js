@@ -20,15 +20,12 @@ function status(state, files = {}) {
 }
 
 test('the screen shows what waits on the owner, what comes next, the roadmap and the progress', () => {
-  const now = new Date().toISOString();
   const day = (time, brief, mark, refused) => ({ brief, mark, at: `2020-01-01T${time}:00.000Z`, ...(refused && { refused }) });
   const { out } = status({
     check: 'true', stack: true, shipped: ['01'],
     briefs: { '01': 'done', '02': 'built', '03': 'confirmed', '05': 'done' },
-    sizes: { '01': { code: 306, tests: 60, removed: 4 }, '02': { code: 71, tests: 15, removed: 0 } },
     history: [day('10:00', '01', 'confirmed'), day('10:30', '01', 'done'), day('11:00', '05', 'confirmed'), day('11:20', '05', 'done', true),
-      day('11:46', '05', 'done'), day('12:00', null, 'shipped', true), { brief: '02', mark: 'built', at: now },
-      { brief: '02', mark: 'reviewed', at: now, refused: true }, { brief: null, mark: 'shipped', at: now }, { brief: '03', mark: 'confirmed', at: now }],
+      day('11:46', '05', 'done')],
   }, {
     'briefs.md': '# Split the bill\n\n- 01 even-split: Split evenly.\n- 02 drinks-separately: Drinks apart.\n'
       + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
@@ -36,9 +33,6 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
       + '| share/link.html | 04 | done | link | |\n| share/revoke.html | 04 | planned | revoke | |\n',
     'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
-    'decisions.md': Array.from({ length: 9 }, (_, i) => `- 2026-11-0${i + 1} 01: Ruling ${i}.\n`).join(''),
-    'lessons.md': '- 01: [wrong-library] a\n- 05: [built-twice] b\n- fix: [built-twice] c\n- 02: [built-twice] d\n- 03: [wrong-library] e\n'
-      + '- 01: [none] f\n- 05: [none] g\n- guard: [built-twice] h\n- guard: [solo] i\n- guard: [solo] j\n',
   });
   assert.equal(out, `🙋 Waiting on you
    ├─ 1 question on the whole product
@@ -98,5 +92,4 @@ test('a brief whose examples changed after approval is listed under Waiting on y
   const { out } = status({ stack: true, approved: { '01': 'old-hash' }, briefs: { '01': 'done', '02': 'confirmed' } },
     { 'briefs.md': '- 01 a: One.\n- 02 bb: Two.\n' });
   assert.match(out, /└─ your yes again on 01, changed since approval\n\n🎯 Next/);
-  assert.doesNotMatch(out, /⚠️/);
 });

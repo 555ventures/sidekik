@@ -43,12 +43,12 @@ really needs.
    documents recommend, that can be tried without going live. A product with screens gets
    its one design system here, from the prototype kit: the same tokens, and one shared
    component per kit piece that has structure or behaviour, under the same name. Plain
-   helper classes stay classes. Its one check command, steps joined by
-   `&&`, carries the quality checks every later change must pass, as far as the stack has
-   tools: tests, style rules, type checks, duplicate code, unused code, which area may use
-   which, no raw colours or sizes outside the design system, no secrets, no to-do notes.
-   Add an index command that prints, from the code, the names and signatures each area
-   exposes. Put the layout and all commands in `CLAUDE.md`.
+   helper classes stay classes. Its one check command, steps joined by `&&`, carries the
+   quality checks every later change must pass, as far as the stack has tools: tests,
+   style rules, type checks, duplicate code, unused code, which area may use which, no raw
+   colours or sizes outside the design system, no secrets, no to-do notes. Add an index
+   command that prints, from the code, the names and signatures each area exposes. Put the
+   layout and all commands in `CLAUDE.md`.
 9. **Try the risky pieces** on the running skeleton: where a confirmed example depends on
    what an outside service can do, run a small real test against it and show the result.
    Write it, or "not tried" and which briefs wait on it, into `sidekik/stack.md`.

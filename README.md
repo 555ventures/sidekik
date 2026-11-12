@@ -40,7 +40,7 @@ Claude comes to the owner when a good partner would. Several of those moments st
 work until the owner answers; four are held by the scripts, each needing the owner's yes
 recorded as a decision: the brief list and each brief's prototype need a decision for
 them; the stack picks need an `all` decision dated on or after the latest
-`confirmed` mark, and going live a decision for the brief or for `all` dated on or after its
+`confirmed` mark, and going live a decision for the brief dated on or after its
 own `done` mark (the marks table says exactly what each accepts). The build
 between them runs unattended and reports as it goes. A bug or a small tweak skips the
 stages: it is fixed directly and reported in one line.
@@ -71,7 +71,7 @@ sidekik/
   state.json            written only by scripts
   briefs.md             - 01 booking-flow: Clients book in under a minute.
   decisions.md          the owner's rulings; written only by decide.js
-  questions/<who>.md    guesses waiting for the owner:  - [open] 01: text
+  questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
   calls.md              calls Claude made, for the owner to overrule
   handoff.md            where a half-finished stage stands, for the next session
   stack.md              ## Picks, ## Your steps
@@ -124,10 +124,6 @@ Line formats, exactly:
 ```
 
 A missing field in an older state file counts as its empty value.
-A state file with `approved` for a brief but no `approvals` entry, or a bare number from an
-older version, gets `{ count, on }` the first time any `state.js` command reads it: the
-brief's decision count then, and the day of its latest `confirmed` mark in `history`
-(`0000-00-00` when none); `next` says so once.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 
@@ -143,9 +139,8 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 When mapped files no longer match `approved`, the refusal says the prototype changed after
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. A brief's marks depend only on that brief, apart from the
-prototype check at `prototyped`, which covers the whole prototype; briefs at the same
-stage can move in parallel.
+requirements as `confirmed`, and it also needs a decision for that brief recorded after the last approval (more decisions than `approvals` counts, or one dated after its day), so a changed prototype is never approved again on the old yes. Briefs at the same stage
+can move in parallel.
 
 Project marks:
 
@@ -161,7 +156,7 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it or for `all` dated on or after the day of its `done` mark. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it dated on or after the day of its `done` mark. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at }` to `history` (`brief` is
 null for a project mark), with `refused: true` when it was refused.
@@ -201,7 +196,8 @@ What `next` answers:
 | every brief is `done` and shipped | `idle` |
 
 `next` prints six lines: `Stage:`, `Brief: NN slug: sentence` or `Brief: none`, `Read:` with
-the absolute path of the stage file (`none` for idle), `Also at this stage: 02, 03` listing
+the absolute path of the stage file (`none` for idle) and the plugin version, as
+`(sidekik 0.11.0)`, `Also at this stage: 02, 03` listing
 the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.
@@ -302,7 +298,7 @@ output is one; piped output is left plain.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
 `kit/`, `map/`, `shots/` and `sample/` folders. It fails on: a file with no map row (the
-message shows what a map row looks like; `sample/` is exempt); a `done` map row with no file; kit files that differ from the
+message shows what a map row looks like); a `done` map row with no file; kit files that differ from the
 frozen hash; a kit stylesheet with an `@import` or a `url(` that points at `http`. For
 `.html` files it also fails on: a class the kit css does not define; a `<style>` block; an
 inline `style` that sets anything but `top`, `left`, `width`, `height`, `grid-*` or a

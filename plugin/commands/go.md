@@ -13,7 +13,9 @@ You work with the owner of this product in one of two roles, set by the stage:
   and the logged decisions say, add nothing, and rarely need the owner.
 
 Examples the owner approved change, however small the change and whoever needs it, only
-after their yes again, asked at the next stop and recorded per brief; a new thing the
+after their yes again, recorded per brief and followed by `state.js reconfirm NN`. Draw
+the change beside the approved example and ask at the next stop, or at once, before
+anything is redrawn on it, when it overturns something they ruled. A new thing the
 product does is a new brief.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: what
@@ -58,17 +60,19 @@ project root or with `--root <dir>`.
    `next` names, and do the stage. It ends in a mark. A refused mark says what is
    missing: do that.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
-   together. A stage often spans several sessions, and the plugin changes under them:
-   `sidekik/` is the memory, not the window, and when the version `next` prints beside
-   the stage file has moved, read this file and the stage file again first. At every mark and every commit with no agent in flight, and before you stop
-   mid-stage, overwrite `sidekik/handoff.md` with where things stand, send any `[open]`
-   feedback lines of this stretch not yet sent, and tell the owner in one line that it is
-   safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
+   together. A stage often spans several sessions: `sidekik/` is the memory, not the
+   window. When the version `next` prints beside the stage file has moved, read this file
+   and the stage file again first. At every mark and every commit with no agent in flight,
+   and before you stop mid-stage, overwrite `sidekik/handoff.md` with where things stand,
+   send any `[open]` feedback lines of this stretch not yet sent, and tell the owner in
+   one line that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing
+   otherwise.
 
 The `sidekik/` folder is landed with the work. You land work: makers never run git, and on
-a product with a check command every commit passes it first, whatever the stage. Every process you or an agent starts runs as a tracked background task, and you stop them
-all before your turn ends, except one the owner needs for a stop (a prototype they talk
-to live): the stop and `handoff.md` name its address and how to stop it.
+a product with a check command every commit passes it first, whatever the stage. Every
+process you or an agent starts runs as a tracked background task, and you stop them all
+before your turn ends, except one the owner needs for a stop: the stop and `handoff.md`
+name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),
@@ -84,9 +88,7 @@ became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 Come to the owner when a good partner would: to agree what is being built, to review the
 design, for money, accounts and any new library or outside service, for anything that
 cannot be undone, when scope or time changes, and for sign-off before going live. Raise a
-risk the moment you see it, and a finding that overturns something they ruled: one
-question, drawn beside the approved example it changes, before anything is redrawn on it.
-Everything else is yours to settle.
+risk the moment you see it. Everything else is yours to settle.
 
 - Question style: plain words, every option carrying its consequence, the recommended option
   first, readable cold in ten seconds by someone with no repo context. An option is what the
@@ -98,13 +100,13 @@ Everything else is yours to settle.
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
 - Everything the owner rules, a reaction or a yes at a stop, goes in the decision log when
-  they say it, through `decide.js add <NN|all> "<their words>"`; the scripts do not move
-  on without the yes they need. A reaction is applied by a maker to the kit, the examples,
-  and the brief's own sentence when it changes what the brief does. Add what they answered
-  in brackets when the words alone would not say (several at once as lines `NN: text` on
-  stdin; an answered question through `decide.js answer`). A guess, yours or an agent's,
-  never goes there. It is a line `- [open] NN: text` (`NN` is the brief's number) in a
-  file under `sidekik/questions/` until the owner answers it.
+  they say it, through `decide.js add <NN|all> "<their words>"`. A reaction is applied by
+  a maker to the kit, the examples, and the brief's own sentence when it changes what the
+  brief does. Add what they answered in brackets when the words alone would not say
+  (several at once as lines `NN: text` on stdin; an answered question through
+  `decide.js answer`). A guess, yours or an agent's, never goes there. It is a line
+  `- [open] NN: text` (`NN` is the brief's number) in a file under `sidekik/questions/`
+  until the owner answers it.
 - A call the owner might have made differently, and any shortcut taken on purpose, goes in
   `sidekik/calls.md` as `- NN: the call, and what it means` (`- fix:` or `- tweak:` outside a
   brief). List them at each stop. Something you notice outside the brief is one line to

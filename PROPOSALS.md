@@ -61,6 +61,13 @@ the ask goes in the owner's next stop, not a separate interruption.
 the deploy needed a second dialog. When taking a change live is a separate step, the
 partner asks once: approve and put it live?
 
+**Tightened 2026-11-12, applied in 0.11.0 (tidy).** The yes is recorded for each brief it
+covers, never as `all`: the tidy's reviewer proved in a scratch project that a later
+brief's list yes, recorded as `all` the way the brief stage records it, let `mark shipped`
+put a finished brief live that the owner had never approved. 0.9.0 had closed this in the
+guide only; the script now refuses it too. One `decide.js add` call still records several
+briefs at once.
+
 ## Walkers go before the owner's yes on a change to a confirmed screen
 
 **Decided 2026-11-10, applied in 0.6.1.** From sumglass: the owner said yes to a changed
@@ -74,7 +81,9 @@ required field on every save, redrawing 17 approved exchanges. Waiting for the l
 would have meant drawing them twice. A finding that overturns something the owner ruled
 goes to them at once as one question, drawn beside the approved example it changes,
 before anything is redrawn on it; the same sentence now serves the tidy stage, which had
-its own copy.
+its own copy. The 0.11.0 tidy merged it into the one rule for approved examples at the top
+of go.md: their yes again, recorded per brief and followed by `reconfirm`, asked at the
+next stop, or at once when the change overturns something the owner ruled.
 
 ## A rough idea is worked out in talk, not in a reply
 
@@ -88,8 +97,9 @@ whose report changed the priorities, and the owner speaking first.
 
 Applied, guide change only: when the idea is rough, the brief stage works the picture out
 in talk, owner first, one question a turn, a scout on competitors and feasibility running
-meanwhile, a `sidekik:walker` as the skeptic on the idea before the list is written. The
-stop and the yes are the ones that already exist. Not a new command or stage: a discovery
+meanwhile. The stop and the yes are the ones that already exist. A skeptic walker on the
+idea was added with it and removed in the 0.11.0 tidy: no lesson asked for it, and the
+walker tries a prototype, which does not exist yet at the brief. Not a new command or stage: a discovery
 step would put a third stop and a third artifact in front of the owner, and the session's
 own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
 over-engineering the plugin avoids; the four sentences above are what the owner said worked.

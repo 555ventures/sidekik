@@ -1,9 +1,9 @@
 # Build note
 
-Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines.
-It is your working note for whoever builds and reviews this brief, and the owner does not
-approve it. The prototype already shows the behaviour, so the note holds only what an
-example cannot show. Use these headings:
+Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines. It is your working note for
+whoever builds and reviews this brief, and the owner does not approve it. The prototype
+already shows the behaviour, so the note holds only what an example cannot show. Use these
+headings:
 
 ```
 # <the brief's sentence>

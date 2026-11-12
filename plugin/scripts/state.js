@@ -248,9 +248,9 @@ function markShipped(root, state, named = []) {
   if (!briefs.length) return 'There is no finished brief waiting to be shipped.';
   const notDone = briefs.find((nn) => !done.includes(nn));
   if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
-  // The owner's yes to take a brief live is a decision for it, or for all, after it was finished.
-  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done', nn) && !decidedSince(root, state, 'all', 'done', nn));
-  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>" (or add all), and mark again.`;
+  // The owner's yes to take a brief live is a decision for that brief, after it was finished.
+  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done', nn));
+  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>", and mark again.`;
   state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;
 }
@@ -307,18 +307,8 @@ function main(root, [cmd, a, b, ...more]) {
   const stored = readState(root);
   if (!stored) return 'This project has no sidekik setup yet; run init first.';
   const state = { ...fresh(), ...stored };
-  // An older state file lacks the approval records (count and day); they are completed once from the decisions as they stand.
-  // A bare number was written by an earlier version and is completed the same way. The day is that of the brief's last confirmed mark.
-  const uncounted = Object.keys(state.approved).filter((nn) => typeof state.approvals[nn] !== 'object');
-  if (uncounted.length) {
-    const since = (nn) => state.history.findLast((h) => h.brief === nn && h.mark === 'confirmed' && !h.refused)?.at;
-    state.approvals = { ...state.approvals, ...Object.fromEntries(uncounted.map((nn) => [nn, { count: decisionsFor(root, nn).length, on: since(nn) ? day(since(nn)) : '0000-00-00' }])) };
-    stored.approvals = state.approvals;
-    writeState(root, state);
-  }
   if (cmd === 'next') {
     printNext(root, state);
-    if (uncounted.length) console.log(`Approval records completed for ${uncounted.join(', ')} (older state file).`);
   }
   else if (cmd === 'set-check' && a) {
     if (a.includes(';')) return SEMICOLON;

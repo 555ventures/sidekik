@@ -1,6 +1,6 @@
 {
   "name": "sidekik",
-  "version": "0.10.5",
+  "version": "0.11.0",
   "description": "Prototype-first building: Claude designs the product with you as product designer, then builds it as technical partner with a small agent team.",
   "author": {
     "name": "JJ",

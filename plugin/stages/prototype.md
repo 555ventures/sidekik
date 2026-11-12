@@ -51,10 +51,12 @@ shown by one example later. Look at them all yourself in a browser, settle their
 requests, and run `proto-check.js freeze`. After that the kit changes only on your
 decision, and you freeze again.
 
-For an existing product the kit is what the product really uses, and each example a brief changes is redrawn in place; the product's tests that read it are
-pointed at a copy kept with those tests, outside the prototype, until the build moves
-them to the new example and removes the copy. A brief that changes a shared piece maps, in its own map file, every example it
-redraws, even one another brief owns. A small change needs no more foundation.
+For an existing product the kit is what the product really uses, and each example a
+brief changes is redrawn in place; the product's tests that read it are pointed at a copy
+kept with those tests, outside the prototype, until the build moves them to the new
+example and removes the copy. A brief that changes a shared piece maps, in its own map
+file, every example it redraws, even one another brief owns. A small change needs no
+more foundation.
 
 ## Examples
 

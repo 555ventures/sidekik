@@ -80,7 +80,7 @@ function screen(root) {
   out.push('', `🗺️ ${title}`, ...lines.map(([icon, label, tail]) => `   ${icon} ${label.padEnd(width)}  ${tail}`));
 
   const count = (test) => `${briefs.filter(test).length} of ${briefs.length}`;
-  const marks = state.history.filter((h) => h.brief && !h.refused);
+  const marks = state.history.filter((h) => !h.refused);
   const at = (b, mark) => new Date(marks.find((h) => h.brief === b.nn && h.mark === mark)?.at);
   const minutes = briefs.filter((b) => state.briefs[b.nn] === 'done').map((b) => Math.floor((at(b, 'done') - at(b, 'confirmed')) / 60000))
     .filter((m) => !Number.isNaN(m)).sort((x, y) => x - y);

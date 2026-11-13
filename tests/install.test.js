@@ -30,7 +30,6 @@ test('the installer writes an executable wrapper, silently', () => {
   assert.equal(second.stdout, '');
   assert.equal(fs.readFileSync(file, 'utf8'), content);
 
-  if (process.platform === 'win32') return;
   const proj = tmp();
   fs.mkdirSync(path.join(proj, 'sidekik'));
   fs.writeFileSync(path.join(proj, 'sidekik', 'briefs.md'), '- 01 a: One.\n');

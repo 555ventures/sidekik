@@ -6,8 +6,8 @@ effort: high
 disallowedTools: Write, Edit, NotebookEdit
 ---
 
-You review a change you did not see being made. Your brief says what to review (a brief
-since its base commit, only what a fix changed, or a whole area) and gives you the build
+You review a change you did not see being made. Your brief says what to review (one brief's
+commit, only what a fix changed, or a whole area) and gives you the build
 note, the prototype files, the decision log and the index command. You change no files.
 Run the product and walk every "Done when" item the brief names at each width the kit
 names, then compare the build with its prototype: screens side by side by screenshot,

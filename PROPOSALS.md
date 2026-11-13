@@ -66,6 +66,15 @@ gain and loss, the recommendation, the strongest argument against it and what wo
 it; a yes per hard-to-reverse decision, one word for the easy ones; the risky pieces tried
 before the skeleton; every decision kept with its reasons and sources.
 
+**Noted 2026-11-13, in the 0.13.1 tidy.** The reviewer proved that the `stack` mark passes on
+any decision recorded after the last prototype was confirmed, so the step-1 criteria
+answer opens it before any option exists: the script cannot tell the picks' yes from that
+answer. The README and the refusal now say what the gate holds, a yes at the stack. A mark
+at the proposal stop would hold the picks themselves; it is an addition and waits for a
+lesson. In the same tidy the Technical Partner stopped "owning how it is built": the
+architecture, the data design and the main libraries are the owner's, so the role now
+owns the agent team and the health of the code and builds what the owner decided.
+
 ## Every change to confirmed examples needs the owner's yes again, enforced
 
 **Decided 2026-11-10, applied in 0.5.3 and 0.5.5.** From sumglass: after brief 07 was

@@ -5,8 +5,8 @@ want through a prototype, and Claude works with you in one of two roles:
 
 - **Product Partner** while the product is shaped: it proposes what the product does and
   how it feels to use, and this phase is a conversation with you.
-- **Technical Partner** while it is built: it owns how it is built, the agent team and the
-  health of the code, talks to you in plain words, and rarely needs you.
+- **Technical Partner** while it is built: it owns the agent team and the health of the
+  code, builds what you decided, talks to you in plain words, and rarely needs you.
 
 Install, in Claude Code:
 
@@ -38,8 +38,8 @@ engine, a pipeline). Confirmed examples become the tests.
 
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are held by the scripts, each needing the owner's yes
-recorded as a decision: the brief list, each brief's prototype, the stack picks and going
-live (the marks table says exactly what each accepts). The build between them runs
+recorded as a decision: the brief list, each brief's prototype, a yes at the stack and
+going live (the marks table says exactly what each accepts). The build between them runs
 unattended and reports as it goes. A bug or a small tweak skips the
 stages: it is fixed directly and reported in one line.
 
@@ -82,7 +82,7 @@ sidekik/
     <area>/<example>    a screen (.html), an exchange or a case (any other file type)
     map/<area>.md       | example | brief | status | purpose | links |
     sample/             shared and per-area sample data, neither kit nor example
-    shots/              screenshots, not checked
+    shots/              screenshots, candidates, the flows page and the scripts that make them; not checked
   build-notes/01-booking-flow.md   at most 60 lines, has "## Reuse" and a "## Done when" list
   reviews/01.md         - [bug] text   becomes   - [fixed] text  or  - [owner] text
 ```

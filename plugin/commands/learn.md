@@ -9,6 +9,13 @@ Run this inside the sidekik repo. Projects: $ARGUMENTS.
 The plugin is a project like any other, and what it asks of a project it asks of itself.
 It changes only for a lesson from real use, never for an idea.
 
+Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
+when the last four versions hold none that starts with `tidy:`, dispatch one
+general-purpose agent on Opus at the highest effort over the whole plugin, for rules that
+repeat or contradict, special cases stacked on one part, and rules no lesson or the current
+model needed. It reads every file and quotes the sentences it names. The result is a
+merge, a removal or a reshape, never an addition.
+
 ## Read
 
 In each project read the `[open]` lines of `sidekik/feedback.md`, then
@@ -40,13 +47,6 @@ case. There is no size limit to fit under, and size is never a question for the 
 the owner (what it asks, when it stops, what it decides alone) is theirs: make the change
 you would recommend, describe it in `PROPOSALS.md` with why, and tell the owner so they
 can undo it; ask first only when you cannot tell which way they would go.
-
-Every fifth change is a tidy of the plugin itself, and so is the arrival of a new model:
-when the last four versions hold none that starts with `tidy:`, dispatch one
-general-purpose agent on Opus at the highest effort over the whole plugin, for rules that
-repeat or contradict, special cases stacked on one part, and rules no lesson or the current
-model needed. It reads every file and quotes the sentences it names. The result is a
-merge, a removal or a reshape, never an addition.
 
 ## Land
 

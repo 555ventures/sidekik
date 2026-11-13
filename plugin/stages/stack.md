@@ -6,12 +6,11 @@ what they chose. Never read the owner's other repositories to guess a stack.
 
 1. **Criteria.** One owner batch before anything is researched: the platforms now and
    later (web, native mobile, desktop), who else will call the backend, where the users
-   are and how many, the budget per month, who will write and maintain the code (when that
-   is an AI, familiarity is no criterion: options are compared by fit for the product's
-   hardest parts and by how well an AI writes and checks that language), and the
-   development machine as it is (which databases, object stores and mail catchers already
-   run, in which containers and on which ports; how env files and secrets are kept), which
-   serves only to reuse local services. In the same batch, the decisions this product
+   are and how many, the budget per month, who will write and maintain the code (a language
+   counts by how well that writer writes and checks it), and the development machine as it
+   is (which databases, object stores and mail catchers already run, in which containers
+   and on which ports; how env files and secrets are kept), which serves only to reuse
+   local services. In the same batch, the decisions this product
    needs, named from the confirmed examples, usually eight to twelve: the architecture,
    the framework, the main libraries of each part, the data design, the UI toolkit the kit
    becomes and whether it reaches a native app, the database and its access layer, login,
@@ -21,10 +20,9 @@ what they chose. Never read the owner's other repositories to guess a stack.
 2. **Research.** Before any option, per decision, scouts read current primary sources,
    dated: how products of this kind are built now, the languages and frameworks, data,
    hosting, the product's hardest parts, and what changed in the last year; and each
-   candidate's current documentation through Context7. Facts only, no pick in mind. You
-   open the source of every fact a decision hangs on; what no source settles stays marked
-   "not confirmed". Depth follows reversibility: a decision that is hard to reverse gets
-   the deeper read.
+   candidate's current documentation through Context7. Facts only, no pick in mind; what no
+   source settles stays marked "not confirmed". A decision that is hard to reverse gets the
+   deeper read.
 3. **Proposal.** One page the owner sees whole on screen, never a summary with the brief
    left in a file: the architecture as a picture (which parts exist, who calls whom, where
    data lives), two or three whole designs, the data design in short as a picture (what
@@ -35,15 +33,11 @@ what they chose. Never read the owner's other repositories to guess a stack.
    someone they trust can decide from the page alone. On the same page, one batch of
    questions from walking every example for what it cannot show: who may do what, money
    rules, limits, what happens when something fails, what cannot be undone.
-4. **The stop.** The architecture, the data design and the main libraries are the owner's,
-   never calls. Each decision that is hard to reverse is its own line and gets its own
+4. **The stop.** Each decision that is hard to reverse is its own line and gets its own
    yes; the easy ones take one word for all. Nothing after this step is built before they
-   decide; only tooling with no effect on the product is a call. Record what they decided,
-   each with its reasons and sources. End your turn.
-5. **Data design and areas.** Write `sidekik/model.md` from the picture they approved:
-   what the whole product stores, the rules every brief shares, and the product's areas
-   with what each is responsible for. Do not list there what an area contains: that is
-   read from the code.
+   decide; only tooling with no effect on the product is a call. End your turn.
+5. **Data design and areas.** Write `sidekik/model.md` from the data design they approved.
+   Do not list there what an area contains: that is read from the code.
 6. **Release readiness.** Write what this product needs before real people use it under
    `## Before release` in `sidekik/stack.md`: secrets and personal data kept safe,
    backups, knowing when it breaks, legal pages, platform or store rules, real wording and
@@ -68,14 +62,14 @@ what they chose. Never read the owner's other repositories to guess a stack.
    documents recommend, that can be tried without going live. A product with screens gets
    its one design system here, from the prototype kit: the same tokens, and one shared
    component per kit piece that has structure or behaviour, under the same name. Plain
-   helper classes stay classes. Its one check command, steps joined by `&&`, carries the
-   quality checks every later change must pass, as far as the stack has tools: tests,
-   style rules, type checks, duplicate code, unused code, which area may use which, no raw
-   colours or sizes outside the design system, no secrets, no to-do notes. Add an index
-   command that prints, from the code, the names and signatures each area exposes. Put the
-   layout and all commands in `CLAUDE.md`.
+   helper classes stay classes. Its one check command carries the quality
+   checks every later change must pass, as far as the stack has tools: tests, style rules,
+   type checks, duplicate code, unused code, which area may use which, no raw colours or
+   sizes outside the design system, no secrets, no to-do notes. Add an index command that
+   prints, from the code, the names and signatures each area exposes. Put the layout and
+   all commands in `CLAUDE.md`.
 
-Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and `##
-Your steps`. Run `state.js set-check "<command>"`, then `state.js set-deps "<a command
-that prints one library name per line>"`. Commit the skeleton with the `sidekik/` folder,
-then `state.js mark stack`.
+Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and
+`## Your steps`. Run `state.js set-check "<command>"`, then
+`state.js set-deps "<a command that prints one library name per line>"`. Then
+`state.js mark stack`.

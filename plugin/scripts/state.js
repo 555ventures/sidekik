@@ -216,7 +216,7 @@ function markStack(root, state) {
   }
   if (read(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
   if (!decidedSince(root, state, 'all', 'confirmed')) {
-    return 'The stack has no decision recording the owner\'s picks. After their yes, run decide.js add all "<their picks>" and mark again.';
+    return 'The stack has no decision recorded since the last prototype was confirmed. After their yes, run decide.js add all "<their picks>" and mark again.';
   }
   const problem = checkProblem(root, state);
   if (problem) return problem;

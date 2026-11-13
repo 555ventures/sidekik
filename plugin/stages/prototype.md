@@ -73,19 +73,20 @@ that are yours rather than the owner's as `[settled] NN: … → what you chose`
 
 ## Check
 
+What the check makes lives under `shots/` (the screenshots, the measuring script and the
+generator of the flows page), and its scripts run again before every owner stop that
+redraws screens, so its pages are rebuilt, never patched.
+
 1. A scout uses the real thing: it clicks every screen in a browser at each width the kit
-   names (serving the folder locally if it refuses file addresses, saving screenshots
-   under `sidekik/prototype/shots/`), reads the exchanges, runs the cases, and measures
-   what eyes miss with a script a maker writes once under `shots/` and that runs again
-   before every owner stop that redraws screens: text contrast in each theme, field text
-   size at phone width, one kind of control drawn one way, no card inside a card, every
-   kit token computing to a value. It returns what is broken, empty, failing the measure,
-   unmeasured because it could not be opened, or at odds with the rest. A maker fixes
-   that, and you look yourself only there.
-2. A maker builds `shots/flows.html`, from a generator kept beside it under `shots/` so a
-   later session rebuilds the page rather than patching it: each flow in step order,
-   every step with its screenshot or the spoken lines of its exchange, one anchor per
-   step.
+   names (serving the folder locally if it refuses file addresses), reads the exchanges,
+   runs the cases, and measures what eyes miss with a script a maker writes: text contrast
+   in each theme, field text size at phone width, one kind of control drawn one way, no
+   card inside a card, every kit token computing to a value; a page it cannot open fails.
+   It returns what is broken, empty, failing the measure or at odds with the rest, and a
+   maker fixes that.
+2. A maker builds `shots/flows.html` with the generator: each flow in step order, every
+   example in a flow, every step with its screenshot or the spoken lines of its exchange,
+   one anchor per step.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only its role and task, and one as the skeptic.
 

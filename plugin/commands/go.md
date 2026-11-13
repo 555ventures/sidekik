@@ -53,10 +53,7 @@ Scripts live in `${CLAUDE_PLUGIN_ROOT}/scripts`. Stage files name them bare:
 `state.js next` means `node ${CLAUDE_PLUGIN_ROOT}/scripts/state.js next`, run from the
 project root or with `--root <dir>`.
 
-1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. The project is a
-   git repo with a private GitHub remote from its first commit: create what is missing
-   (`git init`, `gh repo create --private --source .`) and say so in one line, or, when the
-   session cannot, give the owner what to run and carry on. For an existing
+1. Run `state.js next`. With no `sidekik/` yet, this is your first visit. For an existing
    product, learn how it runs, how it is checked and how it behaves, then run its check
    (make the smallest one first if it has none, and tell the owner first if it already
    fails). Then `state.js init --existing "<check command>"`. For an empty project:

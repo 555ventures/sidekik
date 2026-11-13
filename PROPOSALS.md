@@ -144,6 +144,20 @@ step would put a third stop and a third artifact in front of the owner, and the 
 own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
 over-engineering the plugin avoids; the four sentences above are what the owner said worked.
 
+## The repo and its remote are created at the briefed mark, not on the first visit
+
+**Decided 2026-11-13, applied in 0.13.3.** From the owner: an idea was talked through
+outside any sidekik project, because `go` created a git repo and a private GitHub remote
+before the brief talk, so a rough idea that might never become a product would already own
+a repo. The repo is needed by the makers and the commit-based gates, which start at the
+prototype stage; the brief stage writes one file and talks, and neither `state.js init`
+nor the `briefed` mark reads git. The sentence moved from the first visit in go.md to the
+end of brief.md, right before `mark briefed`, with the same fallback when the session
+cannot run `gh`. Nothing changes for an existing product.
+
+Not recommended: a brainstorm entry that creates nothing until the list is agreed (a second
+entrance to keep true, for what one sentence in the right place gives).
+
 ## The brief stop is short, says what comes next, and carries the prototype's word questions
 
 **Decided 2026-11-11, applied in 0.7.2.** From Sumaro: the owner typed "make prototype for

@@ -5,10 +5,12 @@ really needs.
 
 1. **What shapes the architecture.** One owner batch before anything is chosen: the
    platforms now and later (web, native mobile, desktop), who else will call the backend,
-   where the users are and how many, the budget per month, the team's skills, and the
-   development machine as it is (which databases, object stores and mail catchers already
-   run, in which containers and on which ports; how env files and secrets are kept), so
-   the skeleton reuses what is there. Then, from the answers and the confirmed examples,
+   where the users are and how many, the budget per month, who will write and maintain
+   the code (when that is an AI, familiarity is no criterion: options are compared by fit
+   for the product's hardest parts and by how well an AI writes and checks that
+   language), and the development machine as it is (which databases, object stores and
+   mail catchers already run, in which containers and on which ports; how env files and
+   secrets are kept), so the skeleton reuses the local services that are there. Then, from the answers and the confirmed examples,
    list what the product needs to be built and released.
 2. **Options.** The picks that shape the product are the owner's: framework, the UI
    toolkit the kit becomes and whether it reaches a native app, database and its access

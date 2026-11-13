@@ -144,6 +144,15 @@ step would put a third stop and a third artifact in front of the owner, and the 
 own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
 over-engineering the plugin avoids; the four sentences above are what the owner said worked.
 
+## The Product Partner proposes; the owner decides
+
+**Decided 2026-11-13, applied in 0.14.0 (tidy).** go.md said the Product Partner "owns
+what the product does and how it feels to use", while prototype.md says the owner is the
+creative lead who makes the final call and the README says the plugin proposes. One
+reading now: the Product Partner proposes what the product does and how it feels to use,
+and talks it through with the owner. The same shape as the 0.13.1 change to the Technical
+Partner, who no longer owns how it is built.
+
 ## The repo and its remote are created at the briefed mark, not on the first visit
 
 **Decided 2026-11-13, applied in 0.13.3.** From the owner: an idea was talked through

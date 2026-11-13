@@ -3,8 +3,8 @@
 Report the brief and keep going.
 
 Print, in plain words: what a user can now do, how to see it running, how much the brief
-added, and the calls you made on it (from `sidekik/calls.md`). Stop only if the review left
-an `- [owner]` item: ask it with your recommendation.
+added, and the calls you made on it (from `sidekik/calls.md`). Stop if the review left an
+`- [owner]` item: ask it with your recommendation.
 
 Write one line in `sidekik/lessons.md`: `- NN: [cause] ` then the worst moment of this brief
 (a correction from the owner, a run that went wrong, something built twice) and the one

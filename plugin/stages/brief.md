@@ -35,8 +35,8 @@ Show the owner the list, with the two or three lines that say what the product i
 whom; the picture stays in the file. Say that this yes fixes only what the product will
 do, that how each thing looks is decided in the prototype and that two or three candidates
 for the heart of the product come next. Ask once whether anything is missing or wrong,
-with those questions. Change it as they say, then record their yes with `decide.js add all
-"<their words>"`. Makers start after this mark, so the project is a git repo with a
-private GitHub remote from here on: create what is missing (`git init`, `gh repo create
---private --source .`) and say so in one line, or, when the session cannot, give the owner
-what to run and carry on. Then run `state.js mark briefed`.
+with those questions. Change it as they say, then record their yes with
+`decide.js add all "<their words>"`. From here on the project is a git repo with a private
+GitHub remote: create what is missing (`git init`, `gh repo create --private --source .`)
+and say so in one line, or, when the session cannot, give the owner what to run and carry
+on. Then run `state.js mark briefed`.

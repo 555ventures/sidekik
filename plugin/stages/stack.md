@@ -10,13 +10,13 @@ what they chose. Never read the owner's other repositories to guess a stack.
    counts by how well that writer writes and checks it), and the development machine as it
    is (which databases, object stores and mail catchers already run, in which containers
    and on which ports; how env files and secrets are kept), which serves only to reuse
-   local services. In the same batch, the decisions this product
-   needs, named from the confirmed examples, usually eight to twelve: the architecture,
-   the framework, the main libraries of each part, the data design, the UI toolkit the kit
-   becomes and whether it reaches a native app, the database and its access layer, login,
-   hosting, storage, email, payments when the product charges, analytics, outside feeds,
-   error tracking. Mark each hard or easy to reverse; the owner confirms the list with the
-   criteria.
+   local services. In the same batch, the decisions this product needs, named from the
+   confirmed examples and the questions the prototype settled as stack decisions, usually
+   eight to twelve: the architecture, the framework, the main libraries of each part, the
+   data design, the UI toolkit the kit becomes and whether it reaches a native app, the
+   database and its access layer, login, hosting, storage, email, payments when the
+   product charges, analytics, outside feeds, error tracking. Mark each hard or easy to
+   reverse; the owner confirms the list with the criteria.
 2. **Research.** Before any option, per decision, scouts read current primary sources,
    dated: how products of this kind are built now, the languages and frameworks, data,
    hosting, the product's hardest parts, and what changed in the last year; and each
@@ -55,9 +55,9 @@ what they chose. Never read the owner's other repositories to guess a stack.
    depends on what an outside service can do, run a small real test against it and show
    the result. One that needs a key waits for its step; write it, or "not tried" and which
    briefs wait on it, into `sidekik/stack.md`.
-9. **Best practice for the picks.** From the documentation read in step 2 (the recommended
-   layout, the patterns it advises, what its current version changed, its known traps),
-   write what a builder must follow into `CLAUDE.md`, briefly.
+9. **Best practice for the picks.** From the documentation read in step 2 (the patterns it
+   advises, what its current version changed, its known traps), write what a builder must
+   follow into `CLAUDE.md`, briefly.
 10. **Skeleton.** The smallest product that runs on the chosen stack, laid out as those
    documents recommend, that can be tried without going live. A product with screens gets
    its one design system here, from the prototype kit: the same tokens, and one shared

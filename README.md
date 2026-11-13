@@ -39,9 +39,9 @@ engine, a pipeline). Confirmed examples become the tests.
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are held by the scripts, each needing the owner's yes
 recorded as a decision: the brief list, each brief's prototype, a yes at the stack and
-going live (the marks table says exactly what each accepts). The build between them runs
-unattended and reports as it goes. A bug or a small tweak skips the
-stages: it is fixed directly and reported in one line.
+going live (the marks below say exactly what each accepts). The build between them runs
+unattended and reports as it goes. A bug or a small tweak skips the stages: it is fixed
+directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
 and a mistake that repeats three times must get a machine check.
@@ -130,7 +130,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
 | `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) recorded after its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the file holds |
 | `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, is at most 60 lines, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
-| `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size, and moves the base of every brief still at `noted` to the current commit |
+| `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
 | `done` | `reviewed`; the brief's mapped files still match `approved`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
 
@@ -138,8 +138,7 @@ When mapped files no longer match `approved`, the refusal says the prototype cha
 the owner approved it and must be shown to them again, and names `reconfirm`.
 `reconfirm <NN>` records the hash again without changing the mark, under the same
 requirements as `confirmed`, and it also needs a decision for that brief recorded after the
-last approval, so a changed prototype is never approved again on the old yes. Briefs at the
-same stage can move in parallel.
+last approval, so a changed prototype is never approved again on the old yes.
 
 Project marks:
 
@@ -149,7 +148,9 @@ Project marks:
   mark of any brief, or after the latest `reopen stack` when that is later; a check
   command is set and exits 0; the project has a commit and nothing outside `sidekik/` is
   uncommitted, so every brief gets a base.
-  `init --existing "<check command>"` sets `stack` true at once.
+  `init --existing "<check command>"` sets `stack` true at once. `reopen stack` (refused
+  while `stack` is false) sets `stack` false and appends
+  `{ brief: null, mark: 'stack', reopen: true, at, decisions }`.
 - `tidying`: records the current git commit as `tidyBase` (null outside a git repo).
 - `tidied`: `tidyBase` was recorded by `tidying`; the check command exits 0; and no
   cause appears three or more times in `lessons.md` (on brief and fix lines together)
@@ -158,13 +159,10 @@ Project marks:
   is a base).
 - `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `done` mark. Adds them to `shipped`.
 
-Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to `history`
-(`brief` is null for a project mark; `decisions` is how many decisions the file held at that
-moment, and an older entry without it counts as 0), with `refused: true` when it was
-refused.
-`reopen stack` (refused while `stack` is false) sets `stack` false and appends
-`{ brief: null, mark: 'stack', reopen: true, at, decisions }`, so `next` goes back to the
-stack stage.
+Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to
+`history` (`brief` is null for a project mark; `decisions` is how many decisions the file
+held at that moment, and an older entry without it counts as 0), with `refused: true` when
+it was refused.
 
 `set-check "<command>"` refuses a command that contains `;`, saying to join the steps with
 `&&` so that a failing step fails the whole check.
@@ -180,8 +178,8 @@ lines added, split into tests
 (a path with a `test`, `tests`, `__tests__`, `spec` or `e2e` folder, or a file name that
 contains `.test.`, `.spec.` or `_test.` or starts with `test_`) and code (everything else),
 plus the lines removed and how many of those were test lines. Paths under `sidekik/` and
-lock files do not count. With no base, no size is recorded and the "something changed"
-requirement is skipped. `mark <NN> built` prints the size in one sentence, for example
+lock files do not count. With no base, no size is recorded. `mark <NN> built` prints the
+size in one sentence, for example
 `It added 71 lines of code and 15 lines of tests, and removed 20 lines, 4 of them tests.`
 It then moves the base of every brief still at `noted` to the current commit, so briefs
 built in the same wave and landed one commit each are measured and reviewed one by one.
@@ -192,8 +190,8 @@ What `next` answers:
 |---|---|
 | no `briefs.md`, or it has no brief lines, or `briefed` is false and no brief has a mark | `brief` |
 | `stack` false and some brief has no mark | `prototype` (the lowest such brief) |
-| `stack` false, every brief has a mark, some brief is not `confirmed` | `look` (the lowest such brief) |
-| `stack` false and every brief is `confirmed` | `stack` |
+| `stack` false, every brief has a mark, some brief is only `prototyped` | `look` (the lowest such brief) |
+| `stack` false and every brief is at least `confirmed` | `stack` |
 | `stack` true, and `tidyBase` is set, or five or more briefs became `done` since the last tidy and no brief is `noted`, `built` or `reviewed` | `tidy` (no brief) |
 | `stack` true: of the briefs not `done`, the one furthest along, the lowest number among equals | by its mark: none `prototype`, `prototyped` `look`, `confirmed` `note`, `noted` `build`, `built` `review`, `reviewed` `close` |
 | every brief is `done`, and `tidied` is less than the number of `done` briefs | `tidy` (no brief) |
@@ -207,9 +205,7 @@ the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.
 When any brief with an `approved` hash has mapped files that no longer match it (finished
-briefs included), `next` adds a last line `Changed since approval: 01, 02`, and
-`status.js` lists them under Waiting on you as `your yes again on 01, 02, changed since
-approval`.
+briefs included), `next` adds a last line `Changed since approval: 01, 02`.
 
 `scripts/status.js` is the progress screen. It derives everything from the same functions
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:

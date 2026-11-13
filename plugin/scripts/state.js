@@ -103,10 +103,10 @@ function doneWhenItems(note) {
 // The decisions file only grows, so the owner's yes is a decision for `brief` after the first `count` lines.
 const decidedAfter = (root, brief, count = 0) => decisionsFor(root).slice(count).some((d) => d.brief === brief);
 
-// The owner's yes counts when it comes after the last mark it must follow (of `markBrief` when given). A mark
+// The owner's yes counts when it comes after the last mark it must follow. A mark
 // records how many decisions there were; an older entry without that counts as 0, so any decision counts.
-function decidedSince(root, state, brief, mark, markBrief) {
-  const last = state.history.findLast((h) => h.mark === mark && !h.refused && (markBrief === undefined || h.brief === markBrief));
+function decidedSince(root, state, brief, mark) {
+  const last = state.history.findLast((h) => h.brief === brief && h.mark === mark && !h.refused);
   return decidedAfter(root, brief, last?.decisions);
 }
 
@@ -126,7 +126,7 @@ const REQUIRES = {
     if (!decisions.ok) return decisions.problems[0];
     const open = openQuestions(root, b.nn).length;
     if (open) return `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.`;
-    return decidedSince(root, state, b.nn, 'prototyped', b.nn) ? null
+    return decidedSince(root, state, b.nn, 'prototyped') ? null
       : `Brief ${b.nn} has no decision recording the owner's yes on its prototype. After their yes, run decide.js add ${b.nn} "<their words>" and mark again.`;
   },
   noted(root, state, b) {
@@ -218,7 +218,7 @@ function markStack(root, state) {
   // The owner's yes must come after the last confirmed mark, or after the last reopen when that is later.
   const since = state.history.findLast((h) => !h.refused && (h.mark === 'confirmed' || h.reopen));
   if (!decidedAfter(root, 'all', since?.decisions)) {
-    return 'The stack has no decision recorded since the last prototype was confirmed. After their yes, run decide.js add all "<their picks>" and mark again.';
+    return 'The stack has no decision recorded since the last prototype was confirmed or the stack was reopened. After their yes, run decide.js add all "<their picks>" and mark again.';
   }
   const problem = checkProblem(root, state);
   if (problem) return problem;
@@ -253,7 +253,7 @@ function markShipped(root, state, named = []) {
   const notDone = briefs.find((nn) => !done.includes(nn));
   if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
   // The owner's yes to take a brief live is a decision for that brief, after it was finished.
-  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done', nn));
+  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done'));
   if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>", and mark again.`;
   state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;
@@ -344,7 +344,7 @@ function main(root, [cmd, a, b, ...more]) {
     state.stack = false;
     state.history.push({ brief: null, mark: 'stack', reopen: true, at: new Date().toISOString(), decisions: decisionsFor(root).length });
     writeState(root, state);
-    console.log('The stack is open again; next goes back to the stack stage.');
+    console.log('The stack is open again.');
   } else if (cmd === 'mark' && a) {
     const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
     const problem = markProject ? markProject(root, state, [b, ...more].filter(Boolean)) : markBrief(root, state, a, b);

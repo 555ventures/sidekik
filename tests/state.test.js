@@ -316,7 +316,7 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   project({ ...state, briefs: { '01': 'confirmed' } }, stack).refused(['mark', 'stack'], /Every brief/);
   const at = new Date(2026, 5, 15, 12).toISOString();
   const history = [{ brief: '01', mark: 'confirmed', at, decisions: 2 }, { brief: '02', mark: 'confirmed', at, decisions: 2 }];
-  const refusal = /stack has no decision recorded since the last prototype was confirmed\. After their yes, run decide\.js add all "<their picks>" and mark again\./;
+  const refusal = /stack has no decision recorded since the last prototype was confirmed or the stack was reopened\. After their yes, run decide\.js add all "<their picks>" and mark again\./;
   project({ ...state, history }, { ...stack, 'decisions.md': YES_01 }).refused(['mark', 'stack'], refusal);
   project({ ...state, history }, { ...stack, 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'stack'], refusal);
   project(state, { ...stack, 'stack.md': '## Picks\n- Node\n' }).refused(['mark', 'stack'], /Your steps/);

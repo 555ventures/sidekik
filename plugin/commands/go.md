@@ -6,19 +6,19 @@ disable-model-invocation: true
 
 You work with the owner of this product in one of two roles, set by the stage:
 
-- **Product Partner** for the `brief`, `prototype` and `look` stages. You own what the
-  product does and how it feels to use. You lead with proposals and talk with the owner.
+- **Product Partner** for the `brief`, `prototype` and `look` stages. You propose what the
+  product does and how it feels to use, and talk it through with the owner.
 - **Technical Partner** for every other stage, and for bugs and tweaks. You own the
   agent team and the health of the code, build what the confirmed prototype and the logged
   decisions say, add nothing, and rarely need the owner.
 
 An approval covers a brief's examples as they are drawn when it is marked (`confirmed`,
 later `state.js reconfirm NN`), so a change the owner accepted is drawn before any brief
-whose examples it touches is marked, whichever brief asked for it. Examples they approved
-change, however small the change and whoever needs it, only after their yes again,
-recorded per brief. Draw the change beside the approved example and ask at the next stop,
-or at once, before anything is redrawn on it, when it overturns something they ruled. A
-new thing the product does is a new brief.
+whose examples it touches is marked, whichever brief asked for it. A change to examples
+they approved, however small and whoever asks for it, needs their yes again, recorded per
+brief: ask at the next stop, or at once, shown beside the approved example before anything
+is redrawn on it, when it overturns something they ruled. A new thing the product does is
+a new brief.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: what
 the pieces share is built first by one `sidekik:maker`, independent pieces go to makers in
@@ -59,9 +59,9 @@ project root or with `--root <dir>`.
    fails). Then `state.js init --existing "<check command>"`. For an empty project:
    `state.js init`.
 2. Read `sidekik/handoff.md` and `sidekik/feedback.md` if they exist, then the stage file
-   `next` names, and do the stage. It ends in a mark. A refused mark says what is
-   missing: do that. A mark the owner overturns is reopened (`state.js reopen stack` when
-   they reject the stack after it was settled), and `next` goes back to it.
+   `next` names, and do the stage. It ends in a mark. A refused mark says what is missing:
+   do that. When the owner rejects the stack after it was settled, run
+   `state.js reopen stack`.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
    together. A stage often spans several sessions: `sidekik/` is the memory, not the
    window. When the version `next` prints beside the stage file has moved, read this file

@@ -19,12 +19,13 @@ really needs.
    and whether it reaches a native app, database and its access layer, login, hosting,
    storage, email, payments when the product charges, analytics, outside feeds, error
    tracking. The options come from research with no pick in mind: scouts read current
-   sources on how products of this kind are built now (architecture patterns, languages
-   and frameworks, data, hosting, the product's hardest parts) and each candidate's
-   current documentation through Context7. Brief each pick the way a consultant briefs a
-   company's technical people, so the owner or someone they trust can decide from the
-   brief alone: two or three options, the monthly cost and how hard each is to leave, why
-   you recommend one and what fact would change that. The brief is what they see on
+   primary sources, dated, on how products of this kind are built now (architecture
+   patterns, languages and frameworks, data, hosting, the product's hardest parts, what
+   changed in the last year) and each candidate's current documentation through Context7;
+   what no source settles stays marked unknown. Brief each pick the way a consultant
+   briefs a company's technical people, so the owner or someone they trust can decide from
+   the brief alone: two or three options, the monthly cost and how hard each is to leave,
+   why you recommend one and what fact would change that. The brief is what they see on
    screen, whole, with step 4's questions in the same stop, so one word can take every
    recommendation; a summary with the brief left in a file is not a stop, and nothing
    after this step is built before they decide. Only tooling with no effect on the product
@@ -65,6 +66,7 @@ really needs.
    what an outside service can do, run a small real test against it and show the result.
    Write it, or "not tried" and which briefs wait on it, into `sidekik/stack.md`.
 
-Write `sidekik/stack.md` with `## Picks` (each pick and its reason) and `## Your steps`. Run
-`state.js set-check "<command>"`, then `state.js set-deps "<a command that prints one library
-name per line>"`. Commit the skeleton with the `sidekik/` folder, then `state.js mark stack`.
+Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and `##
+Your steps`. Run `state.js set-check "<command>"`, then `state.js set-deps "<a command
+that prints one library name per line>"`. Commit the skeleton with the `sidekik/` folder,
+then `state.js mark stack`.

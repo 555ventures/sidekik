@@ -181,7 +181,7 @@ test('confirmed needs a decision for exactly this brief recorded after its proto
   assert.equal(project(old).run('mark', '01', 'confirmed').code, 0);
 });
 
-test('confirmed binds the approval to the mapped files, so noted and built refuse after a change until reconfirm', () => {
+test('confirmed binds the approval to the mapped files, so noted and done refuse after a change until reconfirm, while built and reviewed do not', () => {
   const p = project({ stack: true, briefs: { '01': 'prototyped' } }, { ...proto('done'), 'build-notes/01-booking-flow.md': NOTE, 'questions/pm.md': '' });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
   assert.match(p.read().approved['01'], /^[0-9a-f]{64}$/);
@@ -202,7 +202,17 @@ test('confirmed binds the approval to the mapped files, so noted and built refus
   assert.equal(p.read().briefs['01'], 'confirmed');
   assert.equal(p.run('mark', '01', 'noted').code, 0);
   p.write('sidekik/prototype/book/start.html', '<button class="btn">Book</button>\n');
-  p.refused(['mark', '01', 'built'], /changed after the owner approved it/);
+  p.write('sidekik/lessons.md', '- 01: [edge-cases] Check the button.\n');
+  fs.mkdirSync(path.join(p.root, 'sidekik', 'reviews'));
+  p.write('sidekik/reviews/01.md', 'No proven bugs.\n');
+  p.run('set-check', IN_ROOT);
+  p.write('sidekik/state.json', JSON.stringify({ ...p.read(), bases: {}, history: p.read().history.map((h) => ({ ...h, at: new Date(0).toISOString() })) }));
+  assert.equal(p.run('mark', '01', 'built').code, 0);
+  assert.equal(p.run('mark', '01', 'reviewed').code, 0);
+  p.refused(['mark', '01', 'done'], /changed after the owner approved it/);
+  assert.equal(spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, 'add', '01', 'Shorter button is fine.']).status, 0);
+  assert.equal(p.run('reconfirm', '01').code, 0);
+  assert.equal(p.run('mark', '01', 'done').code, 0);
 });
 
 test('noted needs the stack settled and a build note with a reuse section and a done-when item', () => {
@@ -289,12 +299,13 @@ test('reviewed runs the check only when the review fixed or cut something', () =
 });
 
 test('done needs a lesson with a cause for the brief, and every attempt joins the history', () => {
-  const p = project({ stack: true, briefs: { '01': 'reviewed' } }, { 'lessons.md': '- 02: [late] Another brief.\n- 01: Prototype the edge cases first.\n' });
+  const p = project({ stack: true, briefs: { '01': 'reviewed' }, history: [{ brief: '01', mark: 'prototyped', at: '2026-01-01T00:00:00.000Z' }] }, { 'lessons.md': '- 02: [late] Another brief.\n- 01: Prototype the edge cases first.\n' });
+  p.run('reconfirm', '01');
   p.refused(['mark', '01', 'done'], /no lesson for brief 01 yet, written as "- 01: \[cause\]/);
   p.write('sidekik/lessons.md', '- 01: [edge-cases] Prototype the edge cases first.\n');
   assert.equal(p.run('mark', '01', 'done').code, 0);
   assert.equal(p.read().briefs['01'], 'done');
-  const history = p.read().history;
+  const history = p.read().history.filter((h) => h.mark === 'done');
   assert.deepEqual(history.map(({ brief, mark, refused }) => [brief, mark, refused]), [['01', 'done', true], ['01', 'done', undefined]]);
   assert.equal(new Date(history[1].at).toISOString(), history[1].at);
 });

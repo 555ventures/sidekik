@@ -141,8 +141,6 @@ const REQUIRES = {
     return doneWhenItems(note) ? null : `The build note sidekik/${rel} needs a "## Done when" section with at least one item.`;
   },
   built(root, state, b) {
-    const changed = changedSinceApproval(root, state, b.nn);
-    if (changed) return changed;
     const names = state.depsCommand ? libraries(root, state.depsCommand) : [];
     if (!names) return `The library command "${state.depsCommand}" did not run.`;
     const extra = names.find((name) => !state.deps.includes(name));
@@ -164,6 +162,8 @@ const REQUIRES = {
     return has(review, /^- \[(fixed|cut)\]/m) ? checkProblem(root, state) : null;
   },
   done(root, state, b) {
+    const changed = changedSinceApproval(root, state, b.nn);
+    if (changed) return changed;
     return has(read(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null
       : `The lessons file has no lesson for brief ${b.nn} yet, written as "- ${b.nn}: [cause] what to change".`;
   },

@@ -62,8 +62,10 @@ more foundation.
 
 A new product gets every brief prototyped in this one pass, with makers on the remaining
 areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its guesses in
-`sidekik/questions/<area>.md`. When they return, settle the kit requests, and the questions
-that are yours rather than the owner's as `[settled] NN: … → what you chose`.
+`sidekik/questions/<area>.md`. When they return, settle the kit requests, and the questions that are not the owner's
+as `[settled] NN: … → what you chose`; one the examples cannot answer because it is a
+stack decision (where it runs, what it costs, how it is packaged, what an outside service
+can do) is settled as `→ a stack decision` and joins that stage's list.
 
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
 - What a user does inside another company's product comes from that company's own pages,

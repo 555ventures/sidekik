@@ -56,6 +56,16 @@ architecture as a picture, the main libraries of each part and the data design i
 join the owner's picks; the brief is shown whole on screen; nothing after the picks is
 built before they decide.
 
+**Rewritten 2026-11-13, applied in 0.13.0,** on the owner's instruction after Sumaro's three
+lines (anchoring on their other repositories, no consultation on the architecture, no
+research before the options): criteria agreed with the owner and the decisions named and
+marked hard or easy to reverse in one batch; research from dated primary sources with no
+pick in mind before any option; one proposal page shown whole, with the architecture and
+the data design as pictures, two or three whole designs, and per decision the options,
+gain and loss, the recommendation, the strongest argument against it and what would change
+it; a yes per hard-to-reverse decision, one word for the easy ones; the risky pieces tried
+before the skeleton; every decision kept with its reasons and sources.
+
 ## Every change to confirmed examples needs the owner's yes again, enforced
 
 **Decided 2026-11-10, applied in 0.5.3 and 0.5.5.** From sumglass: after brief 07 was

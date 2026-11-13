@@ -10,17 +10,23 @@ really needs.
    for the product's hardest parts and by how well an AI writes and checks that
    language), and the development machine as it is (which databases, object stores and
    mail catchers already run, in which containers and on which ports; how env files and
-   secrets are kept), so the skeleton reuses the local services that are there. Then, from the answers and the confirmed examples,
-   list what the product needs to be built and released.
-2. **Options.** The picks that shape the product are the owner's: framework, the UI
-   toolkit the kit becomes and whether it reaches a native app, database and its access
-   layer, login, hosting, storage, email, payments when the product charges, analytics,
-   outside feeds, error tracking. Brief each the way a consultant briefs a company's
+   secrets are kept), so the skeleton reuses the local services that are there. Then, from
+   the answers and the confirmed examples, list what the product needs to be built and
+   released.
+2. **Options.** The picks that shape the product are the owner's: the architecture (which
+   parts exist, who calls whom, where data lives, drawn as a picture), the framework, the
+   main libraries of each part, the data design in short, the UI toolkit the kit becomes
+   and whether it reaches a native app, database and its access layer, login, hosting,
+   storage, email, payments when the product charges, analytics, outside feeds, error
+   tracking. Brief each the way a consultant briefs a company's
    technical people, so the owner or someone they trust can decide from the brief alone:
    two or three options, the monthly cost and how hard each is to leave, why you recommend
-   one and what fact would change that. They go in one stop with step 4's questions, so one
-   word can take every recommendation. Only tooling with no effect on the product is a call.
-3. **Data design and areas.** Write `sidekik/model.md`: what the whole product stores, the
+   one and what fact would change that. The brief is what they see on screen, whole, with step 4's questions in the same stop,
+   so one word can take every recommendation; a summary with the brief left in a file is
+   not a stop, and nothing after this step is built before they decide. Only tooling with
+   no effect on the product is a call.
+3. **Data design and areas.** Write `sidekik/model.md` from what they decided: what the
+   whole product stores, the
    rules every brief shares, and the product's areas with what each is responsible for.
    Do not list there what an area contains: that is read from the code.
 4. **One batch of questions.** Walk every example for what it cannot show: who may do

@@ -47,6 +47,15 @@ me, or give me more options" and "are we planning to make mobile app or just web
 do you know you want to properly architect?" Decided by that correction and applied in
 0.4.1: the owner batch and the shaping picks in stack.md steps 1 and 2.
 
+**Widened 2026-11-13, applied in 0.12.6.** From Sumaro: the guide left the architecture,
+the data design and the main libraries as the lead's calls and had the skeleton built right
+after one stop; the session showed a 13-row summary with the brief left in a file. The
+owner: "framework, tech stack, main libraries, architecture, database pick, UI kits and
+other important things MUST BE consulted before you start doing anything." The
+architecture as a picture, the main libraries of each part and the data design in short
+join the owner's picks; the brief is shown whole on screen; nothing after the picks is
+built before they decide.
+
 ## Every change to confirmed examples needs the owner's yes again, enforced
 
 **Decided 2026-11-10, applied in 0.5.3 and 0.5.5.** From sumglass: after brief 07 was

@@ -215,7 +215,9 @@ function markStack(root, state) {
     return 'The stack file needs a "## Picks" section and a "## Your steps" section.';
   }
   if (read(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
-  if (!decidedSince(root, state, 'all', 'confirmed')) {
+  // The owner's yes must come after the last confirmed mark, or after the last reopen when that is later.
+  const since = state.history.findLast((h) => !h.refused && (h.mark === 'confirmed' || h.reopen));
+  if (!decidedAfter(root, 'all', since?.decisions)) {
     return 'The stack has no decision recorded since the last prototype was confirmed. After their yes, run decide.js add all "<their picks>" and mark again.';
   }
   const problem = checkProblem(root, state);
@@ -337,6 +339,12 @@ function main(root, [cmd, a, b, ...more]) {
     approve(root, state, a);
     writeState(root, state);
     console.log(`The owner's approval of brief ${a} now covers the prototype as it stands.`);
+  } else if (cmd === 'reopen' && a === 'stack') {
+    if (!state.stack) return 'The stack is not settled, so there is nothing to reopen.';
+    state.stack = false;
+    state.history.push({ brief: null, mark: 'stack', reopen: true, at: new Date().toISOString(), decisions: decisionsFor(root).length });
+    writeState(root, state);
+    console.log('The stack is open again; next goes back to the stack stage.');
   } else if (cmd === 'mark' && a) {
     const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
     const problem = markProject ? markProject(root, state, [b, ...more].filter(Boolean)) : markBrief(root, state, a, b);
@@ -350,7 +358,7 @@ function main(root, [cmd, a, b, ...more]) {
       shipped: `The finished briefs are now live: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
   }
   return null;
 }

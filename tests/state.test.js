@@ -325,6 +325,26 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   assert.equal(p.read().stack, true);
 });
 
+test('reopen stack unsettles a settled stack and the yes for it must come after the reopen', () => {
+  project({ stack: false }).refused(['reopen', 'stack'], /nothing to reopen/);
+  const state = { stack: true, check: IN_ROOT, briefs: { '01': 'confirmed', '02': 'confirmed' } };
+  const stack = { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' };
+  const p = project(state, stack);
+  p.git('init', '-q');
+  p.write('app.js', 'x\n');
+  p.git('add', 'app.js');
+  p.git('commit', '-qm', 'skeleton');
+  assert.equal(p.run('reopen', 'stack').code, 0);
+  assert.equal(p.read().stack, false);
+  const [entry] = p.read().history;
+  assert.deepEqual({ ...entry, at: null }, { brief: null, mark: 'stack', reopen: true, at: null, decisions: 2 });
+  assert.match(p.run('next').out, /stack/);
+  p.refused(['mark', 'stack'], /no decision recorded/);
+  assert.equal(spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, 'add', 'all', 'The new picks.']).status, 0);
+  assert.equal(p.run('mark', 'stack').code, 0);
+  assert.equal(p.read().stack, true);
+});
+
 test('the shipped mark records named done briefs, or every done brief not yet shipped, on the owner\'s yes for each, joins the history with no brief', () => {
   const state = { stack: true, briefs: { '01': 'done', '02': 'done', '03': 'built' } };
   const at = new Date(2026, 5, 15, 12).toISOString();

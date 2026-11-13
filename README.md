@@ -146,8 +146,9 @@ Project marks:
 - `briefed`: `briefs.md` has brief lines and an `all` decision exists (the owner's yes on the list). It sets `briefed` true.
 - `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and `## Your steps`;
   `model.md` exists; an `all` decision is recorded after the latest `confirmed`
-  mark of any brief; a check command is set and exits 0; the project has a commit and
-  nothing outside `sidekik/` is uncommitted, so every brief gets a base.
+  mark of any brief, or after the latest `reopen stack` when that is later; a check
+  command is set and exits 0; the project has a commit and nothing outside `sidekik/` is
+  uncommitted, so every brief gets a base.
   `init --existing "<check command>"` sets `stack` true at once.
 - `tidying`: records the current git commit as `tidyBase` (null outside a git repo).
 - `tidied`: `tidyBase` was recorded by `tidying`; the check command exits 0; and no
@@ -161,6 +162,9 @@ Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` t
 (`brief` is null for a project mark; `decisions` is how many decisions the file held at that
 moment, and an older entry without it counts as 0), with `refused: true` when it was
 refused.
+`reopen stack` (refused while `stack` is false) sets `stack` false and appends
+`{ brief: null, mark: 'stack', reopen: true, at, decisions }`, so `next` goes back to the
+stack stage.
 
 `set-check "<command>"` refuses a command that contains `;`, saying to join the steps with
 `&&` so that a failing step fails the whole check.
@@ -287,9 +291,9 @@ output is one; piped output is left plain.
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
   `nextStep(root, state)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
-  `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `set-check "<cmd>"`,
-  `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet requirement in one
-  plain sentence and exits 1.
+  `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `reopen stack`,
+  `set-check "<cmd>"`, `set-deps "<cmd>"`, `allow <name>`. A refused mark prints the unmet
+  requirement in one plain sentence and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
 - `scripts/install.js` is the SessionStart hook: it writes the `sidekik` command (a `sh`
   wrapper that runs `sidekik.js`) into the folder on your PATH that holds `node` when it is

@@ -60,7 +60,8 @@ project root or with `--root <dir>`.
    `state.js init`.
 2. Read `sidekik/handoff.md` and `sidekik/feedback.md` if they exist, then the stage file
    `next` names, and do the stage. It ends in a mark. A refused mark says what is
-   missing: do that.
+   missing: do that. A mark the owner overturns is reopened (`state.js reopen stack` when
+   they reject the stack after it was settled), and `next` goes back to it.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
    together. A stage often spans several sessions: `sidekik/` is the memory, not the
    window. When the version `next` prints beside the stage file has moved, read this file

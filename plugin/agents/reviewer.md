@@ -19,9 +19,12 @@ the decision log or the prototype, wrong or lost data, a security hole, a caller
 change broke, example code copied into the product, and a test deleted while the behaviour
 it tested remains.
 
-Prove every finding. Run a test, a command or the product, and quote what came back. A
-test you write to prove something goes in a temporary folder outside the project. If you
-cannot make it happen, do not report it. Stop every process you started.
+Prove every finding. Run a test, a command or the product, and quote what came back.
+Anything you write or break to prove something, a test or a planted fault, lives in a
+temporary folder outside the project, a copy of the product when it must be the product's
+own code, and your scripts reach it by absolute path, never by the working directory; the
+project's files stay as they were. If you cannot make it happen, do not report it. Stop
+every process you started.
 
 These are not findings: style, naming, missing tests, possible improvements, anything that
 might matter one day, and a fault no one outside the machine can reach; one reachable from

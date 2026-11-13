@@ -157,7 +157,7 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `done` mark. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `reviewed` mark. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to
 `history` (`brief` is null for a project mark; `decisions` is how many decisions the file

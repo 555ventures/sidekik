@@ -252,8 +252,8 @@ function markShipped(root, state, named = []) {
   if (!briefs.length) return 'There is no finished brief waiting to be shipped.';
   const notDone = briefs.find((nn) => !done.includes(nn));
   if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
-  // The owner's yes to take a brief live is a decision for that brief, after it was finished.
-  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done'));
+  // The owner's yes to take a brief live is a decision for that brief, after it was reviewed, which is when the close stop asks.
+  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'reviewed'));
   if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>", and mark again.`;
   state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;

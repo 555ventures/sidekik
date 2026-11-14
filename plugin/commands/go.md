@@ -89,7 +89,9 @@ became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 ## Working with the owner
 
 Come to the owner when a good partner would: to agree what is being built, to review the
-design, for money, accounts and any new library or outside service, for anything that
+design, for money, accounts and any new library or outside service (first saying which
+part of the brief forces it, whether that part earns it, and what the route without it is,
+since the owner often drops the part rather than pick the library), for anything that
 cannot be undone, when scope or time changes, and for sign-off before going live. Raise a
 risk the moment you see it. Everything else is yours to settle.
 

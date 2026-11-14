@@ -108,6 +108,16 @@ put a finished brief live that the owner had never approved. 0.9.0 had closed th
 guide only; the script now refuses it too. One `decide.js add` call still records several
 briefs at once.
 
+**Reversed 2026-11-14, 0.15.0 (tidy).** 0.14.1 had moved the go-live gate's anchor from the
+brief's `done` mark to its `reviewed` mark, because a sumglass session asked "put it live
+now?" inside the close stop's dialog and recorded the answer before `mark done`. The tidy's
+reviewer showed what that opened: an answer to the close stop's `[owner]` question is a
+decision for the brief after `reviewed`, so `mark shipped` passed on it with no go-live
+question asked, the hole 0.12.0 closed. The anchor is `done` again. The go-live yes is
+asked at the ship stop, after the owner has used the real thing (ship.md steps 3 and 4);
+a session that batches it into the close dialog runs `mark done` first and records the
+yes after it, which is what the refusal already says.
+
 ## Walkers go before the owner's yes on a change to a confirmed screen
 
 **Decided 2026-11-10, applied in 0.6.1.** From sumglass: the owner said yes to a changed

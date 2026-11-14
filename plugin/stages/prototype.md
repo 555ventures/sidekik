@@ -9,8 +9,8 @@ Propose, from the owner's answers on voice, feel and what to avoid, which came w
 list. Design for behaviour: what the user wants, the moment they first get it, the reasons
 to come back. Use persuasion on purpose: progress, streaks, rewards, defaults, social proof.
 
-The prototype is a set of concrete examples of the product in use, with nothing behind
-them, in the form the product is judged by:
+The prototype is a set of concrete examples of the product in use, in the form the product
+is judged by:
 
 - looked at: screens to click, with fake data, drawn as the device shows them at each
   width the kit names,
@@ -19,8 +19,9 @@ them, in the form the product is judged by:
 - works on its own: cases to check, each "given this, it does that" over sample data,
   with the hard cases, and a throwaway run that shows the results.
 
-None of its examples' code goes into the product, and confirmed examples become its tests.
-It lives in `sidekik/prototype/`, built so a session with no memory can extend it.
+None of its examples' or candidates' code goes into the product, and confirmed examples
+become its tests. It lives in `sidekik/prototype/`, built so a session with no memory can
+extend it.
 
 ## Foundation
 
@@ -38,21 +39,20 @@ nothing. Use what works, and what the owner gave you.
   them, and outside the map. The kit carries the small script that prints rows as markup.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
-- `INDEX.md`, under 40 lines: what this is and its rules.
+- `INDEX.md`: what this is and its rules.
 
-Then the heart of the product as two or three candidate screens under `shots/candidates/`,
-which the checker and the freeze ignore, in the kit's tokens. When the heart is a
-conversation with a model or a live agent, which scripted exchanges cannot show, one
-candidate is a thin working piece on the real model, thrown away like the others, with no
-stack chosen for it. The moment they exist, hand them to the owner as images or as a thing
-to try: one line with what differs and what to look at, and end your turn. Their pick
-becomes the one reference example and the kit follows it. Variants of one screen early are
-cheap; variants of a prototype are waste. Then one finished reference example for each
-other area (a part of the product a user would name), by makers against the kit as it
-stands, each in the product's primary language, with any other language shown by one
-example later. Look at them all yourself in a browser, settle their kit requests, and run
-`proto-check.js freeze`. After that the kit changes only on your decision, and you freeze
-again.
+Then the heart of the product as two or three candidates under `shots/candidates/`, which
+the checker and the freeze ignore, in the kit's tokens. When the heart is a conversation
+with a model or a live agent, which scripted exchanges cannot show, one candidate is a
+thin working piece on the real model. The moment they exist, hand them to the owner as
+images or as a thing to try: one line with what differs and what to look at, and end your
+turn. Their pick becomes the one reference example and the kit follows it. Variants of one
+screen early are cheap; variants of a prototype are waste. Then one finished reference
+example for each other area (a part of the product a user would name), by makers against
+the kit as it stands, each in the product's primary language, with any other language
+shown by one example later. Look at them all yourself in a browser, settle their kit
+requests, and run `proto-check.js freeze`. After that the kit changes only on your
+decision, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes is redrawn in place; the product's tests that read it are pointed at a copy

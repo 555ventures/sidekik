@@ -359,7 +359,7 @@ test('reopen stack unsettles a settled stack and the yes for it must come after 
 test('the shipped mark records named done briefs, or every done brief not yet shipped, on the owner\'s yes for each, joins the history with no brief', () => {
   const state = { stack: true, briefs: { '01': 'done', '02': 'done', '03': 'built' } };
   const at = new Date(2026, 5, 15, 12).toISOString();
-  const history = [{ brief: '01', mark: 'reviewed', at, decisions: 2 }, { brief: '02', mark: 'reviewed', at, decisions: 2 }];
+  const history = [{ brief: '01', mark: 'done', at, decisions: 2 }, { brief: '02', mark: 'done', at, decisions: 2 }];
   project({ ...state, shipped: ['01', '02'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
   project(state).refused(['mark', 'shipped', '03'], /Brief 03 is not finished/);
   const refusal = /no decision recording the owner's yes to take brief 01 live\. After their yes, run decide\.js add 01 "<their words>", and mark again\./;
@@ -390,8 +390,8 @@ test('a yes recorded before the mark it must follow does not count, even on the 
   const listed = `${YES}${YES_01}- 2026-06-15 02: Looks right.\n`;
   project(state, { ...stack, 'decisions.md': listed }).refused(['mark', 'stack'], /stack has no decision recorded since the last prototype was confirmed/);
   project(state, { ...stack, 'decisions.md': `${listed}- 2026-06-15 all: Node it is.\n` }).refused(['mark', 'stack'], /nothing is committed yet/);
-  // Shipped: only a decision recorded before the reviewed mark is refused; one between reviewed and done counts.
-  const done = { stack: true, briefs: { '01': 'done' }, history: [{ brief: '01', mark: 'reviewed', at, decisions: 2 }, { brief: '01', mark: 'done', at, decisions: 3 }] };
+  // Shipped: a yes recorded before the done mark is refused; one after it counts.
+  const done = { stack: true, briefs: { '01': 'done' }, history: [{ brief: '01', mark: 'done', at, decisions: 2 }] };
   project(done, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped', '01'], /no decision recording the owner's yes to take brief 01 live/);
   assert.equal(project(done, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Go live.\n` }).run('mark', 'shipped', '01').code, 0);
 });

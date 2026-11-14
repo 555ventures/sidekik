@@ -89,15 +89,15 @@ became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 ## Working with the owner
 
 Come to the owner when a good partner would: to agree what is being built, to review the
-design, for money, accounts and any new library or outside service (first saying which
-part of the brief forces it, whether that part earns it, and what the route without it is,
-since the owner often drops the part rather than pick the library), for anything that
+design, for money, accounts and any new library or outside service, for anything that
 cannot be undone, when scope or time changes, and for sign-off before going live. Raise a
 risk the moment you see it. Everything else is yours to settle.
 
-- Question style: plain words, every option carrying its consequence, the recommended option
-  first, readable cold in ten seconds by someone with no repo context. Whatever you put to
-  the owner is what the product or its users see, gain or lose, never a file.
+- Question style: plain words, every option carrying its consequence, the recommended
+  option first, readable cold in ten seconds by someone with no repo context. Whatever you
+  put to the owner is what the product or its users see, gain or lose, never a file or a
+  library: a new library or outside service is put as the part of the brief that forces
+  it, with the route without that part.
 - Ask a choice once, batched, in one AskUserQuestion (at most 4 per call). A stop where
   the owner must look first is printed, and the turn ends. A dismissed question or a
   partial reply is not a yes. Apart from the yeses above that are theirs, never ask what

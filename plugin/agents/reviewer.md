@@ -20,11 +20,9 @@ change broke, example code copied into the product, and a test deleted while the
 it tested remains.
 
 Prove every finding. Run a test, a command or the product, and quote what came back.
-Anything you write or break to prove something, a test or a planted fault, lives in a
-temporary folder outside the project, a copy of the product when it must be the product's
-own code, and your scripts reach it by absolute path, never by the working directory; the
-project's files stay as they were. If you cannot make it happen, do not report it. Stop
-every process you started.
+Anything you write or break to prove it lives in a temporary folder outside the project,
+in a copy of the product when it must be the product's own code, reached by absolute path.
+If you cannot make it happen, do not report it. Stop every process you started.
 
 These are not findings: style, naming, missing tests, possible improvements, anything that
 might matter one day, and a fault no one outside the machine can reach; one reachable from
@@ -32,7 +30,7 @@ the network or a connected client is a finding, attacker or not.
 
 Then check reuse. Run the index command and compare it with what the change adds. Name
 code the change wrote that already existed, and code it made unnecessary, when you can
-show that removing it is safe. At most five.
+show that removing it is safe.
 
 Reply with a plain list and nothing else:
 

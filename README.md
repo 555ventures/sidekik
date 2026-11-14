@@ -157,7 +157,7 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `reviewed` mark. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `done` mark. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to
 `history` (`brief` is null for a project mark; `decisions` is how many decisions the file
@@ -264,12 +264,10 @@ briefs included), `next` adds a last line `Changed since approval: 01, 02`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
-The shell command appears by itself after the first session with the plugin (see
-`scripts/install.js` below; `npm install -g <checkout>` is the alternative). Then `sidekik status`, `sidekik next`,
-`sidekik questions [NN]` and `sidekik check [freeze]` run the scripts below, and
-`sidekik state|decide <...>` passes the rest to that script. `sidekik help` lists them;
-`--root <dir>` goes after the word. `sidekik status` clears the terminal first when its
-output is one; piped output is left plain.
+`sidekik status`, `sidekik next`, `sidekik questions [NN]` and `sidekik check [freeze]`
+run the scripts below, and `sidekik state|decide <...>` passes the rest to that script.
+`sidekik help` lists them; `--root <dir>` goes after the word. `sidekik status` clears the
+terminal first when its output is one; piped output is left plain.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,

@@ -6,14 +6,14 @@ what they chose. Never read the owner's other repositories to guess a stack.
 
 1. **Criteria.** One owner batch before anything is researched: the platforms now and
    later (web, native mobile, desktop), who else will call the backend, where the users
-   are and how many, the budget per month, who will write and maintain the code (a language
-   counts by how well that writer writes and checks it), and the development machine as it
-   is (which databases, object stores and mail catchers already run, in which containers
-   and on which ports; how env files and secrets are kept), which serves only to reuse
-   local services. In the same batch, the decisions this product needs, named from the
-   confirmed examples and the questions the prototype settled as stack decisions, usually
-   eight to twelve: the architecture, the framework, the main libraries of each part, the
-   data design, the UI toolkit the kit becomes and whether it reaches a native app, the
+   are and how many, the budget per month, who will write and maintain the code (a
+   language counts by how well that writer writes and checks it), and the development
+   machine as it is (which databases, object stores and mail catchers already run, in
+   which containers and on which ports; how env files and secrets are kept), which serves
+   only to reuse local services. In the same batch, the decisions this product needs,
+   named from the confirmed examples and the questions the prototype settled as stack
+   decisions: the architecture, the framework, the main libraries of each part, the data
+   design, the UI toolkit the kit becomes and whether it reaches a native app, the
    database and its access layer, login, hosting, storage, email, payments when the
    product charges, analytics, outside feeds, error tracking. Mark each hard or easy to
    reverse; the owner confirms the list with the criteria.

@@ -18,10 +18,10 @@ Start it with the product picture in a few plain lines:
 - what the first version includes, and what it must make easy to add later (a language,
   a currency, a region, a channel, a native app), with what waits under `## Later`.
 
-Then the briefs. A brief is one thing a user will be able to do, in one sentence a customer
-would understand. It can add a feature, change one or remove one. Order them by what has to
-exist first; there are usually three to eight. Format: `- 01 booking-flow: Clients book an
-appointment in under a minute.`
+Then the briefs. A brief is one thing a user will be able to do, in one sentence a
+customer would understand. It can add a feature, change one or remove one. Order them by
+what has to exist first. Format:
+`- 01 booking-flow: Clients book an appointment in under a minute.`
 
 Ask only what would change the list and the words the prototype needs (the voice of the
 product, two or three products whose feel they like, what to avoid). When the idea is

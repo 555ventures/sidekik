@@ -75,6 +75,14 @@ lesson. In the same tidy the Technical Partner stopped "owning how it is built":
 architecture, the data design and the main libraries are the owner's, so the role now
 owns the agent team and the health of the code and builds what the owner decided.
 
+**Plain first, 2026-11-14, applied in 0.15.1.** The owner, asked honestly: would technical
+and architectural questions be better with an easier explanation? Yes. The proposal page was
+"written the way a consultant briefs a company's technical people", and sumaro's owner line
+said "he got no explanation". Each decision now opens with one plain sentence on what the
+choice means for the product and its users and what it costs to change later, with the
+options and the technical reasons under it; the page is written so the owner can decide
+from it alone. The number of decisions that reach the owner does not change.
+
 ## Every change to confirmed examples needs the owner's yes again, enforced
 
 **Decided 2026-11-10, applied in 0.5.3 and 0.5.5.** From sumglass: after brief 07 was

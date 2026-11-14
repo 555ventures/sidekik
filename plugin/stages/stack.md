@@ -27,12 +27,13 @@ what they chose. Never read the owner's other repositories to guess a stack.
    left in a file: the architecture as a picture (which parts exist, who calls whom, where
    data lives), two or three whole designs, the data design in short as a picture (what
    the product stores, the rules every brief shares, the areas and what each owns), and
-   per decision the options with their gain and loss, monthly cost and how hard each is to
-   leave, the recommendation, the strongest argument against it and what fact would change
-   it. Written the way a consultant briefs a company's technical people, so the owner or
-   someone they trust can decide from the page alone. On the same page, one batch of
-   questions from walking every example for what it cannot show: who may do what, money
-   rules, limits, what happens when something fails, what cannot be undone.
+   per decision, first one plain sentence on what the choice means for the product and its
+   users and what it costs to change later, then the options with their gain and loss,
+   monthly cost and how hard each is to leave, the recommendation, the strongest argument
+   against it and what fact would change it. Written so the owner can decide from the page
+   alone: the product's words first, the technical reasons under them. On the same page,
+   one batch of questions from walking every example for what it cannot show: who may do
+   what, money rules, limits, what happens when something fails, what cannot be undone.
 4. **The stop.** Each decision that is hard to reverse is its own line and gets its own
    yes; the easy ones take one word for all. Nothing after this step is built before they
    decide; only tooling with no effect on the product is a call. End your turn.

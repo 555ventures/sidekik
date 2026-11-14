@@ -1,9 +1,11 @@
 # Build note
 
 Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines. It is your working note for
-whoever builds and reviews this brief, and the owner does not approve it. The prototype
-already shows the behaviour, so the note holds only what an example cannot show. Use these
-headings:
+whoever builds and reviews this brief, and the owner does not approve it; when several
+briefs are noted together, one `sidekik:reviewer` reads all their notes against
+`sidekik/model.md`, the decision log and the stack's area rules before any is marked, and
+you fix what it proves. The prototype already shows the behaviour, so the note holds only
+what an example cannot show. Use these headings:
 
 ```
 # <the brief's sentence>
@@ -19,8 +21,9 @@ headings:
   undone. For a change to an existing product: what happens to data that already exists
   and to users who know the old behaviour.
 - **Reuse.** Run the project's index command and read the signatures of the areas this
-  brief touches. Copy in the ones it must use, and name what will be changed in place and
-  what will be deleted.
+  brief touches. Copy in the ones it must use, name what will be changed in place and what
+  will be deleted, and name what this brief builds on; a part another brief has not built
+  yet means this brief waits for it, and the note says which.
 - **Done when.** Three to six things a user can do or see, and each rule or number from
   Behind them that this brief makes true. Each gets a test that can be run again. The test
   meets the rule the way a user or caller does: a refusal or a failure on the screen that

@@ -41,15 +41,18 @@ nothing. Use what works, and what the owner gave you.
 - `INDEX.md`, under 40 lines: what this is and its rules.
 
 Then the heart of the product as two or three candidate screens under `shots/candidates/`,
-which the checker and the freeze ignore, in the kit's tokens. The moment they exist, hand
-them to the owner as images: one line with what differs and what to look at, and end your
-turn. Their pick becomes the one reference example and the kit follows it. Variants of one
-screen early are cheap; variants of a prototype are waste. Then one finished reference
-example for each other area (a part of the product a user would name), by makers against
-the kit as it stands, each in the product's primary language, with any other language
-shown by one example later. Look at them all yourself in a browser, settle their kit
-requests, and run `proto-check.js freeze`. After that the kit changes only on your
-decision, and you freeze again.
+which the checker and the freeze ignore, in the kit's tokens. When the heart is a
+conversation with a model or a live agent, which scripted exchanges cannot show, one
+candidate is a thin working piece on the real model, thrown away like the others, with no
+stack chosen for it. The moment they exist, hand them to the owner as images or as a thing
+to try: one line with what differs and what to look at, and end your turn. Their pick
+becomes the one reference example and the kit follows it. Variants of one screen early are
+cheap; variants of a prototype are waste. Then one finished reference example for each
+other area (a part of the product a user would name), by makers against the kit as it
+stands, each in the product's primary language, with any other language shown by one
+example later. Look at them all yourself in a browser, settle their kit requests, and run
+`proto-check.js freeze`. After that the kit changes only on your decision, and you freeze
+again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes is redrawn in place; the product's tests that read it are pointed at a copy

@@ -28,8 +28,10 @@ product, two or three products whose feel they like, what to avoid). When the id
 still rough (is it feasible, who competes, what should it do first), the picture is worked
 out in talk, not in a reply: the owner speaks first, each turn of yours carries one idea
 and at most one question, and a scout researches who else solves this and what it would
-take while you talk and its facts enter the conversation.
-The stop below is where the talk ends.
+take while you talk and its facts enter the conversation. When they cannot settle the list
+without seeing something, one candidate of the heart is drawn during the talk, as the
+prototype stage draws candidates, and thrown away; the stop below is still where the talk
+ends.
 
 Show the owner the list, with the two or three lines that say what the product is and for
 whom; the picture stays in the file. Say that this yes fixes only what the product will

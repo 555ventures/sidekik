@@ -144,6 +144,27 @@ step would put a third stop and a third artifact in front of the owner, and the 
 own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
 over-engineering the plugin avoids; the four sentences above are what the owner said worked.
 
+## A mock during the brief talk, and a working candidate for a live heart
+
+**Decided 2026-11-14, applied in 0.14.3.** From praxtrade, and before it sumaro: the owner
+asked to see a mock before choosing which piece leads, so before the list was agreed, and
+then ruled that a product whose heart is a conversation with Claude Code cannot be judged
+from scripted exchanges, so the candidate for the heart had to really work. Sumaro's
+session had reached the same point in 0.10.4 (a prototype the owner talks to live).
+
+Applied, guide only: brief.md says that when the owner cannot settle the list without
+seeing something, one candidate of the heart is drawn during the talk and thrown away, and
+the list stop still follows; prototype.md says that when the heart is a conversation with
+a model or a live agent, one of the candidates is a thin working piece on the real model,
+thrown away like the others, with no stack chosen for it, handed to the owner as a thing to
+try. The prototype stays examples with nothing behind them in every other case, and the
+stack stage still decides the stack.
+
+Not recommended: moving the candidates before the list for every product (the list is what
+the product does; most owners can agree it from words, and sumaro's 0.7.2 lesson was the
+list stop being too long, not too early), or letting the working candidate's code into the
+product (it is a candidate, and the stack is not chosen yet).
+
 ## The Product Partner proposes; the owner decides
 
 **Decided 2026-11-13, applied in 0.14.0 (tidy).** go.md said the Product Partner "owns

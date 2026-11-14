@@ -143,8 +143,8 @@ const REQUIRES = {
   built(root, state, b) {
     const names = state.depsCommand ? libraries(root, state.depsCommand) : [];
     if (!names) return `The library command "${state.depsCommand}" did not run.`;
-    const extra = names.find((name) => !state.deps.includes(name));
-    if (extra) return `The project uses the library ${extra}, which the owner has not agreed to. After the owner's yes, run state.js allow ${extra}.`;
+    const extra = names.filter((name) => !state.deps.includes(name));
+    if (extra.length) return `The project uses ${extra.length === 1 ? 'the library' : 'libraries'} the owner has not agreed to: ${extra.join(', ')}. After the owner's yes, run state.js allow ${extra.join(' ')}.`;
     const size = sizeSince(root, state.bases[b.nn]);
     // A brief committed before another of its wave was marked built was measured there, so it may be empty here.
     const noted = state.history.findLast((h) => h.brief === b.nn && h.mark === 'noted' && !h.refused)?.at;
@@ -224,6 +224,12 @@ function markStack(root, state) {
   if (problem) return problem;
   const loose = uncommitted(root);
   if (loose) return `The skeleton must be committed before the stack is settled, so that every brief has a starting point: ${loose}.`;
+  // The skeleton's libraries are the owner's picks at this mark.
+  if (state.depsCommand) {
+    const names = libraries(root, state.depsCommand);
+    if (!names) return `The library command "${state.depsCommand}" did not run.`;
+    state.deps = names;
+  }
   state.stack = true;
   return null;
 }
@@ -324,8 +330,9 @@ function main(root, [cmd, a, b, ...more]) {
     writeState(root, { ...state, depsCommand: a, deps });
     console.log(`The library command is now "${a}", and the ${deps.length} libraries it lists are accepted.`);
   } else if (cmd === 'allow' && a) {
-    writeState(root, { ...state, deps: [...(state.deps ?? []), a] });
-    console.log(`The library ${a} is now allowed.`);
+    const names = [a, b, ...more].filter(Boolean);
+    writeState(root, { ...state, deps: [...new Set([...(state.deps ?? []), ...names])] });
+    console.log(`The ${names.length === 1 ? 'library' : 'libraries'} ${names.join(', ')} ${names.length === 1 ? 'is' : 'are'} now allowed.`);
   } else if (cmd === 'reconfirm' && a) {
     const brief = readBriefs(root).find((x) => x.nn === a);
     if (!brief) return `There is no brief ${a} in the briefs file.`;
@@ -358,7 +365,7 @@ function main(root, [cmd, a, b, ...more]) {
       shipped: `The finished briefs are now live: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name ...>.';
   }
   return null;
 }

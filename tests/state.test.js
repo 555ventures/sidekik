@@ -271,9 +271,13 @@ test('built needs every library the library command lists agreed and a check com
   assert.equal(p.run('set-deps', 'cat libs.txt').code, 0);
   assert.deepEqual([p.read().depsCommand, p.read().deps], ['cat libs.txt', ['react']]);
   p.libs('react', 'dayjs');
-  p.refused(['mark', '01', 'built'], /library dayjs, .* run state\.js allow dayjs\./);
+  p.refused(['mark', '01', 'built'], /the library the owner has not agreed to: dayjs\. .* run state\.js allow dayjs\./);
   assert.equal(p.run('allow', 'dayjs').code, 0);
   assert.deepEqual(p.read().deps, ['react', 'dayjs']);
+  p.libs('react', 'dayjs', 'zod', 'clsx');
+  p.refused(['mark', '01', 'built'], /libraries the owner has not agreed to: zod, clsx\. .* run state\.js allow zod clsx\./);
+  assert.match(p.run('allow', 'zod', 'clsx').out, /The libraries zod, clsx are now allowed\./);
+  assert.deepEqual(p.read().deps, ['react', 'dayjs', 'zod', 'clsx']);
   p.refused(['mark', '01', 'built'], /No check command/);
   p.refused(['set-check', 'npm test; npm run lint'], /cannot contain ";"\. Join the steps with &&/);
   p.run('set-check', 'exit 1');
@@ -334,6 +338,18 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   p.git('commit', '-qm', 'more');
   assert.equal(p.run('mark', 'stack').code, 0);
   assert.equal(p.read().stack, true);
+});
+
+test('the stack mark records the library command\'s output as the deps', () => {
+  const p = project({ check: IN_ROOT, briefs: { '01': 'confirmed', '02': 'confirmed' } }, { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' });
+  p.git('init', '-q');
+  p.write('app.js', 'x\n');
+  p.git('add', 'app.js');
+  p.git('commit', '-qm', 'skeleton');
+  assert.equal(p.run('set-deps', 'printf "react\\ndayjs\\n"').code, 0);
+  p.run('allow', 'old');
+  assert.equal(p.run('mark', 'stack').code, 0);
+  assert.deepEqual(p.read().deps, ['react', 'dayjs']);
 });
 
 test('reopen stack unsettles a settled stack and the yes for it must come after the reopen', () => {

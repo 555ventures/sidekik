@@ -44,13 +44,13 @@ what they chose. Never read the owner's other repositories to guess a stack.
    images, the brand mark, favicon and app icon.
 7. **Their steps.** Every step only a person can do (accounts, keys, billing) goes in one
    numbered list, given once, so the build never stops to wait for one. A secret never
-   passes through the chat, a command argument or a committed file: the skeleton carries a
-   small env utility in the product's own language that takes a key from a hidden prompt
-   or stdin and puts it where that app and environment keep it (the env file step 1 found,
-   or the host's secret store), keeps the example file in step, and reports every key the
-   product needs as missing, present, or failing a cheap live test, never the value. Each
-   step that needs a key tells the owner to run it; the report tells you which steps are
-   done.
+   passes through the chat, a command argument or a committed file: a maker writes a small
+   env utility now, in the product's own language and kept by the skeleton, that takes a
+   key from a hidden prompt or stdin and puts it where that app and environment keep it
+   (the env file step 1 found, or the host's secret store), keeps the example file in
+   step, and reports every key the product needs as missing, present, or failing a cheap
+   live test, never the value. Each step that needs a key tells the owner to run it; the
+   report tells you which steps are done.
 8. **Try the risky pieces** before the skeleton: where a decision or a confirmed example
    depends on what an outside service can do, run a small real test against it and show
    the result. One that needs a key waits for its step; write it, or "not tried" and which

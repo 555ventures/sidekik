@@ -34,14 +34,21 @@ const sha = (text) => crypto.createHash('sha256').update(text).digest('hex');
 // The local calendar day of `at` as YYYY-MM-DD, the form decisions are dated in.
 const day = (at = Date.now()) => new Date(at).toLocaleDateString('en-CA');
 
-// `--root <dir>` from argv, else the current directory, and the arguments without it.
+// `--root <dir>` from argv, else the current directory, and the arguments without it; no folder after it stops the script.
 function rootFrom(argv) {
   const args = argv.slice(2);
   const i = args.indexOf('--root');
   if (i === -1) return { root: process.cwd(), args };
+  if (args[i + 1] === undefined) {
+    console.log('--root needs a folder after it.');
+    process.exit(1);
+  }
   const root = path.resolve(args[i + 1]);
   args.splice(i, 2);
   return { root, args };
 }
 
-module.exports = { dir, readState, writeState, read, sha, day, rootFrom };
+// Said by every script that needs the project set up first.
+const NO_SETUP = 'This project has no sidekik setup yet; run init first.';
+
+module.exports = { NO_SETUP, dir, readState, writeState, read, sha, day, rootFrom };

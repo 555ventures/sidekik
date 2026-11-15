@@ -2,7 +2,7 @@
 // The only writer of sidekik/decisions.md, the record of the owner's rulings.
 const fs = require('fs');
 const path = require('path');
-const { dir, readState, writeState, read, sha, day, rootFrom } = require('./lib/store');
+const { dir, readState, writeState, read, sha, day, rootFrom, NO_SETUP } = require('./lib/store');
 
 const decisionsFile = (root) => path.join(dir(root), 'decisions.md');
 
@@ -103,6 +103,9 @@ if (require.main === module) {
   };
   if (cmd === 'add' && args.length > 3) {
     finish('add takes one ruling. To record several at once, pipe lines "NN: text" into decide.js add.');
+  } else if (['add', 'answer', 'seal'].includes(cmd) && !readState(root)) {
+    // The commands that write need a setup to write into; without one nothing is created.
+    finish(NO_SETUP);
   } else if (cmd === 'add' && args.length === 1) {
     const { entries, bad } = parseDecisions(fs.readFileSync(0, 'utf8'));
     const form = 'The form is "NN: text" or "all: text", with NN two digits. Nothing is recorded.';

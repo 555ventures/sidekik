@@ -156,3 +156,29 @@ test('answer refuses when no open question or several match, writing nothing', (
   assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'questions', 'designer.md'), 'utf8'), questions);
   assert.equal(fs.existsSync(p.file), false);
 });
+
+test('the commands that write refuse in a folder with no setup, and leave nothing behind', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-decide-'));
+  const runs = [
+    { args: ['add', '01', 'A ruling.'] },
+    { args: ['add'], input: '01: A ruling.\n' },
+    { args: ['answer', '01', 'x', 'y'] },
+    { args: ['seal'] },
+  ];
+  for (const { args, input } of runs) {
+    const r = spawnSync(process.execPath, [script, ...args, '--root', root], { encoding: 'utf8', input });
+    assert.equal(r.status, 1, args.join(' '));
+    assert.equal(r.stdout, 'This project has no sidekik setup yet; run init first.\n', args.join(' '));
+    assert.equal(fs.existsSync(path.join(root, 'sidekik')), false, args.join(' '));
+  }
+});
+
+test('--root with nothing after it is refused in one sentence', () => {
+  const scripts = path.join(__dirname, '..', 'plugin', 'scripts');
+  for (const [name, cmd] of [['state.js', 'next'], ['decide.js', 'list']]) {
+    const r = spawnSync(process.execPath, [path.join(scripts, name), cmd, '--root'], { encoding: 'utf8' });
+    assert.equal(r.status, 1, name);
+    assert.equal(r.stdout, '--root needs a folder after it.\n', name);
+    assert.equal(r.stderr, '', name);
+  }
+});

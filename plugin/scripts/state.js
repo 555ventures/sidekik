@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { readState, writeState, read, sha, rootFrom } = require('./lib/store');
+const { readState, writeState, read, sha, rootFrom, NO_SETUP } = require('./lib/store');
 const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
 
@@ -315,7 +315,7 @@ function main(root, [cmd, a, b, ...more]) {
     return null;
   }
   const stored = readState(root);
-  if (!stored) return 'This project has no sidekik setup yet; run init first.';
+  if (!stored) return NO_SETUP;
   const state = { ...fresh(), ...stored };
   if (cmd === 'next') {
     printNext(root, state);

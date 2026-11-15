@@ -47,16 +47,17 @@ Every project also keeps itself clean and learns: a tidy stage is scheduled by t
 and a mistake that repeats three times must get a machine check.
 
 A project also writes down where the plugin itself got in its way, and `/sidekik:learn`,
-run in this repo, turns that feedback and the lessons into one change to the plugin and
-answers in the project.
+run in this repo, fixes a fault of the plugin at once and answers in the project.
 
 ## Why it is small
 
 Its predecessors grew to tens of thousands of lines and answered every incident with a new
-rule. This one stays small by how it changes, not by a limit. It changes only for a lesson
-recorded on a real project. A change rewrites or removes before it adds, and a part that
-was already changed once is reshaped, not patched again. A new machine check is earned when
-the same lesson appears three times, and every fifth change is a tidy of the plugin itself.
+rule, and for its first week so did this one: 73 of 95 fixes added words and 2 removed
+any. It stays small by how it changes, not by a limit. Only a fault (a crash, a wrong
+refusal, a dead end, an untrue sentence) is fixed when it is reported. Everything else
+waits for a tidy every few days, which starts in the projects: for each thing the plugin
+makes a session or the owner do, how often it happened and how often it changed what was
+built. What cost more than it caught is taken out, whatever lesson put it there.
 `npm test` prints its size, so growth is seen and never hidden.
 
 ## Contract (for whoever builds or changes the plugin)
@@ -106,8 +107,8 @@ Line formats, exactly:
   short tag such as `built-twice`. `[none]` is the cause of a lesson with nothing to change
   and is never counted.
 - Feedback: `- [open] stage: text`, later `- [fixed] stage: text → what changed` or
-  `- [declined] stage: text → why`. No script reads it: the project's session writes the
-  line, and `/sidekik:learn` answers it.
+  `- [declined] stage: text → why, and what to do meanwhile`. No script reads it: the
+  project's session writes the line, and `/sidekik:learn` answers it.
 
 `state.json`:
 

@@ -264,3 +264,34 @@ foundation is built before anything is confirmed, and `next` would stop gating t
 prototype stage), and renaming the early list (the confusion came from the stop text, not
 the word). A firm description after the prototype already exists: the build note of the
 note stage, written per brief from the confirmed examples.
+
+## Learn fixes a fault at once and cuts at a tidy
+
+**Decided 2026-11-15, applied in 0.16.3.** From a cross-project review the owner brought,
+each number reproduced: of 95 fixes in the first week 73 added words to the guides and 2
+removed any; 14 tidies took out 1,594 words while the fixes added 8,768; across four
+projects 91 feedback lines were answered `[fixed]` and 7 `[declined]`; the approval
+paragraph of go.md was rewritten nine times in six days. The owner asked whether the
+cause was in each part or in how learn changes parts, and whether the loop had reached
+diminishing returns.
+
+It was learn. A session writes feedback when a rule blocks it and never when obeying a
+rule cost work nobody used, so learn heard only reasons to add; each line was owed one
+edit to one sentence; and a rule with a lesson behind it could not be removed by a tidy,
+which only read the plugin's own text. A count in three projects then showed what the
+feedback never had: of 68 refused marks 4 caught something real, about 270 decision lines
+were one yes copied per brief, and no ruling ever cited the calls file, while reviewers
+proved about 166 bugs and the owner changed most briefs by looking at them.
+
+Applied: learn has two speeds. A fault of the plugin (a crash, a wrong refusal, a dead
+end, an untrue sentence) is fixed when it is reported. Every other line is declined with
+what to do meanwhile and read again at a tidy every few days, which starts in the
+projects, counts for each mechanism how often it fired and how often it changed what was
+built, and takes out what cost more than it caught, whatever lesson put it there. For the
+owner of a project this means fewer new rules between tidies and more answers that say
+"do this meanwhile".
+
+Not recommended: a size budget or a cap on rules (the owner: they get overridden every
+time), stopping the loop (a blocked session should not wait days for a crash to be
+fixed), and rewording learn's four change types in place (removal would still have had
+no evidence to act on).

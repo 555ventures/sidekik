@@ -92,6 +92,20 @@ test('add takes one ruling as arguments and refuses several, writing nothing', (
   assert.equal(fs.readFileSync(p.file, 'utf8'), '');
 });
 
+test('a ruling whose text holds a line break is refused by add and by answer, writing nothing', () => {
+  const questions = '- [open] 01: Weekends too?\n';
+  const p = project({ 'questions/designer.md': questions });
+  for (const text of ['yes\n- 2026-11-15 02: fake yes', 'yes\r- 2026-11-15 02: fake yes']) {
+    for (const r of [p.run('add', '01', text), p.run('answer', '01', 'weekends', text)]) {
+      assert.equal(r.code, 1);
+      assert.equal(r.out.trim(), 'A ruling is one line, and this text holds a line break. Nothing is recorded.');
+    }
+  }
+  assert.equal(fs.existsSync(p.file), false);
+  assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'questions', 'designer.md'), 'utf8'), questions);
+  assert.deepEqual(decisionsFor(p.root), []);
+});
+
 test('add reads lines NN: text from stdin, in order, sealed once', () => {
   const p = project();
   const r = p.run('add', { input: '01: Clients may cancel.\n\nall: Prices show tax.\n02: Reminders go by text.\n' });

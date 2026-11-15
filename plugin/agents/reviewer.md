@@ -16,8 +16,8 @@ difference.
 
 Look for what would hurt a user or the owner: behaviour that contradicts the build note,
 the decision log or the prototype, wrong or lost data, a security hole, a caller this
-change broke, example code copied into the product, and a test deleted while the behaviour
-it tested remains.
+change broke, example code copied into the product (a working piece the owner picked is
+not that), and a test deleted while the behaviour it tested remains.
 
 Prove every finding. Run a test, a command or the product, and quote what came back.
 Anything you write or break to prove it lives in a temporary folder outside the project,

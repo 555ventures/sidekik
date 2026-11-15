@@ -202,7 +202,18 @@ stack stage still decides the stack.
 Not recommended: moving the candidates before the list for every product (the list is what
 the product does; most owners can agree it from words, and sumaro's 0.7.2 lesson was the
 list stop being too long, not too early), or letting the working candidate's code into the
-product (it is a candidate, and the stack is not chosen yet).
+product (it is a candidate, and the stack is not chosen yet). The second clause is
+reversed by the amendment below.
+
+**Amended 2026-11-15, applied in 0.15.5.** From praxtrade: the thin working piece became
+the tool the owner uses every day, thirteen briefs were built and reviewed inside it, and
+no mark could be reached, because the stage ends only through a kit, a map and examples,
+which a working piece did not have. So "thrown away like the others" no longer holds for
+it: a working piece the owner picked is the one part of a prototype that goes into the
+product. The stack skeleton is built from it, every brief is tried there from then on, and
+a brief's tries (the exact input and the exact reply) are kept and mapped as its examples,
+so the marks are reached by the same map. Every other candidate is still thrown away, and
+the stack stage still decides the stack.
 
 ## The Product Partner proposes; the owner decides
 

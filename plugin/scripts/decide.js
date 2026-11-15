@@ -18,8 +18,13 @@ function record(root, entries) {
   seal(root);
 }
 
-// Returns the problem when the file was edited by hand, so a new decision cannot bury the edit.
+// A ruling is one line: a line break in its text would write a second line that reads as another brief's ruling.
+const broken = (text) => (/[\r\n]/.test(text) ? 'A ruling is one line, and this text holds a line break. Nothing is recorded.' : null);
+
+// Returns the problem when a text holds a line break, or when the file was edited by hand, so a new decision cannot bury the edit.
 function addDecisions(root, entries) {
+  const split = entries.map(({ text }) => broken(text)).find(Boolean);
+  if (split) return split;
   const { ok, problems } = verifyDecisions(root);
   if (!ok) return problems[0];
   record(root, entries);
@@ -76,6 +81,7 @@ function openQuestions(root, brief) {
 // Turns the one open question of exactly this brief that contains `match` into an answered one and records the ruling.
 // Returns the problem, or null when done.
 function answerQuestion(root, brief, match, answer) {
+  if (broken(answer)) return broken(answer);
   const { ok, problems } = verifyDecisions(root);
   if (!ok) return problems[0];
   const hits = questionLines(root).filter((q) => q.brief === brief && q.text.toLowerCase().includes(match.toLowerCase()));

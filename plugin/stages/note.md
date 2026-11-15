@@ -1,6 +1,6 @@
 # Build note
 
-Write `sidekik/build-notes/<NN>-<slug>.md`, at most 60 lines. It is your working note for
+Write `sidekik/build-notes/<NN>-<slug>.md`. It is your working note for
 whoever builds and reviews this brief, and the owner does not approve it. The prototype
 already shows the behaviour, so the note holds only what an example cannot show. Use these
 headings:
@@ -22,7 +22,7 @@ headings:
   brief touches. Copy in the ones it must use, name what will be changed in place and what
   will be deleted, and name what this brief builds on, with the brief that builds it when
   it is not built yet.
-- **Done when.** Three to six things a user can do or see, and each rule or number from
+- **Done when.** What a user can do or see, and each rule or number from
   Behind them that this brief makes true. Each gets a test that can be run again. The test
   meets the rule the way a user or caller does: a refusal or a failure on the screen that
   shows it, a number read back from the running system, never only the layer that enforces

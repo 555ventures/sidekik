@@ -32,6 +32,7 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
     'prototype/map/share.md': '| screen | brief | status | purpose | notes |\n|---|---|---|---|---|\n'
       + '| share/link.html | 04 | done | link | |\n| share/revoke.html | 04 | planned | revoke | |\n',
     'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
+    'reviews/01.md': '- [owner] Already finished.\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
   });
   assert.equal(out, `🙋 Waiting on you

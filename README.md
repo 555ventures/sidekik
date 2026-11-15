@@ -84,7 +84,7 @@ sidekik/
     map/<area>.md       | example | brief | status | purpose | links |
     sample/             shared and per-area sample data, neither kit nor example
     shots/              screenshots, candidates, the flows page and the scripts that make them; not checked
-  build-notes/01-booking-flow.md   at most 60 lines, has "## Reuse" and a "## Done when" list
+  build-notes/01-booking-flow.md   has "## Reuse" and a "## Done when" list
   reviews/01.md         - [bug] text   becomes   - [fixed] text  or  - [owner] text
 ```
 
@@ -130,7 +130,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
 | `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) recorded after its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the file holds |
-| `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, is at most 60 lines, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
+| `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
 | `done` | `reviewed`; the brief's mapped files still match `approved`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
@@ -238,8 +238,8 @@ briefs included), `next` adds a last line `Changed since approval: 01, 02`.
 - Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
   whole product`), counted once; one line per brief with open questions filed under that
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
-  `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief whose
-  review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
+  `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief not yet `done`
+  whose review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any; `your yes again on 01, 02, changed since approval` when approved briefs changed. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
@@ -274,7 +274,7 @@ terminal first when its output is one; piped output is left plain.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,
-  `day(at?) → YYYY-MM-DD` (local time), `rootFrom(argv) → { root, args }` (`args` without
+  `day() → YYYY-MM-DD` (local time), `rootFrom(argv) → { root, args }` (`args` without
   `--root <dir>`).
 - `scripts/proto-check.js` exports `checkPrototype(root) → { ok, problems: [string] }`,
   `screensFor(root, brief) → [{ screen, status }]`, `freezeKit(root)`.
@@ -290,7 +290,7 @@ terminal first when its output is one; piped output is left plain.
   `nextStep(root, state)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `reopen stack`,
   `set-check "<cmd>"`, `set-deps "<cmd>"`, `allow <name ...>`. A refused mark prints the unmet
-  requirement in one plain sentence and exits 1.
+  requirement in plain words and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
 - `scripts/install.js` is the SessionStart hook: it writes the `sidekik` command (a `sh`
   wrapper that runs `sidekik.js`) into the folder on your PATH that holds `node` when it is

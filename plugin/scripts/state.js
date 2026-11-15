@@ -136,7 +136,6 @@ const REQUIRES = {
     const rel = `build-notes/${b.nn}-${b.slug}.md`;
     const note = read(root, rel);
     if (note === null) return `The build note sidekik/${rel} does not exist yet.`;
-    if (note.trimEnd().split('\n').length > 60) return `The build note sidekik/${rel} is longer than 60 lines.`;
     if (!has(note, /^## Reuse\s*$/m)) return `The build note sidekik/${rel} needs a "## Reuse" section.`;
     return doneWhenItems(note) ? null : `The build note sidekik/${rel} needs a "## Done when" section with at least one item.`;
   },

@@ -31,8 +31,8 @@ function read(root, rel) {
 
 const sha = (text) => crypto.createHash('sha256').update(text).digest('hex');
 
-// The local calendar day of `at` as YYYY-MM-DD, the form decisions are dated in.
-const day = (at = Date.now()) => new Date(at).toLocaleDateString('en-CA');
+// Today's local calendar day as YYYY-MM-DD, the form decisions are dated in.
+const day = () => new Date().toLocaleDateString('en-CA');
 
 // `--root <dir>` from argv, else the current directory, and the arguments without it; no folder after it stops the script.
 function rootFrom(argv) {

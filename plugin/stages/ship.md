@@ -1,6 +1,6 @@
 # Ship
 
-The owner is needed here. Nothing goes live without their yes.
+The owner is needed here.
 
 1. **Release readiness.** Go through `## Before release` in `sidekik/stack.md`, when there is
    one, and say plainly what is done and what is not.

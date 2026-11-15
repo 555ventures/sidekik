@@ -20,8 +20,8 @@ is judged by:
   with the hard cases, and a throwaway run that shows the results.
 
 Confirmed examples become its tests. None of its examples' code goes into the product,
-except a working piece the owner picked, which the stack stage's skeleton is built from.
-It lives in `sidekik/prototype/`, built so a session with no memory can extend it.
+except a working piece the owner picked. It lives in `sidekik/prototype/`, built so a
+session with no memory can extend it.
 
 ## Foundation
 
@@ -96,6 +96,6 @@ redraws screens, so its pages are rebuilt, never patched.
    example in a flow, every step with its screenshot or the spoken lines of its exchange,
    one anchor per step.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
-   knowing only its role and task, and one as the skeptic.
+   knowing only that persona, and one as the skeptic.
 
 Set the finished rows to `done` and run `state.js mark <NN> prototyped` for each brief.

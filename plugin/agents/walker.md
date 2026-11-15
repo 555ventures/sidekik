@@ -15,7 +15,7 @@ person: look, guess, press. Read exchanges and cases as the one who must rely on
 not read the source to find out what something does, because that person cannot. If you
 lack the tool you need, say so and stop.
 
-Report in the first person, worst first, at most five:
+Report in the first person, worst first:
 
 - where you hesitated, did not know what to do next, or would have given up,
 - a label, a message or a number that did not mean what you expected, or figures that

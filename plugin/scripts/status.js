@@ -44,7 +44,7 @@ function screen(root) {
     ...perBrief((b) => openQuestions(root, b.nn).filter((line) => line.startsWith(`- [open] ${b.nn}:`)).length, 'question'),
     ...(stage === 'look' ? [`your look at the prototype (${prototyped.join(', ')})`] : []),
     ...(stage === 'stack' ? ['your stack picks'] : []),
-    ...perBrief((b) => ((read(root, `reviews/${b.nn}.md`) ?? '').match(/^- \[owner\]/gm) ?? []).length, 'review question'),
+    ...perBrief((b) => (state.briefs[b.nn] === 'done' ? 0 : ((read(root, `reviews/${b.nn}.md`) ?? '').match(/^- \[owner\]/gm) ?? []).length), 'review question'),
     ...(unshipped.length ? [`your sign-off to take ${unshipped.join(', ')} live`] : []),
     ...(changed.length ? [`your yes again on ${changed.join(', ')}, changed since approval`] : []),
   ];

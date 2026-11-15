@@ -71,7 +71,6 @@ sidekik/
   briefs.md             - 01 booking-flow: Clients book in under a minute.
   decisions.md          the owner's rulings; written only by decide.js
   questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
-  calls.md              calls Claude made, for the owner to overrule
   handoff.md            where the work stands, for the next session
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas

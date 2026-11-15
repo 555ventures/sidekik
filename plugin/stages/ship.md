@@ -9,7 +9,7 @@ The owner is needed here.
    an install to try. When it cannot be tried except on its real address, use the real
    address with real users kept out.
 3. **The owner uses the real product.** Give them how to open it, what to try, the calls
-   you made since the last ship, what going live changes for real users and real data, and
+   you made getting it ready, what going live changes for real users and real data, and
    how it can be taken back. End your turn.
 4. **After a clear yes,** record it once with `decide.js add all "<their words>"`, naming in
    brackets the briefs it covers, then take it live the same way: secrets through the env

@@ -33,8 +33,8 @@ what obeying a rule cost, so the tidy starts in the projects, not in the plugin.
 Readers on Opus, one per project, count for each thing the plugin makes a session or the
 owner do how often it happened and how often it changed what was built: a real catch, an
 answer that was not the predicted yes, a file someone read. They read every feedback line
-too, answered or not, the refused steps in the history, `sidekik/lessons.md` and
-`sidekik/calls.md`: several lines about one part mean the part is wrong, not its wording.
+too, answered or not, the refused steps in the history and `sidekik/lessons.md`: several
+lines about one part mean the part is wrong, not its wording.
 
 Then change the plugin, the first of these that fits each finding:
 

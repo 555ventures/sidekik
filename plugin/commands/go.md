@@ -31,9 +31,10 @@ Size it first, and tell the owner which size you chose:
 - **A bug**: reproduce it by running the product, have a maker write a test that fails
   because of it and fix the cause, run the check, and have one `sidekik:reviewer` look at
   the fix, and once more at what a rework after its findings touched. One you cannot
-  reproduce: say so, have a maker make the next occurrence name itself (a log line, and
-  the test that will catch it), and record it as unproven in `sidekik/calls.md`.
-  Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`.
+  reproduce: say so, and have a maker make the next occurrence name itself (a log line,
+  and the test that will catch it).
+  Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`,
+  its text starting `unproven:` for a bug you could not reproduce.
 - **A small tweak** that changes no behaviour (a label, a colour): a maker changes
   exactly what was asked.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
@@ -63,10 +64,11 @@ project root or with `--root <dir>`.
    together. A stage often spans several sessions: `sidekik/` is the memory, not the
    window. When the version `next` prints beside the stage file has moved, read this file
    and the stage file again first. At every mark and every commit, and before you stop
-   mid-stage, overwrite `sidekik/handoff.md` with where things stand and send any `[open]`
-   feedback lines of this stretch not yet sent. When the work is committed and nothing of
-   yours is running (no agent, no background task, no server), tell the owner in one line
-   that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing otherwise.
+   mid-stage, overwrite `sidekik/handoff.md` with where things stand and the calls not yet
+   told to the owner, and send any `[open]` feedback lines of this stretch not yet sent.
+   When the work is committed and nothing of yours is running (no agent, no background
+   task, no server), tell the owner in one line that it is safe to `/clear` and run
+   `/sidekik:go`; say nothing about clearing otherwise.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: makers never run git, every commit is pushed, and on a product with a check command
@@ -109,10 +111,10 @@ risk the moment you see it. Everything else is yours to settle.
   `decide.js answer`). A guess, yours or an agent's, never goes there. It is a line
   `- [open] NN: text` (`NN` is the brief's number) in a file under `sidekik/questions/`
   until the owner answers it.
-- A call the owner might have made differently, and any shortcut taken on purpose, goes in
-  `sidekik/calls.md` as `- NN: the call, and what it means` (`- fix:` or `- tweak:` outside a
-  brief). List them at each stop. Something you notice outside the brief is one line to
-  the owner, not code.
+- A call the owner might have made differently, and any shortcut taken on purpose, is
+  told with what it means at the stop it belongs to, in that stop's own text (a fix's or
+  a tweak's in its one-line report), and kept nowhere once told. Something you notice
+  outside the brief is one line to the owner, not code.
 
 ## Seats and tools
 

@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { readState, writeState, read, sha, rootFrom, NO_SETUP } = require('./lib/store');
+const { readState, writeState, read, rootFrom, NO_SETUP } = require('./lib/store');
 const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
 const { checkPrototype, screensFor } = require('./proto-check');
 
@@ -11,8 +11,9 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.claude-p
 
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
-// An older state file may lack the later fields; each counts as its empty value.
-const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
+// An older state file may lack the later fields, each counted as its empty value, or carry fields
+// nothing reads any more (approved, approvals), which are kept as they are.
+const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null,
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
 const has = (text, re) => text !== null && re.test(text);
@@ -51,13 +52,6 @@ function sizeSince(root, base) {
   }
   return size;
 }
-
-// A hash of the brief's mapped files, paths and contents, so an approval covers exactly what was shown.
-const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, read(root, `prototype/${screen}`)])));
-const changedSinceApproval = (root, state, nn) => state.approved[nn] !== briefHash(root, nn)
-  && `The prototype of brief ${nn} changed after the owner approved it. Record their yes for it with decide.js add ${nn} "<their words>", then run state.js reconfirm ${nn}.`;
-// The briefs with an approval whose mapped files no longer match it, done ones included.
-const changedBriefs = (root, state) => readBriefs(root).map((b) => b.nn).filter((nn) => state.approved[nn] && changedSinceApproval(root, state, nn));
 
 // How often each cause appears on brief and fix lessons; [none] is never counted.
 function lessonCauses(root) {
@@ -100,11 +94,11 @@ function doneWhenItems(note) {
   return (end === -1 ? after : after.slice(0, end)).filter((l) => l.startsWith('- ')).length;
 }
 
-// The decisions file only grows, so the owner's yes is a decision for `brief` after the first `count` lines.
-const decidedAfter = (root, brief, count = 0) => decisionsFor(root).slice(count).some((d) => d.brief === brief);
+// The decisions file only grows, so the owner's yes is a decision for `brief` or for all after the first `count` lines.
+const decidedAfter = (root, brief, count = 0) => decisionsFor(root).slice(count).some((d) => d.brief === brief || d.brief === 'all');
 
-// The owner's yes counts when it comes after the last mark it must follow. A mark
-// records how many decisions there were; an older entry without that counts as 0, so any decision counts.
+// The owner's yes counts when it comes after the last mark it must follow, and one for all covers every brief marked on it.
+// A mark records how many decisions there were; an older entry without that counts as 0, so any decision counts.
 function decidedSince(root, state, brief, mark) {
   const last = state.history.findLast((h) => h.brief === brief && h.mark === mark && !h.refused);
   return decidedAfter(root, brief, last?.decisions);
@@ -127,12 +121,10 @@ const REQUIRES = {
     const open = openQuestions(root, b.nn).length;
     if (open) return `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.`;
     return decidedSince(root, state, b.nn, 'prototyped') ? null
-      : `Brief ${b.nn} has no decision recording the owner's yes on its prototype. After their yes, run decide.js add ${b.nn} "<their words>" and mark again.`;
+      : `Brief ${b.nn} has no decision recording the owner's yes on its prototype. After their yes, run decide.js add all "<their words>" once for every brief it covers, and mark again.`;
   },
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';
-    const changed = changedSinceApproval(root, state, b.nn);
-    if (changed) return changed;
     const rel = `build-notes/${b.nn}-${b.slug}.md`;
     const note = read(root, rel);
     if (note === null) return `The build note sidekik/${rel} does not exist yet.`;
@@ -161,18 +153,10 @@ const REQUIRES = {
     return has(review, /^- \[(fixed|cut)\]/m) ? checkProblem(root, state) : null;
   },
   done(root, state, b) {
-    const changed = changedSinceApproval(root, state, b.nn);
-    if (changed) return changed;
     return has(read(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null
       : `The lessons file has no lesson for brief ${b.nn} yet, written as "- ${b.nn}: [cause] what to change".`;
   },
 };
-
-// An approval covers the prototype as it stands and the decisions recorded so far; a later reconfirm needs a yes after them.
-function approve(root, state, nn) {
-  state.approved[nn] = briefHash(root, nn);
-  state.approvals[nn] = { count: decisionsFor(root).length };
-}
 
 function markBrief(root, state, nn, mark) {
   const brief = readBriefs(root).find((b) => b.nn === nn);
@@ -185,7 +169,6 @@ function markBrief(root, state, nn, mark) {
   const problem = REQUIRES[mark](root, state, brief);
   if (problem) return problem;
   state.briefs[nn] = mark;
-  if (mark === 'confirmed') approve(root, state, nn);
   if (mark === 'noted') state.bases[nn] = git(root, 'rev-parse', 'HEAD');
   const size = mark === 'built' && sizeSince(root, state.bases[nn]);
   if (size) {
@@ -257,9 +240,9 @@ function markShipped(root, state, named = []) {
   if (!briefs.length) return 'There is no finished brief waiting to be shipped.';
   const notDone = briefs.find((nn) => !done.includes(nn));
   if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
-  // The owner's yes to take a brief live is a decision for that brief after its done mark, at the ship stop; an answer at the close stop is not it.
+  // The owner's yes to take briefs live is a decision for each or for all after its done mark, at the ship stop; an answer at the close stop is not it.
   const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done'));
-  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add ${unsaid} "<their words>", and mark again.`;
+  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add all "<their words>" once, and mark again naming the briefs it covers.`;
   state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;
 }
@@ -298,8 +281,6 @@ function printNext(root, state) {
   console.log(`Also at this stage: ${also.join(', ') || 'none'}`);
   console.log(`Open questions for ${brief ? 'this brief' : 'all briefs'}: ${openQuestions(root, brief?.nn).length}`);
   console.log(`Base: ${(brief && state.bases[brief.nn]) || 'none'}`);
-  const changed = changedBriefs(root, state);
-  if (changed.length) console.log(`Changed since approval: ${changed.join(', ')}`);
 }
 
 function main(root, [cmd, a, b, ...more]) {
@@ -332,19 +313,6 @@ function main(root, [cmd, a, b, ...more]) {
     const names = [a, b, ...more].filter(Boolean);
     writeState(root, { ...state, deps: [...new Set([...(state.deps ?? []), ...names])] });
     console.log(`The ${names.length === 1 ? 'library' : 'libraries'} ${names.join(', ')} ${names.length === 1 ? 'is' : 'are'} now allowed.`);
-  } else if (cmd === 'reconfirm' && a) {
-    const brief = readBriefs(root).find((x) => x.nn === a);
-    if (!brief) return `There is no brief ${a} in the briefs file.`;
-    if (rank(state, brief) < 0) return `Brief ${a} has no prototype ready yet, so there is nothing to approve again.`;
-    const problem = REQUIRES.confirmed(root, state, brief);
-    if (problem) return problem;
-    // A new yes is a decision for the brief after the file's length at the approval. A brief never approved counts every one.
-    if (!decidedAfter(root, a, state.approvals[a]?.count)) {
-      return `Brief ${a} changed after the owner approved it, and no new yes is recorded. Record it first with decide.js add ${a} "<their words>", then run state.js reconfirm ${a}.`;
-    }
-    approve(root, state, a);
-    writeState(root, state);
-    console.log(`The owner's approval of brief ${a} now covers the prototype as it stands.`);
   } else if (cmd === 'reopen' && a === 'stack') {
     if (!state.stack) return 'The stack is not settled, so there is nothing to reopen.';
     state.stack = false;
@@ -364,7 +332,7 @@ function main(root, [cmd, a, b, ...more]) {
       shipped: `The finished briefs are now live: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reconfirm <NN>, reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name ...>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name ...>.';
   }
   return null;
 }
@@ -378,4 +346,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, rank, nextStep, changedBriefs };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep };

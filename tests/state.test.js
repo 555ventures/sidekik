@@ -98,31 +98,10 @@ test('mark briefed needs brief lines and an all decision', () => {
   assert.match(q.run('next').out, /^Stage: prototype\n/);
 });
 
-test('next lists the briefs whose examples changed after approval', () => {
-  const p = project({ briefs: { '01': 'prototyped' } }, proto('done'));
-  assert.equal(p.run('mark', '01', 'confirmed').code, 0);
-  assert.doesNotMatch(p.run('next').out, /Changed since approval/);
-  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book now</button>\n');
-  assert.match(p.run('next').out, /Base: none\nChanged since approval: 01\n$/);
-});
-
-test('reconfirm needs a decision for the brief recorded after the approval, the same day included', () => {
-  const state = { briefs: { '01': 'confirmed' }, approved: { '01': 'old-hash' } };
-  const later = { 'decisions.md': `${YES}${YES_01}- 2026-01-01 01: Fine after the change.\n` };
-  project({ ...state, approvals: { '01': { count: 3 } } }, later).refused(['reconfirm', '01'], /no new yes is recorded/);
-  const other = { 'decisions.md': `${YES}${YES_01}- 2026-01-02 02: Another brief.\n` };
-  project({ ...state, approvals: { '01': { count: 2 } } }, other).refused(['reconfirm', '01'], /no new yes is recorded/);
-  const p = project({ ...state, approvals: { '01': { count: 2 } } }, later);
-  assert.equal(p.run('reconfirm', '01').code, 0);
-  assert.equal(p.read().approvals['01'].count, 3);
-  // An approval stored before the count was the file's length is read as it is.
-  assert.equal(project({ ...state, approvals: { '01': { count: 1, on: '2026-01-01' } } }, later).run('reconfirm', '01').code, 0);
-});
-
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);
-  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null, approved: {}, approvals: {},
+  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null,
     bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
   p.run('set-check', 'npm test');
   assert.match(p.run('init', '--existing', 'make test').out, /nothing was changed/);
@@ -167,59 +146,46 @@ test('confirmed needs untampered decisions and no open question for the brief', 
   assert.equal(p.read().briefs['01'], 'confirmed');
 });
 
-test('confirmed needs a decision for exactly this brief recorded after its prototyped mark', () => {
+test('confirmed needs a decision for this brief or for all recorded after its prototyped mark', () => {
   const at = new Date(2026, 5, 15, 12).toISOString();
   const state = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at, decisions: 2 }] };
-  const refusal = /no decision recording the owner's yes on its prototype\. After their yes, run decide\.js add 01 "<their words>" and mark again\./;
+  const refusal = /no decision recording the owner's yes on its prototype\. After their yes, run decide\.js add all "<their words>" once for every brief it covers, and mark again\./;
   project(state, { 'decisions.md': YES }).refused(['mark', '01', 'confirmed'], refusal);
   project(state, { 'decisions.md': `${YES}- 2026-06-14 01: Before the prototype was done.\n` }).refused(['mark', '01', 'confirmed'], refusal);
-  project(state, { 'decisions.md': `${YES}- 2026-06-15 02: Another brief, after.\n` }).refused(['mark', '01', 'confirmed'], refusal);
+  project(state, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 02: Another brief, after.\n` }).refused(['mark', '01', 'confirmed'], refusal);
   const p = project(state, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Same day, after.\n` });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
+  assert.equal(project(state, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 all: Every prototype is right.\n` }).run('mark', '01', 'confirmed').code, 0);
   // A mark from before the count was kept lets any decision for the brief count.
   const old = { briefs: { '01': 'prototyped' }, history: [{ brief: '01', mark: 'prototyped', at }] };
   assert.equal(project(old).run('mark', '01', 'confirmed').code, 0);
 });
 
-test('confirmed binds the approval to the mapped files, so noted and done refuse after a change until reconfirm, while built and reviewed do not', () => {
-  const p = project({ stack: true, briefs: { '01': 'prototyped' } }, { ...proto('done'), 'build-notes/01-booking-flow.md': NOTE, 'questions/pm.md': '' });
+test('one yes for all after the prototyped marks confirms every brief it covers with no line copied, and an old approval hash holds nothing', () => {
+  const at = new Date(2026, 5, 15, 12).toISOString();
+  const history = [{ brief: '01', mark: 'prototyped', at, decisions: 2 }, { brief: '02', mark: 'prototyped', at, decisions: 2 }];
+  // An older state file still carries the approval fields; they are kept as they are and read by nothing.
+  const old = { approved: { '01': 'old-hash' }, approvals: { '01': { count: 1 } } };
+  const log = `${YES}${YES_01}- 2026-06-15 all: Both look right.\n`;
+  const p = project({ stack: true, briefs: { '01': 'prototyped', '02': 'prototyped' }, history, ...old },
+    { ...proto('done'), 'build-notes/01-booking-flow.md': NOTE, 'decisions.md': log });
   assert.equal(p.run('mark', '01', 'confirmed').code, 0);
-  assert.match(p.read().approved['01'], /^[0-9a-f]{64}$/);
+  assert.equal(p.run('mark', '02', 'confirmed').code, 0);
+  assert.equal(fs.readFileSync(path.join(p.root, 'sidekik', 'decisions.md'), 'utf8'), log, 'no line was copied per brief');
   p.write('sidekik/prototype/book/start.html', '<button class="btn">Book now</button>\n');
-  p.refused(['mark', '01', 'noted'], /prototype of brief 01 changed after the owner approved it.* reconfirm 01\./);
-  p.write('sidekik/questions/pm.md', '- [open] 01: Bigger button?\n');
-  p.refused(['reconfirm', '01'], /open question/);
-  p.write('sidekik/questions/pm.md', '');
-  const before = p.read().approved['01'];
-  const noYes = /changed after the owner approved it, and no new yes is recorded\. Record it first with decide\.js add 01 "<their words>", then run state\.js reconfirm 01\./;
-  p.refused(['reconfirm', '01'], noYes);
-  assert.equal(spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, 'add', '01', 'Bigger button is fine.']).status, 0);
-  assert.equal(p.run('reconfirm', '01').code, 0);
-  assert.notEqual(p.read().approved['01'], before);
-  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book today</button>\n');
-  p.refused(['reconfirm', '01'], noYes);
-  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book now</button>\n');
-  assert.equal(p.read().briefs['01'], 'confirmed');
+  assert.doesNotMatch(p.run('next').out, /Changed since approval/);
   assert.equal(p.run('mark', '01', 'noted').code, 0);
-  p.write('sidekik/prototype/book/start.html', '<button class="btn">Book</button>\n');
-  p.write('sidekik/lessons.md', '- 01: [edge-cases] Check the button.\n');
-  fs.mkdirSync(path.join(p.root, 'sidekik', 'reviews'));
-  p.write('sidekik/reviews/01.md', 'No proven bugs.\n');
-  p.run('set-check', IN_ROOT);
-  p.write('sidekik/state.json', JSON.stringify({ ...p.read(), bases: {}, history: p.read().history.map((h) => ({ ...h, at: new Date(0).toISOString() })) }));
-  assert.equal(p.run('mark', '01', 'built').code, 0);
-  assert.equal(p.run('mark', '01', 'reviewed').code, 0);
-  p.refused(['mark', '01', 'done'], /changed after the owner approved it/);
-  assert.equal(spawnSync(process.execPath, [path.join(scripts, 'decide.js'), '--root', p.root, 'add', '01', 'Shorter button is fine.']).status, 0);
-  assert.equal(p.run('reconfirm', '01').code, 0);
-  assert.equal(p.run('mark', '01', 'done').code, 0);
+  assert.deepEqual([p.read().approved, p.read().approvals], [old.approved, old.approvals]);
+  const r = p.run('reconfirm', '01');
+  assert.equal(r.code, 1);
+  assert.match(r.out, /^Use one of: /);
+  assert.doesNotMatch(r.out, /reconfirm/);
 });
 
 test('noted needs the stack settled and a build note with a reuse section and a done-when item', () => {
   const state = { stack: true, briefs: { '01': 'confirmed' } };
   project({ ...state, stack: false }, { 'build-notes/01-booking-flow.md': NOTE }).refused(['mark', '01', 'noted'], /stack is not settled/);
   const p = project(state, { 'build-notes/01-booking-flow.md': NOTE.replace('## Reuse', '## Notes') });
-  p.run('reconfirm', '01');
   p.refused(['mark', '01', 'noted'], /Reuse/);
   p.write('sidekik/build-notes/01-booking-flow.md', '# Booking flow\n\n## Reuse\n- The kit form.\n\n## Done when\n');
   p.refused(['mark', '01', 'noted'], /Done when/);
@@ -230,7 +196,6 @@ test('noted needs the stack settled and a build note with a reuse section and a 
 
 test('noted records the git commit as the base, and built refuses an empty change, measures the commits since it, moves the base of a brief still waiting, and accepts that brief as measured with it', () => {
   const p = project({ check: IN_ROOT, stack: true, briefs: { '01': 'confirmed' } }, { 'build-notes/01-booking-flow.md': NOTE, 'decisions.md': `${YES}${YES_01}- 2026-01-01 02: Looks right.\n` });
-  p.run('reconfirm', '01');
   for (const [rel, text] of Object.entries({ 'old.js': 'old\nlines\n', 'tests/old.js': 'x\n', '.gitignore': 'ignored/\n' })) {
     fs.mkdirSync(path.dirname(path.join(p.root, rel)), { recursive: true });
     p.write(rel, text);
@@ -259,13 +224,11 @@ test('noted records the git commit as the base, and built refuses an empty chang
   assert.deepEqual(p.read().sizes, { '01': { code: 5, tests: 5, removed: 3, testsRemoved: 1 } });
   assert.equal(p.read().bases['02'], p.git('rev-parse', 'HEAD'));
   // 02 was committed before 01 was marked, so it has nothing of its own left to measure.
-  p.run('reconfirm', '02');
   assert.equal(p.run('mark', '02', 'built').code, 0);
 });
 
 test('built needs every library the library command lists agreed and a check command that passes when run from the project root', () => {
   const p = project({ stack: true, briefs: { '01': 'noted' } });
-  p.run('reconfirm', '01');
   p.refused(['set-deps', 'exit 1'], /did not run/);
   p.libs('react');
   assert.equal(p.run('set-deps', 'cat libs.txt').code, 0);
@@ -304,7 +267,6 @@ test('reviewed runs the check only when the review fixed or cut something', () =
 
 test('done needs a lesson with a cause for the brief, and every attempt joins the history', () => {
   const p = project({ stack: true, briefs: { '01': 'reviewed' }, history: [{ brief: '01', mark: 'prototyped', at: '2026-01-01T00:00:00.000Z' }] }, { 'lessons.md': '- 02: [late] Another brief.\n- 01: Prototype the edge cases first.\n' });
-  p.run('reconfirm', '01');
   p.refused(['mark', '01', 'done'], /no lesson for brief 01 yet, written as "- 01: \[cause\]/);
   p.write('sidekik/lessons.md', '- 01: [edge-cases] Prototype the edge cases first.\n');
   assert.equal(p.run('mark', '01', 'done').code, 0);
@@ -372,16 +334,19 @@ test('reopen stack unsettles a settled stack and the yes for it must come after 
   assert.equal(p.read().stack, true);
 });
 
-test('the shipped mark records named done briefs, or every done brief not yet shipped, on the owner\'s yes for each, joins the history with no brief', () => {
+test('the shipped mark records named done briefs, or every done brief not yet shipped, on a yes for each or one for all after their done marks, joins the history with no brief', () => {
   const state = { stack: true, briefs: { '01': 'done', '02': 'done', '03': 'built' } };
   const at = new Date(2026, 5, 15, 12).toISOString();
   const history = [{ brief: '01', mark: 'done', at, decisions: 2 }, { brief: '02', mark: 'done', at, decisions: 2 }];
   project({ ...state, shipped: ['01', '02'] }).refused(['mark', 'shipped'], /no finished brief waiting/);
   project(state).refused(['mark', 'shipped', '03'], /Brief 03 is not finished/);
-  const refusal = /no decision recording the owner's yes to take brief 01 live\. After their yes, run decide\.js add 01 "<their words>", and mark again\./;
+  const refusal = /no decision recording the owner's yes to take brief 01 live\. After their yes, run decide\.js add all "<their words>" once, and mark again naming the briefs it covers\./;
   project({ ...state, history }, { 'decisions.md': YES_01 }).refused(['mark', 'shipped'], refusal);
   project({ ...state, history }, { 'decisions.md': `${YES}${YES_01}` }).refused(['mark', 'shipped', '01'], refusal);
   project({ ...state, history }, { 'decisions.md': '- 2026-06-15 02: Go live.\n' }).refused(['mark', 'shipped', '01', '02'], refusal);
+  const one = project({ ...state, history }, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 all: Put 01 and 02 live.\n` });
+  assert.equal(one.run('mark', 'shipped', '01', '02').code, 0, 'one yes for all after both done marks covers both');
+  assert.deepEqual(one.read().shipped, ['01', '02']);
   const p = project({ ...state, history, tidied: 0 }, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Go live.\n- 2026-06-15 02: Go live.\n` });
   const first = p.run('mark', 'shipped', '01');
   assert.equal(first.code, 0);

@@ -114,7 +114,7 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
-  "kitHash": null, "decisionsHash": null, "approved": { "01": "<hash>" }, "approvals": { "01": { "count": 3 } },
+  "kitHash": null, "decisionsHash": null,
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
@@ -122,24 +122,18 @@ Line formats, exactly:
   "briefs": { "01": "built" } }
 ```
 
-A missing field in an older state file counts as its empty value.
+A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`) is kept as it is and ignored.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 
 | mark | requires |
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for exactly this brief (not `all`) recorded after its last `prototyped` mark. Records in `approved` a hash of the brief's mapped files, paths and contents, and in `approvals` how many decisions the file holds |
-| `noted` | `confirmed`; `stack` is true; the brief's mapped files still match `approved`; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
+| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for this brief or for `all` recorded after its last `prototyped` mark, so one yes covers every brief marked on it |
+| `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
-| `done` | `reviewed`; the brief's mapped files still match `approved`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
-
-When mapped files no longer match `approved`, the refusal says the prototype changed after
-the owner approved it, and names `reconfirm`. `reconfirm <NN>` records the hash again
-without changing the mark, under the same requirements as `confirmed`, and it also needs a
-decision for that brief recorded after the last approval, so a changed prototype is never
-approved again on the old yes.
+| `done` | `reviewed`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
 
 Project marks:
 
@@ -158,7 +152,7 @@ Project marks:
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
   is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it recorded after its `done` mark. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it or for `all` recorded after its `done` mark, so one yes covers every brief the mark names. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to
 `history` (`brief` is null for a project mark; `decisions` is how many decisions the file
@@ -207,8 +201,6 @@ the absolute path of the stage file (`none` for idle) and the plugin version, as
 the other briefs whose own next stage is the same (`none` when there are none),
 `Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
 named), and `Base: <sha>` or `Base: none`.
-When any brief with an `approved` hash has mapped files that no longer match it (finished
-briefs included), `next` adds a last line `Changed since approval: 01, 02`.
 
 `scripts/status.js` is the progress screen. It derives everything from the same functions
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:
@@ -240,7 +232,7 @@ briefs included), `next` adds a last line `Changed since approval: 01, 02`.
   brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
   `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief not yet `done`
   whose review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
-  take 01, 02 live` listing `done` briefs not yet shipped, when there are any; `your yes again on 01, 02, changed since approval` when approved briefs changed. Tree
+  take 01, 02 live` listing `done` briefs not yet shipped, when there are any. Tree
   connectors `├─` and `└─`. With nothing waiting, the section is the single line
   `🙋 Nothing is waiting on you.`
 - Next: `agree the brief list`, `prototype NN slug`, `your look at the
@@ -286,9 +278,9 @@ terminal first when its output is one; piped output is left plain.
   `decide.js list [NN]` (the rulings a brief must honour, its own and `all`, in file order; every ruling without `NN`),
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
-- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
-  `nextStep(root, state)` and `changedBriefs(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
-  `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reconfirm <NN>`, `reopen stack`,
+- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)` and
+  `nextStep(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+  `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reopen stack`,
   `set-check "<cmd>"`, `set-deps "<cmd>"`, `allow <name ...>`. A refused mark prints the unmet
   requirement in plain words and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.

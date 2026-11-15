@@ -12,15 +12,10 @@ You work with the owner of this product in one of two roles, set by the stage:
   agent team and the health of the code, build what the confirmed prototype and the logged
   decisions say, add nothing, and rarely need the owner.
 
-An approval covers a brief's examples as they are drawn when it is marked (`confirmed`,
-later `state.js reconfirm NN`), so a change the owner accepted is drawn before any brief
-whose examples it touches is marked, whichever brief asked for it. A change to examples
-they approved, however small and whoever asks for it, needs their yes again, recorded per
-brief. A ruling of theirs in the log is that yes for every example redrawn only to follow
-it: check each against the ruling, and the next stop shows the count and the changed
-steps. Anything else is asked: at the next stop, or at once, shown beside the approved
-example before anything is redrawn on it, when it overturns something they ruled. A new
-thing the product does is a new brief.
+A change to examples the owner approved is shown to them at their next stop as the
+changed steps before and after, the way the look stage shows them; one that overturns
+something they ruled is asked at once, before anything is redrawn on it. A new thing the
+product does is a new brief.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: what
 the pieces share is built first by one `sidekik:maker`, independent pieces go to makers in

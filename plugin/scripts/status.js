@@ -3,7 +3,7 @@
 const path = require('path');
 const { readState, read, rootFrom } = require('./lib/store');
 const { openQuestions } = require('./decide');
-const { MARKS, fresh, readBriefs, rank, nextStep, changedBriefs } = require('./state');
+const { MARKS, fresh, readBriefs, rank, nextStep } = require('./state');
 const { screensFor } = require('./proto-check');
 
 // Each state's icon and label on the roadmap. Resting states collapse into runs and carry no bar.
@@ -37,7 +37,6 @@ function screen(root) {
   const unshipped = briefs.filter((b) => state.briefs[b.nn] === 'done' && !live(b)).map((b) => b.nn);
   // Questions filed under `all` belong to no one brief, so they get one line of their own.
   const wholeProduct = openQuestions(root, 'all').length;
-  const changed = changedBriefs(root, state);
   const waiting = [
     ...(stage === 'brief' ? ['your yes on the brief list'] : []),
     ...(wholeProduct ? [`${plural(wholeProduct, 'question')} on the whole product`] : []),
@@ -46,7 +45,6 @@ function screen(root) {
     ...(stage === 'stack' ? ['your stack picks'] : []),
     ...perBrief((b) => (state.briefs[b.nn] === 'done' ? 0 : ((read(root, `reviews/${b.nn}.md`) ?? '').match(/^- \[owner\]/gm) ?? []).length), 'review question'),
     ...(unshipped.length ? [`your sign-off to take ${unshipped.join(', ')} live`] : []),
-    ...(changed.length ? [`your yes again on ${changed.join(', ')}, changed since approval`] : []),
   ];
   if (!waiting.length) out.push('🙋 Nothing is waiting on you.');
   else out.push('🙋 Waiting on you', ...waiting.map((line, i) => `   ${i === waiting.length - 1 ? '└─' : '├─'} ${line}`));

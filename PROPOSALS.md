@@ -101,6 +101,17 @@ yes. Now every change to confirmed examples, however small, needs the owner's ye
 recorded with `decide.js add NN` before `reconfirm`, which the script refuses without it;
 the ask goes in the owner's next stop, not a separate interruption.
 
+**Narrowed 2026-11-15, applied in 0.15.6,** from sumaro, where one ruling of the owner (the
+tray shape, "Yes, this shape") was drawn across eleven approved briefs and each came back to
+him to reconfirm, most for one sentence that only followed his ruling ("held back" became
+"not shared"): "I feel you need to change approach for this flow confirmation... how can
+the confirmation be made easy or autonomous?" A ruling of theirs in the log is the yes for
+every example redrawn only to follow it: the partner checks each redraw against the ruling,
+records it per brief in one `decide.js add` batch, and the next stop shows the count and
+the changed steps. A change that is in no ruling of theirs, however small, is asked as
+before. The scripts do not change: `reconfirm` still needs a decision per brief after the
+approval, which the batch is, so the log shows for each brief which ruling re-approved it.
+
 ## The gates read the decision log in order, not by day
 
 **Decided 2026-11-12, applied in 0.12.0 (tidy).** The tidy's reviewer proved in scratch

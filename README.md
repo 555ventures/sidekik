@@ -135,25 +135,24 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | `done` | `reviewed`; the brief's mapped files still match `approved`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
 
 When mapped files no longer match `approved`, the refusal says the prototype changed after
-the owner approved it and must be shown to them again, and names `reconfirm`.
-`reconfirm <NN>` records the hash again without changing the mark, under the same
-requirements as `confirmed`, and it also needs a decision for that brief recorded after the
-last approval, so a changed prototype is never approved again on the old yes.
+the owner approved it, and names `reconfirm`. `reconfirm <NN>` records the hash again
+without changing the mark, under the same requirements as `confirmed`, and it also needs a
+decision for that brief recorded after the last approval, so a changed prototype is never
+approved again on the old yes.
 
 Project marks:
 
 - `briefed`: `briefs.md` has brief lines and an `all` decision exists (the owner's yes on the list). It sets `briefed` true.
-- `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and `## Your steps`;
-  `model.md` exists; an `all` decision is recorded after the latest `confirmed`
-  mark of any brief, or after the latest `reopen stack` when that is later; a check
-  command is set and exits 0; the project has a commit and nothing outside `sidekik/` is
-  uncommitted, so every brief gets a base. It records the library command's output as `deps`
-  when one is set.
+- `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and
+  `## Your steps`; `model.md` exists; an `all` decision is recorded after the latest
+  `confirmed` mark of any brief, or after the latest `reopen stack` when that is later; a
+  check command is set and exits 0; the project has a commit and nothing outside
+  `sidekik/` is uncommitted, so every brief gets a base.
   `init --existing "<check command>"` sets `stack` true at once. `reopen stack` (refused
   while `stack` is false) sets `stack` false and appends
   `{ brief: null, mark: 'stack', reopen: true, at, decisions }`.
 - `tidying`: records the current git commit as `tidyBase` (null outside a git repo).
-- `tidied`: `tidyBase` was recorded by `tidying`; the check command exits 0; and no
+- `tidied`: `tidying` was marked after the last `tidied`; the check command exits 0; and no
   cause appears three or more times in `lessons.md` (on brief and fix lines together)
   without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
   clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there

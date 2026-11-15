@@ -55,7 +55,7 @@ function sizeSince(root, base) {
 // A hash of the brief's mapped files, paths and contents, so an approval covers exactly what was shown.
 const briefHash = (root, nn) => sha(JSON.stringify(screensFor(root, nn).map(({ screen }) => [screen, read(root, `prototype/${screen}`)])));
 const changedSinceApproval = (root, state, nn) => state.approved[nn] !== briefHash(root, nn)
-  && `The prototype of brief ${nn} changed after the owner approved it, so it must be shown to them again. After their yes, record it with decide.js add ${nn} "<their words>", then run state.js reconfirm ${nn}.`;
+  && `The prototype of brief ${nn} changed after the owner approved it. Record their yes for it with decide.js add ${nn} "<their words>", then run state.js reconfirm ${nn}.`;
 // The briefs with an approval whose mapped files no longer match it, done ones included.
 const changedBriefs = (root, state) => readBriefs(root).map((b) => b.nn).filter((nn) => state.approved[nn] && changedSinceApproval(root, state, nn));
 

@@ -30,10 +30,9 @@ what they chose. Never read the owner's other repositories to guess a stack.
    per decision, first one plain sentence on what the choice means for the product and its
    users and what it costs to change later, then the options with their gain and loss,
    monthly cost and how hard each is to leave, the recommendation, the strongest argument
-   against it and what fact would change it. Written so the owner can decide from the page
-   alone: the product's words first, the technical reasons under them. On the same page,
-   one batch of questions from walking every example for what it cannot show: who may do
-   what, money rules, limits, what happens when something fails, what cannot be undone.
+   against it and what fact would change it. On the same page, one batch of questions from
+   walking every example for what it cannot show: who may do what, money rules, limits,
+   what happens when something fails, what cannot be undone.
 4. **The stop.** Each decision that is hard to reverse is its own line and gets its own
    yes; the easy ones take one word for all. Nothing after this step is built before they
    decide; only tooling with no effect on the product is a call. End your turn.

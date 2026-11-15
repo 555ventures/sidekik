@@ -2,10 +2,14 @@
 
 The owner is needed here. This is the design review.
 
-Show every brief that is prototyped and waiting, in one stop:
+Show what they are deciding, at its size, for every brief that is prototyped and
+waiting, in one stop:
 
-- `shots/flows.html` as it now stands,
-- one way to open it and try it, and a few lines on what to try,
+- flows they have not seen: `shots/flows.html`, one way to open it and try it, and a few
+  lines on what to try,
+- a change to flows they have seen, approved or not: the changed steps before and after,
+  in the order a user meets them, a sentence changed the same way in many places shown
+  once with its count. The full page is where to look something up, not what is shown,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
   what it costs to build. Smaller ones are calls,
 - the open questions (`decide.js questions`).

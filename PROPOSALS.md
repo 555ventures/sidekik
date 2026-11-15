@@ -34,11 +34,21 @@ stops and the owner said yes to all twelve after reading the page once: "when yo
 all the prototype screens, I usually go through in one go.. I don't really check one by
 one."
 
+**Narrowed 2026-11-15, applied in 0.15.4,** from sumaro, where one shape was redrawn
+across eleven approved briefs and the look stop showed the whole flows page, 14 flows and
+391 steps, for a change of 44 steps, with seven calls, two issues and three decisions on
+top: "now it has too many that I don't know where to look at... probably this is Sidekik
+plugin issues." The stop shows what the owner is deciding, at its size: flows they have
+not seen come as the page; a change to flows they have seen comes as the changed steps
+before and after, in the order a user meets them, a sentence changed the same way in many
+places once with its count, and the page only as the place to look something up.
+
 The rule as it now stands: every brief, a new product's included, goes to the walkers
-first and to the owner once, at the look stage, with the flows page, the walkers'
-findings, the calls and open questions, and one yes for all or the changes
-by step; a flow the owner wants walked gets its steps one at a time (0.3.7, 0.7.4, 0.8.0,
-0.9.4, tidied in 0.10.0).
+first and to the owner once, at the look stage, with what is new to them (the flows page
+the first time, the changed steps before and after after that), the walkers' findings, the
+calls and open questions, and one yes for all or the changes by step; a flow the owner
+wants walked gets its steps one at a time (0.3.7, 0.7.4, 0.8.0, 0.9.4, tidied in 0.10.0,
+narrowed in 0.15.4).
 
 ## The stack stage asks what shapes the architecture, and the owner makes the shaping picks
 

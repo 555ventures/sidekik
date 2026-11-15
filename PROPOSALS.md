@@ -112,6 +112,8 @@ the changed steps. A change that is in no ruling of theirs, however small, is as
 before. The scripts do not change: `reconfirm` still needs a decision per brief after the
 approval, which the batch is, so the log shows for each brief which ruling re-approved it.
 
+**Reversed in part 2026-11-15, in 0.18.0:** see "One yes per stop, and what the first count took out".
+
 ## The gates read the decision log in order, not by day
 
 **Decided 2026-11-12, applied in 0.12.0 (tidy).** The tidy's reviewer proved in scratch
@@ -123,6 +125,8 @@ live with no go-live yes. Decisions carried only a day. Each mark now records ho
 decision lines existed when it was made, and a gate needs a decision for its brief
 recorded after that point; `reconfirm` works the same way. Nothing is asked that was
 not asked before; the yes is now the one given after the mark, as the guides always said.
+
+**Reversed in part 2026-11-15, in 0.18.0:** see "One yes per stop, and what the first count took out".
 
 ## Approval and going live are one question
 
@@ -146,6 +150,8 @@ question asked, the hole 0.12.0 closed. The anchor is `done` again. The go-live 
 asked at the ship stop, after the owner has used the real thing (ship.md steps 3 and 4);
 a session that batches it into the close dialog runs `mark done` first and records the
 yes after it, which is what the refusal already says.
+
+**Reversed in part 2026-11-15, in 0.18.0:** see "One yes per stop, and what the first count took out".
 
 ## Walkers go before the owner's yes on a change to a confirmed screen
 
@@ -182,6 +188,8 @@ walker tries a prototype, which does not exist yet at the brief. Not a new comma
 step would put a third stop and a third artifact in front of the owner, and the session's
 own list of fourteen methods (Double Diamond, Five Whys, the Mom Test and so on) is the
 over-engineering the plugin avoids; the four sentences above are what the owner said worked.
+
+**Reversed in part 2026-11-15, in 0.18.0:** see "One yes per stop, and what the first count took out".
 
 ## A mock during the brief talk, and a working candidate for a live heart
 
@@ -295,3 +303,41 @@ Not recommended: a size budget or a cap on rules (the owner: they get overridden
 time), stopping the loop (a blocked session should not wait days for a crash to be
 fixed), and rewording learn's four change types in place (removal would still have had
 no evidence to act on).
+
+## One yes per stop, and what the first count took out
+
+**Decided 2026-11-15, applied in 0.18.0 to 0.18.3 (tidy).** The first tidy that started
+in the projects. One reader per project (sumglass, poolyst, sumaro) counted, for each
+thing the plugin makes a session or the owner do, how often it happened and how often it
+changed what was built. What earned its cost stays untouched: the reviewer (about 166
+proven bugs, all fixed), the owner looking at drawn and running things (most briefs
+changed before any product code), the walkers, the stack yes and the go-live yes.
+
+Taken out, one version each so each can be undone alone:
+
+- 0.18.0, the yes counted per brief and the approval hash. A yes recorded once after a
+  mark, for a brief or for all, covers every brief marked on it; nothing is copied per
+  brief (about 270 copied lines in three logs). A change to examples the owner approved
+  is no longer hashed, refused or reconfirmed: it is shown at their next stop as the
+  changed steps before and after, and one that overturns a ruling is still asked at
+  once. Of 68 refused marks 4 caught something real, none of them a missing yes.
+- 0.18.1, the calls file. A call is told at the stop it belongs to and kept nowhere
+  after; until then it lives in the handoff. In 1,055 entries the owner overturned about
+  21, every time through a screen or the conversation.
+- 0.18.2, cause tags, the rule that a cause seen three times needs a guard, and the done
+  mark's refusal for a missing lesson line. The lesson line and the check written after
+  each brief stay.
+- 0.18.3, the long handoff: replaced whole at a mark and before stopping, holding where
+  things stand, what comes next, what is running and the calls not yet told.
+
+What the owner gives up, said plainly: a decision recorded for all after a mark now
+opens that mark's gate whatever it was about, so the script no longer proves that the
+yes was about this prototype or this release, only that the owner said something after
+it; and a redraw after approval can no longer be listed by a script. The first failure
+the gates were built against (a session passing an owner moment with nothing recorded)
+is still guarded; the second (a small change to an approved example judged too small to
+ask about) is now carried by the guide alone.
+
+Not recommended: one line naming several briefs (a new form in the decision log to save
+a gate that caught nothing), and removing the stack or go-live yes (one per project or
+per release, and cheap).

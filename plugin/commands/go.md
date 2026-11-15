@@ -63,12 +63,13 @@ project root or with `--root <dir>`.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
    together. A stage often spans several sessions: `sidekik/` is the memory, not the
    window. When the version `next` prints beside the stage file has moved, read this file
-   and the stage file again first. At every mark and every commit, and before you stop
-   mid-stage, overwrite `sidekik/handoff.md` with where things stand and the calls not yet
-   told to the owner, and send any `[open]` feedback lines of this stretch not yet sent.
-   When the work is committed and nothing of yours is running (no agent, no background
-   task, no server), tell the owner in one line that it is safe to `/clear` and run
-   `/sidekik:go`; say nothing about clearing otherwise.
+   and the stage file again first. At each mark and before you stop, replace
+   `sidekik/handoff.md` whole with only where things stand, what comes next, what is
+   still running and the calls not yet told to the owner, keeping nothing as history, and
+   send any `[open]` feedback lines of this stretch not yet sent. When the work is
+   committed and nothing of yours is running (no agent, no background task, no server),
+   tell the owner in one line that it is safe to `/clear` and run `/sidekik:go`; say
+   nothing about clearing otherwise.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: makers never run git, every commit is pushed, and on a product with a check command

@@ -19,9 +19,9 @@ is judged by:
 - works on its own: cases to check, each "given this, it does that" over sample data,
   with the hard cases, and a throwaway run that shows the results.
 
-None of its examples' or candidates' code goes into the product, and confirmed examples
-become its tests. It lives in `sidekik/prototype/`, built so a session with no memory can
-extend it.
+Confirmed examples become its tests. None of its code goes into the product, except a
+working piece the owner picked, which the stack stage's skeleton is built from. It lives
+in `sidekik/prototype/`, built so a session with no memory can extend it.
 
 ## Foundation
 
@@ -46,13 +46,15 @@ the checker and the freeze ignore, in the kit's tokens. When the heart is a conv
 with a model or a live agent, which scripted exchanges cannot show, one candidate is a
 thin working piece on the real model. The moment they exist, hand them to the owner as
 images or as a thing to try: one line with what differs and what to look at, and end your
-turn. Their pick becomes the one reference example and the kit follows it. Variants of one
-screen early are cheap; variants of a prototype are waste. Then one finished reference
-example for each other area (a part of the product a user would name), by makers against
-the kit as it stands, each in the product's primary language, with any other language
-shown by one example later. Look at them all yourself in a browser, settle their kit
-requests, and run `proto-check.js freeze`. After that the kit changes only on your
-decision, and you freeze again.
+turn. Their pick becomes the one reference example and the kit follows it. A working piece
+they picked is where every brief is tried from then on: a brief's examples are its tries
+there, each the exact input and the exact reply, kept and mapped like any other example.
+Variants of one screen early are cheap; variants of a prototype are waste. Then one
+finished reference example for each other area (a part of the product a user would name),
+by makers against the kit as it stands, each in the product's primary language, with any
+other language shown by one example later. Look at them all yourself in a browser, settle
+their kit requests, and run `proto-check.js freeze`. After that the kit changes only on
+your decision, and you freeze again.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes is redrawn in place; the product's tests that read it are pointed at a copy

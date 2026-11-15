@@ -60,7 +60,8 @@ what they chose. Never read the owner's other repositories to guess a stack.
    advises, what its current version changed, its known traps), write what a builder must
    follow into `CLAUDE.md`, briefly.
 10. **Skeleton.** The smallest product that runs on the chosen stack, laid out as those
-   documents recommend, that can be tried without going live. A product with screens gets
+   documents recommend, that can be tried without going live, built from the working
+   piece when the prototype has one. A product with screens gets
    its one design system here, from the prototype kit: the same tokens, and one shared
    component per kit piece that has structure or behaviour, under the same name. Plain
    helper classes stay classes. Its one check command carries the quality

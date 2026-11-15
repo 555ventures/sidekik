@@ -53,15 +53,6 @@ function sizeSince(root, base) {
   return size;
 }
 
-// How often each cause appears on brief and fix lessons; [none] is never counted.
-function lessonCauses(root) {
-  const counts = {};
-  for (const [, cause] of (read(root, 'lessons.md') ?? '').matchAll(/^- (?:\d\d|fix): \[([^\]]+)\]/gm)) {
-    if (cause !== 'none') counts[cause] = (counts[cause] ?? 0) + 1;
-  }
-  return counts;
-}
-
 function readBriefs(root) {
   return (read(root, 'briefs.md') ?? '').split('\n')
     .map((line) => /^- (\d\d) ([a-z0-9-]+): (.+)$/.exec(line))
@@ -152,10 +143,8 @@ const REQUIRES = {
     // A clean review changed nothing, and its commit passed the check at built; fixes and cuts are checked where they stand.
     return has(review, /^- \[(fixed|cut)\]/m) ? checkProblem(root, state) : null;
   },
-  done(root, state, b) {
-    return has(read(root, 'lessons.md'), new RegExp(`^- ${b.nn}: \\[[^\\]]+\\] `, 'm')) ? null
-      : `The lessons file has no lesson for brief ${b.nn} yet, written as "- ${b.nn}: [cause] what to change".`;
-  },
+  // The close stage's lesson line is read by learn at a tidy; no mark waits on it.
+  done: () => null,
 };
 
 function markBrief(root, state, nn, mark) {
@@ -226,9 +215,6 @@ function markTidied(root, state) {
   if (last?.mark !== 'tidying') return 'The tidy has not started yet; mark tidying first.';
   const problem = checkProblem(root, state);
   if (problem) return problem;
-  const lessons = `\n${read(root, 'lessons.md') ?? ''}`;
-  const [cause, n] = Object.entries(lessonCauses(root)).find(([c, count]) => count >= 3 && !lessons.includes(`\n- guard: [${c}]`)) ?? [];
-  if (cause) return `The cause [${cause}] appears ${n} times in the lessons file with no machine check. Add a check that refuses it and the line "- guard: [${cause}] ..." to the lessons file.`;
   state.tidied = doneBriefs(root, state).length;
   state.tidyBase = null;
   return null;

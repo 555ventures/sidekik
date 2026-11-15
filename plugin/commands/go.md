@@ -33,7 +33,7 @@ Size it first, and tell the owner which size you chose:
   the fix, and once more at what a rework after its findings touched. One you cannot
   reproduce: say so, and have a maker make the next occurrence name itself (a log line,
   and the test that will catch it).
-  Add `- fix: [cause] what escaped, and what would have caught it` to `sidekik/lessons.md`,
+  Add `- fix: what escaped, and what would have caught it` to `sidekik/lessons.md`,
   its text starting `unproven:` for a bug you could not reproduce.
 - **A small tweak** that changes no behaviour (a label, a colour): a maker changes
   exactly what was asked.

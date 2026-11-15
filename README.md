@@ -44,7 +44,7 @@ unattended and reports as it goes. A bug or a small tweak skips the stages: it i
 directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
-and a mistake that repeats three times must get a machine check.
+and each finished brief leaves one lesson and the check or sentence that prevents its worst moment.
 
 A project also writes down where the plugin itself got in its way, and `/sidekik:learn`,
 run in this repo, fixes a fault of the plugin at once and answers in the project.
@@ -74,7 +74,7 @@ sidekik/
   handoff.md            where the work stands, for the next session
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas
-  lessons.md            - 01: [cause] text   - fix: [cause] text   - guard: [cause] text
+  lessons.md            - 01: text   - fix: text
   feedback.md           where the plugin itself got in the way:  - [open] stage: text
   prototype/
     INDEX.md            what this is and the rules for anyone adding to it
@@ -101,10 +101,8 @@ Line formats, exactly:
   and records the decision in one step.
 - Map row: `| area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension.
-- Lesson: `- NN: [cause] text` for a brief, `- fix: [cause] text` for a bug that escaped,
-  `- guard: [cause] text` for the machine check that now refuses that cause. A cause is a
-  short tag such as `built-twice`. `[none]` is the cause of a lesson with nothing to change
-  and is never counted.
+- Lesson: `- NN: text` for a brief, `- fix: text` for a bug that escaped. No script reads
+  it: the close stage and a bug fix write the line, and `/sidekik:learn` reads it at a tidy.
 - Feedback: `- [open] stage: text`, later `- [fixed] stage: text → what changed` or
   `- [declined] stage: text → why, and what to do meanwhile`. No script reads it: the
   project's session writes the line, and `/sidekik:learn` answers it.
@@ -132,7 +130,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
-| `done` | `reviewed`; `lessons.md` has a line `- NN: [cause] ...` for the brief |
+| `done` | `reviewed` |
 
 Project marks:
 
@@ -146,11 +144,7 @@ Project marks:
   while `stack` is false) sets `stack` false and appends
   `{ brief: null, mark: 'stack', reopen: true, at, decisions }`.
 - `tidying`: records the current git commit as `tidyBase` (null outside a git repo).
-- `tidied`: `tidying` was marked after the last `tidied`; the check command exits 0; and no
-  cause appears three or more times in `lessons.md` (on brief and fix lines together)
-  without a `- guard: [cause]` line. It sets `tidied` to the number of `done` briefs,
-  clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there
-  is a base).
+- `tidied`: `tidying` was marked after the last `tidied`, and the check command exits 0. It sets `tidied` to the number of `done` briefs, clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there is a base).
 - `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it or for `all` recorded after its `done` mark, so one yes covers every brief the mark names. Adds them to `shipped`.
 
 Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to

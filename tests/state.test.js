@@ -265,10 +265,10 @@ test('reviewed runs the check only when the review fixed or cut something', () =
   project(state, { 'reviews/01.md': '- [cut] dead code\n' }).refused(['mark', '01', 'reviewed'], /did not pass/);
 });
 
-test('done needs a lesson with a cause for the brief, and every attempt joins the history', () => {
-  const p = project({ stack: true, briefs: { '01': 'reviewed' }, history: [{ brief: '01', mark: 'prototyped', at: '2026-01-01T00:00:00.000Z' }] }, { 'lessons.md': '- 02: [late] Another brief.\n- 01: Prototype the edge cases first.\n' });
-  p.refused(['mark', '01', 'done'], /no lesson for brief 01 yet, written as "- 01: \[cause\]/);
-  p.write('sidekik/lessons.md', '- 01: [edge-cases] Prototype the edge cases first.\n');
+test('done needs only the reviewed mark, no lesson line, and every attempt joins the history', () => {
+  const p = project({ stack: true, briefs: { '01': 'built' } }, { 'reviews/01.md': 'No proven bugs.\n' });
+  p.refused(['mark', '01', 'done'], /only be marked reviewed next, not done/);
+  assert.equal(p.run('mark', '01', 'reviewed').code, 0);
   assert.equal(p.run('mark', '01', 'done').code, 0);
   assert.equal(p.read().briefs['01'], 'done');
   const history = p.read().history.filter((h) => h.mark === 'done');
@@ -377,8 +377,9 @@ test('a yes recorded before the mark it must follow does not count, even on the 
   assert.equal(project(done, { 'decisions.md': `${YES}${YES_01}- 2026-06-15 01: Go live.\n` }).run('mark', 'shipped', '01').code, 0);
 });
 
-test('the tidy stage: tidied needs tidying first, a passing check and a guard for a cause seen three times', () => {
-  const lessons = '- 01: [built-twice] a\n- fix: [built-twice] b\n- fix: [built-twice] c\n- 02: [none] d\n- fix: [none] e\n- fix: [none] f\n';
+test('the tidy stage: tidied needs tidying first and a passing check, and lessons are not counted', () => {
+  // An old lessons file with one cause three times and no guard line holds nothing.
+  const lessons = '- 01: [built-twice] a\n- fix: [built-twice] b\n- fix: [built-twice] c\n';
   const p = project({ check: IN_ROOT, stack: true, briefs: { '01': 'done', '02': 'done' } }, { 'lessons.md': lessons });
   p.write('a.js', 'a\nb\n');
   p.git('init', '-q');
@@ -395,8 +396,6 @@ test('the tidy stage: tidied needs tidying first, a passing check and a guard fo
   p.write('a.js', 'a\n');
   p.git('add', '-A');
   p.git('commit', '-qm', 'tidy');
-  p.refused(['mark', 'tidied'], /\[built-twice\] appears 3 times/);
-  p.write('sidekik/lessons.md', `${lessons}- guard: [built-twice] state.js refuses a second build.\n`);
   assert.equal(p.run('mark', 'tidied').out, 'The tidy is finished. It added 1 lines and removed 1.\n');
   assert.deepEqual([p.read().tidied, p.read().tidyBase], [2, null]);
 });

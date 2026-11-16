@@ -66,9 +66,11 @@ what they chose. Never read the owner's other repositories to guess a stack.
    helper classes stay classes. Its one check command carries the quality
    checks every later change must pass, as far as the stack has tools: tests, style rules,
    type checks, duplicate code, unused code, which area may use which, no raw colours or
-   sizes outside the design system, no secrets, no to-do notes. Add an index command that
-   prints, from the code, the names and signatures each area exposes. Put the layout and
-   all commands in `CLAUDE.md`.
+   sizes outside the design system, no secrets, no to-do notes. It runs before every
+   commit on the owner's machine, so build it light: a part whose files did not change
+   since it last passed is skipped, and it never starts more than a few workers at once.
+   Add an index command that prints, from the code, the names and signatures each area
+   exposes. Put the layout and all commands in `CLAUDE.md`.
 
 Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and
 `## Your steps`. Run `state.js set-check "<command>"`, then

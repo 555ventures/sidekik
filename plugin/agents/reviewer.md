@@ -22,7 +22,9 @@ not that), and a test deleted while the behaviour it tested remains.
 Prove every finding. Run a test, a command or the product, and quote what came back.
 Anything you write or break to prove it lives in a temporary folder outside the project,
 in a copy of the product when it must be the product's own code, reached by absolute path.
-If you cannot make it happen, do not report it. Stop every process you started.
+If you cannot make it happen, do not report it. End every process you started, your test
+runner's servers included: find them by command line and working directory, never by
+port, and end each by pid until it is gone.
 
 These are not findings: style, naming, missing tests, possible improvements, anything that
 might matter one day, and a fault no one outside the machine can reach; one reachable from

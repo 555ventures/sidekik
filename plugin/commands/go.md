@@ -73,9 +73,11 @@ project root or with `--root <dir>`.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: makers never run git, every commit is pushed, and on a product with a check command
-every commit passes it first, whatever the stage. Every process you or an agent starts
-runs as a tracked background task, and you stop them all before your turn ends, except one
-the owner needs for a stop: the stop and `handoff.md` name its address and how to stop it.
+every commit passes it first, whatever the stage. A process you, an agent or a test
+runner started outlives its starter and is tracked by no one: after each agent reports
+and before your turn ends, list what still runs from this project by command line and
+working directory, never by port, and end each by pid until it is gone, except one the
+owner needs for a stop: the stop and `handoff.md` name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),

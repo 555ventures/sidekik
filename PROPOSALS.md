@@ -341,3 +341,24 @@ ask about) is now carried by the guide alone.
 Not recommended: one line naming several briefs (a new form in the decision log to save
 a gate that caught nothing), and removing the stack or go-live yes (one per project or
 per release, and cheap).
+
+## The close stops only for a product decision
+
+**Decided 2026-11-16, applied in 0.18.7.** From poolyst: "close.md says 'Stop if the
+review left an `- [owner]` item: ask it with your recommendation', and review.md makes
+`[owner]` of two different things: a product decision, and a finding I will not fix.
+Brief 18's second look left one of the second kind ... and go.md says a yes I can predict
+is a call, not a question." The session stopped and asked the owner something it would
+have answered without doubt. The line was first declined to wait for a tidy; the owner
+said to fix it now.
+
+Applied: close.md stops only when the review left an `[owner]` item that is a product
+decision. A finding the partner chose not to fix is told with the calls at the close,
+with no stop. For the owner this is one stop fewer for each such finding, in line with
+the 0.7.4 rule that a yes the partner can predict is a call; poolyst's reviews held 14
+`[owner]` lines, and how many were of this kind was not counted.
+
+Not recommended: a second tag in the review file for a finding left alone (it would
+keep the status screen exact, but it is a new form for a difference one sentence
+carries). Until a brief is marked done the status screen still counts such a line as a
+review question.

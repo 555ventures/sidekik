@@ -112,9 +112,10 @@ risk the moment you see it. Everything else is yours to settle.
   how many agents, on which model, what each makes, and what a run like it cost the last
   time (a hand-back names its tokens). The line is a stop, with a thinner way offered
   first, when the run covers a whole new product or is far larger than the last one they
-  agreed to. An agent on a stronger model than its file names needs their yes with the
-  extra cost stated, apart from the one redo named under Seats. Otherwise the line is a
-  report and the work goes on.
+  agreed to. An agent runs on the model its file names: a stronger one needs their yes
+  with the extra cost stated, apart from the one redo named under Seats, and a model they
+  named for your own session is not that yes. Otherwise the line is a report and the work
+  goes on.
 - What the owner rules about the product is written where it is built from, when they say
   it: a maker applies it to the brief's own sentence, the kit and the examples, and to
   the build note or `sidekik/model.md` once those exist; a ruling on the whole product

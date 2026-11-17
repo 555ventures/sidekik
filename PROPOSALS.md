@@ -430,3 +430,10 @@ nikoniko-hub, and what this request asked for: it would stop every build wave an
 back the predictable yes of 0.7.4; say so and it is one sentence to change), a token cap
 (a number the owner overrides), and a digest for makers to read (reading before the
 first write was 30 to 100 thousand tokens of a run; the length of the run was the cost).
+
+**Amended the same day in 0.20.1,** from shop-bltr, where the owner said "Now with Fable,
+try redesign" and the partner passed `model: "fable"` on all 23 maker dispatches of the
+session (14.2 million tokens without cache reads, 669 million with them; the maker's file
+says Sonnet, and nothing else in the project set a model): go.md now says an agent runs
+on the model its file names, and that a model the owner named for the partner's own
+session is not their yes to a stronger model for an agent.

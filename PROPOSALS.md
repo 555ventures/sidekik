@@ -398,3 +398,35 @@ briefs already carry), a mark for an overruled line (a new command against a sea
 that leaves the noise in place), and cleaning the existing logs (the marks count their
 lines). Left as it is: a mark accepts any line for `all` recorded after it, so the gate
 proves that the owner spoke, not what they meant.
+
+## Tokens are the owner's money: a run of agents is sized, and a large one is a stop
+
+**Asked by the owner 2026-11-17, applied in 0.20.0.** From nikoniko-hub: "the stage says
+'a new product gets every brief prototyped in this one pass, with makers on the remaining
+areas' and has no budget gate. With 94 briefs that became about 40 agent jobs and over 18
+million tokens in one day (the partner also overrode every maker to Opus), most of it on
+states and cases pages the owner will never look at." Measured from that project's
+transcripts: 58 agent runs in the day, 16 of them started by makers and unseen by the
+partner; 30.5 million tokens of fresh input, cache writes and output, and 1.69 billion
+with cache reads; 37 runs on Opus (median 666 thousand tokens) against 19 on Sonnet (242
+thousand); a median run of 86 turns with a context of 276 to 950 thousand tokens read
+again on every turn; 147 screens. No size and no go or no-go was put to the owner before
+the pass, and no human message concerned a model.
+
+Applied: go.md says tokens are the owner's money. Before a run of several agents the
+partner says its size in one line; the line is a stop, with a thinner way offered first,
+when the run covers a whole new product or is far larger than the last one agreed to; an
+agent on a stronger model than its file names needs the owner's yes with the extra cost
+stated. prototype.md starts a new product's examples pass at that stop and offers the
+thin pass: every brief mapped to the reference example that shows it, only the first
+slice drawn in full, each later slice drawn before its build note. A large area is split
+by flow among makers, and a maker never starts an agent of its own.
+
+For the owner: one new stop per new product, and one whenever a model would be raised;
+every other run of agents costs one line to read.
+
+Not recommended: a stop before every run of more than one agent (the owner's ruling in
+nikoniko-hub, and what this request asked for: it would stop every build wave and bring
+back the predictable yes of 0.7.4; say so and it is one sentence to change), a token cap
+(a number the owner overrides), and a digest for makers to read (reading before the
+first write was 30 to 100 thousand tokens of a run; the length of the run was the cost).

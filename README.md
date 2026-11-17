@@ -40,8 +40,10 @@ Claude comes to the owner when a good partner would. Several of those moments st
 work until the owner answers; four are held by the scripts, each needing the owner's yes
 recorded as a decision: the brief list, each brief's prototype, a yes at the stack and
 going live (the marks below say exactly what each accepts). The build between them runs
-unattended and reports as it goes. A bug or a small tweak skips the stages: it is fixed
-directly and reported in one line.
+unattended and reports as it goes. A run of several agents is announced with its size, and
+is a stop when it covers a whole new product, is far larger than the last one agreed to,
+or raises an agent's model. A bug or a small tweak skips the stages: it is fixed directly
+and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
 and each finished brief leaves one lesson and the check or sentence that prevents its worst moment.

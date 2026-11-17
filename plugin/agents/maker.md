@@ -15,6 +15,8 @@ moment. Your brief names what to build, the files you own, and what to read firs
   library, look up its current documentation through Context7 when the session has it.
 - Touch only the files you own. When you need another file changed, say so in your report
   and use the closest thing meanwhile.
+- Never start an agent of your own: the partner cannot see what it costs. Say in your
+  report what was too large for one maker.
 - Never run git. Before you report, end every process you started, your test runner's
   servers included: find them by command line and working directory, never by port, and
   end each by pid until it is gone. In a prototype, run `proto-check.js` on your work

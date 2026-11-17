@@ -65,9 +65,17 @@ more foundation.
 
 ## Examples
 
-A new product gets every brief prototyped in this one pass, with makers on the remaining
-areas. A maker writes what the kit lacks in `map/kit-requests-<area>.md` and its guesses
-in `sidekik/questions/<area>.md`. When they return, settle the kit requests, and the
+A new product's remaining examples are the largest run of agents it will see, so the
+pass starts at a stop: tell the owner how many examples and makers the full pass takes
+and what the reference examples cost, and offer the thin pass first. In the thin pass
+every brief is mapped to the reference example that shows it, only the first slice to be
+built (one area's briefs, or fewer) is drawn in full, and each later slice gets its
+examples before its build note, shown to the owner then like any change to approved
+examples; its risk is a need the stack must meet that is found late. On their yes, makers
+draw what was chosen, one per area, a large area split by flow so that no maker draws
+more than a few briefs. A maker writes what the kit lacks in
+`map/kit-requests-<area>.md` and its guesses in `sidekik/questions/<area>.md`. When they
+return, settle the kit requests, and the
 questions that are not the owner's as `[settled] NN: … → what you chose`; one the examples
 cannot answer because it is a stack decision (where it runs, what it costs, how it is
 packaged, what an outside service can do) is settled as `→ a stack decision` and joins

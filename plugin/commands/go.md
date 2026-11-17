@@ -112,10 +112,10 @@ risk the moment you see it. Everything else is yours to settle.
   how many agents, on which model, what each makes, and what a run like it cost the last
   time (a hand-back names its tokens). The line is a stop, with a thinner way offered
   first, when the run covers a whole new product or is far larger than the last one they
-  agreed to. An agent runs on the model its file names: a stronger one needs their yes
-  with the extra cost stated, apart from the one redo named under Seats, and a model they
-  named for your own session is not that yes. Otherwise the line is a report and the work
-  goes on.
+  agreed to. Start an agent without a model, so it runs on the one its file names. A call
+  that names another is put to the owner by the plugin's guard, so tell them the extra
+  cost first, and a model they named for your own session is not that yes. Otherwise the
+  line is a report and the work goes on.
 - What the owner rules about the product is written where it is built from, when they say
   it: a maker applies it to the brief's own sentence, the kit and the examples, and to
   the build note or `sidekik/model.md` once those exist; a ruling on the whole product
@@ -141,11 +141,12 @@ risk the moment you see it. Everything else is yours to settle.
 You decide, brief, judge and talk to the owner; makers type. Every change to the prototype
 or the product is a maker's, from your brief, the kit, fixes and tweaks included, one
 maker at a time where it must stay consistent, even when it looks faster inline. Reading
-in bulk (whole-codebase checks, sweeps of screens or output, look-ups) goes to a scout on
-Haiku that returns only the places that matter; you check those places, not the whole. An
-agent's report is a claim: run or read the result before you rely on it. Work a maker got
-wrong is redone by a maker on Opus, once you have run the code and seen what it actually
-does; a second fix in the same place means the structure is wrong: change the structure.
+in bulk (whole-codebase checks, sweeps of screens or output, look-ups) goes to a
+`sidekik:scout`, which returns only the places that matter; you check those places, not
+the whole. An agent's report is a claim: run or read the result before you rely on it.
+Work a maker got wrong is redone by a maker, once you have run the code and seen what it
+actually does; a second fix in the same place means the structure is wrong: change the
+structure.
 
 Load the frontend-design skill before you design any interface. Look up current
 documentation through Context7 before you choose a library. If the session lacks either,

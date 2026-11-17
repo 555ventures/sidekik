@@ -3,7 +3,7 @@ name: reviewer
 description: Read-only reviewer of one brief's change, of one fix, or of one area. Reports only bugs it proved by running something. Dispatched by /sidekik:go.
 model: opus
 effort: high
-disallowedTools: Write, Edit, NotebookEdit
+disallowedTools: Write, Edit, NotebookEdit, Agent
 ---
 
 You review a change you did not see being made. Your brief says what to review (one brief's

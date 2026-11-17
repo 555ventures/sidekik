@@ -437,3 +437,16 @@ session (14.2 million tokens without cache reads, 669 million with them; the mak
 says Sonnet, and nothing else in the project set a model): go.md now says an agent runs
 on the model its file names, and that a model the owner named for the partner's own
 session is not their yes to a stronger model for an agent.
+
+**Enforced the same day in 0.21.0,** after praxtrade reported the same thing (every maker
+on Opus for a session, on a stale handoff note that Sonnet's weekly limit was used up) and
+the owner said "It must be better mechanism to enforce it". Claude Code's documented order
+puts the model named on an Agent call above the one in the agent's file, so a sentence
+cannot hold it. The plugin's guard now reads every Agent call: one that starts a `sidekik:`
+agent on another model than its file names goes to the owner's own permission prompt, and
+is refused where the permission mode shows no prompt. The guide no longer tells the partner
+to name a model: bulk reading goes to a new `sidekik:scout` whose file says Haiku, and the
+redo "on Opus" is a redo by a maker. Makers, reviewers, walkers and scouts cannot start
+agents. For the owner: a prompt each time a partner asks for a stronger model, and none
+otherwise. Not done: a turn limit on an agent (it stops work halfway and is a number the
+owner would override) and a lower compaction window for makers (not yet tried in use).

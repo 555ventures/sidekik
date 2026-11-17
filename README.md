@@ -90,8 +90,11 @@ sidekik/
 ```
 
 A PreToolUse hook (`hooks/hooks.json`, `scripts/guard.js`) refuses Write and Edit on
-`state.json` and `decisions.md`; edits made through the shell are not caught. `hooks.json`
-also runs `scripts/install.js` at session start.
+`state.json` and `decisions.md`; edits made through the shell are not caught. The same
+hook reads every Agent call: one that starts a `sidekik:` agent on a model other than the
+one its file names is sent to the owner's permission prompt, or refused where the
+session's permission mode shows no prompt. `hooks.json` also runs `scripts/install.js` at
+session start.
 
 Line formats, exactly:
 

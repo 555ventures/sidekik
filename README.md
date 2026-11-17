@@ -69,7 +69,7 @@ landed with the project's work. Scripts re-read it on every call.
 sidekik/
   state.json            written only by scripts
   briefs.md             - 01 booking-flow: Clients book in under a minute.
-  decisions.md          the owner's rulings; written only by decide.js
+  decisions.md          the owner's yes at each stop, read by the marks and by no builder; written only by decide.js
   questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
   handoff.md            where the work stands and what comes next, replaced whole each time
   stack.md              ## Picks, ## Your steps
@@ -268,7 +268,7 @@ terminal first when its output is one; piped output is left plain.
 - `scripts/decide.js` exports `verifyDecisions(root) → { ok, problems }`,
   `decisionsFor(root, ...briefs) → [{ date, brief, text }]`, `openQuestions(root, brief?) → [string]`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
   `decide.js add`, all or none), `decide.js answer <NN|all> "<match>" "<answer>"`, `decide.js verify`,
-  `decide.js list [NN]` (the rulings a brief must honour, its own and `all`, in file order; every ruling without `NN`),
+  `decide.js list [NN]` (the lines recorded for a brief, its own and `all`, in file order; every line without `NN`),
   `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
   theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)` and

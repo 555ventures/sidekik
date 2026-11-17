@@ -362,3 +362,39 @@ Not recommended: a second tag in the review file for a finding left alone (it wo
 keep the status screen exact, but it is a new form for a difference one sentence
 carries). Until a brief is marked done the status screen still counts such a line as a
 review question.
+
+## A ruling lives where it is built from, and the decision log holds only the yes at a stop
+
+**Decided 2026-11-17 by the owner ("yes"), applied in 0.19.0.** From praxtrade: "I read
+it as every message of theirs and logged session housekeeping ... The owner asked why and
+sees no benefit", and "the decision log only grows (about 300 lines here after two weeks),
+later lines overrule earlier ones, and nothing marks a line as overruled ... the owner
+said old decisions 'keep coming back again and again'". Readers counted the four
+projects' logs, 1,271 lines: 19 housekeeping, 171 thinking out loud, 454 spent yeses (a
+third of sumglass's log is one yes copied onto each brief it covered), 494 live rulings,
+at least 111 overruled with nothing marking them. A builder of one brief was handed 80 to
+213 of those lines. Three of the four projects had written a digest of current rulings by
+hand. The owner's own points shaped the change: an old idea comes back and conflicts with
+a newer one, and whatever they said is already in Claude Code's transcript.
+
+Applied: go.md says a ruling about the product is written where it is built from (the
+brief's sentence, the kit and the examples, the build note or the model, the picture at
+the top of the brief list for a ruling on the whole product), and that one which replaces
+an earlier ruling is done only when the earlier one is gone from every file a session or
+an agent reads. The later word wins, and the partner asks only when it cannot tell
+whether the owner meant to replace the earlier one. The decision log holds only what the
+marks read: the yes at a stop, once for every brief it covers, and an answered question.
+A session order belongs to the handoff; a thought that rules nothing is written nowhere.
+Makers, the reviewer and the reader of the build notes are handed `sidekik/briefs.md`
+where they were handed the log. No script changed.
+
+For the owner: fewer lines written, no old ruling handed to a builder, and one new
+question, asked only when the partner cannot tell whether a new word replaces an old one.
+What is given up: the owner's exact words for a ruling, once Claude Code has deleted the
+transcript; the brief and its git history are then the record.
+
+Not recommended: a page of current rulings in front of the log (a new file for what the
+briefs already carry), a mark for an overruled line (a new command against a sealed file
+that leaves the noise in place), and cleaning the existing logs (the marks count their
+lines). Left as it is: a mark accepts any line for `all` recorded after it, so the gate
+proves that the owner spoke, not what they meant.

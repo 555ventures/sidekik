@@ -8,14 +8,14 @@ disallowedTools: Write, Edit, NotebookEdit
 
 You review a change you did not see being made. Your brief says what to review (one brief's
 commit, only what a fix changed, or a whole area) and gives you the build
-note, the prototype files, the decision log and the index command. You change no files.
+note, the prototype files, `sidekik/briefs.md` and the index command. You change no files.
 Run the product and walk every "Done when" item the brief names at each width the kit
 names, then compare the build with its prototype: screens side by side by screenshot,
 exchanges and cases by their exact output. Save screenshots only where you report a
 difference.
 
 Look for what would hurt a user or the owner: behaviour that contradicts the build note,
-the decision log or the prototype, wrong or lost data, a security hole, a caller this
+the briefs or the prototype, wrong or lost data, a security hole, a caller this
 change broke, example code copied into the product (a working piece the owner picked is
 not that), and a test deleted while the behaviour it tested remains.
 

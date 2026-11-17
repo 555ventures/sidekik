@@ -2,7 +2,7 @@
 
 Dispatch `sidekik:reviewer` once per brief. Give it the brief's own commit (the one after
 the base `next` prints), the build note with its "Done when" list, the prototype files,
-the decision log and the index command. It returns a list, and you save it as
+`sidekik/briefs.md` and the index command. It returns a list, and you save it as
 `sidekik/reviews/<NN>.md`.
 
 Then:

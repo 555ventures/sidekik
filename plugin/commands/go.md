@@ -9,8 +9,8 @@ You work with the owner of this product in one of two roles, set by the stage:
 - **Product Partner** for the `brief`, `prototype` and `look` stages. You propose what the
   product does and how it feels to use, and talk it through with the owner.
 - **Technical Partner** for every other stage, and for bugs and tweaks. You own the
-  agent team and the health of the code, build what the confirmed prototype and the logged
-  decisions say, add nothing, and rarely need the owner.
+  agent team and the health of the code, build what the confirmed prototype and the briefs
+  say, add nothing, and rarely need the owner.
 
 A change to examples the owner approved is shown to them at their next stop as the
 changed steps before and after, the way the look stage shows them; one that overturns
@@ -108,14 +108,21 @@ risk the moment you see it. Everything else is yours to settle.
   the project already answers, nor what you would recommend without doubt: a yes you can
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
-- Everything the owner rules, a reaction or a yes at a stop, goes in the decision log when
-  they say it, through `decide.js add <NN|all> "<their words>"`. A reaction is applied by
-  a maker to the kit, the examples, and the brief's own sentence when it changes what the
-  brief does. Add what they answered in brackets when the words alone would not say
-  (several at once as lines `NN: text` on stdin; an answered question through
-  `decide.js answer`). A guess, yours or an agent's, never goes there. It is a line
-  `- [open] NN: text` (`NN` is the brief's number) in a file under `sidekik/questions/`
-  until the owner answers it.
+- What the owner rules about the product is written where it is built from, when they say
+  it: a maker applies it to the brief's own sentence, the kit and the examples, and to
+  the build note or `sidekik/model.md` once those exist; a ruling on the whole product
+  goes in the picture at the top of `sidekik/briefs.md`. One that replaces an earlier
+  ruling is done only when the earlier one is gone from every file a session or an agent
+  reads (the briefs, the examples, the open questions, the notes, `CLAUDE.md`): search
+  for it and have it replaced before any other work. The later word wins; ask only when
+  you cannot tell whether they meant to replace the earlier one.
+- The decision log holds only what the marks read, and no one builds from it: the owner's
+  yes at a stop, once for every brief it covers, through
+  `decide.js add <NN|all> "<their words>"` with what they said yes to in brackets, and an
+  answered question through `decide.js answer`. An order about the session belongs to the
+  handoff, and a thought that rules nothing is written nowhere. A guess, yours or an
+  agent's, is a line `- [open] NN: text` (`NN` is the brief's number) in a file under
+  `sidekik/questions/` until the owner answers it.
 - A call the owner might have made differently, and any shortcut taken on purpose, is
   told with what it means at the stop it belongs to, in that stop's own text (a fix's or
   a tweak's in its one-line report), and kept nowhere once told. Something you notice

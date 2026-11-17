@@ -31,5 +31,5 @@ headings:
   which.
 
 When several briefs are noted together, one general-purpose agent on Opus reads all their
-notes against `sidekik/model.md`, the decision log and the project's `CLAUDE.md` before
+notes against `sidekik/model.md`, `sidekik/briefs.md` and the project's `CLAUDE.md` before
 any is marked, and you fix what it finds. Then run `state.js mark <NN> noted`.

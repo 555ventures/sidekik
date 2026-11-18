@@ -63,10 +63,12 @@ project root or with `--root <dir>`.
 3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
    together. A stage often spans several sessions: `sidekik/` is the memory, not the
    window. When the version `next` prints beside the stage file has moved, read this file
-   and the stage file again first. At each mark and before you stop, replace
-   `sidekik/handoff.md` whole with only where things stand, what comes next, what is
-   still running and the calls not yet told to the owner, keeping nothing as history, and
-   send any `[open]` feedback lines of this stretch not yet sent. When the work is
+   and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
+   with only where things stand, what comes next, what is still running and the calls
+   not yet told to the owner. It keeps no history and nothing meant to last: what later work must
+   know goes into the file it is about (`CLAUDE.md`, `sidekik/stack.md`, the prototype's
+   `INDEX.md`, the build note of the brief that needs it). Send any `[open]` feedback
+   lines of this stretch not yet sent. When the work is
    committed and nothing of yours is running (no agent, no background task, no server),
    tell the owner in one line that it is safe to `/clear` and run `/sidekik:go`; say
    nothing about clearing otherwise.

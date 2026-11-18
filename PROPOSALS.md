@@ -499,3 +499,12 @@ from: unprompted, not at a stop.
   already was. The flows page is still built by its generator. For the owner: the same
   stop, without the wait. Not done: keeping the pictures out of git (a new practice,
   which no project has tried).
+- 0.22.3, the handoff rewritten at each mark, and rules living in it. The handoff was
+  written 58 times in sumglass (19 commits held nothing else), 73 times in sumaro, 41 in
+  poolyst, and touched in 121 of praxtrade's 189 commits. When 0.18.3 shrank it,
+  sumglass lost two standing rules of the owner (no Japanese examples or yen in sample
+  data; copy states facts plainly), poolyst read the old long version back from git nine
+  times and then spent a maker moving it, and in praxtrade one stale line ("Sonnet's
+  weekly limit resets on 20 Nov") stayed 33 hours and put 31 makers on Opus. It is now
+  replaced before a stop only, and holds nothing meant to last: what later work must know goes into
+  the file it is about. Poolyst asked for exactly that on 2026-11-15.

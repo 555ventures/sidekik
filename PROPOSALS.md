@@ -533,3 +533,13 @@ from: unprompted, not at a stop.
   with no file (the reader of several build notes, learn's readers) then runs on the
   session's model, the owner's most expensive one, so the guide now says to name the
   model its stage file gives.
+- 0.22.6, a maker for every change. "Every change to the prototype or the product is a
+  maker's ... even when it looks faster inline" sent changes of a few lines to an agent:
+  about 19 such runs in the six projects, a median near 100 thousand tokens and 30 turns
+  each for 1 to 30 lines, one of which changed nothing. A change of a few lines in a
+  single file the partner has already read is now the partner's; everything else stays
+  a maker's, which keeps the 2026-11-09 lesson (no expensive session spent on renames
+  across files). Sumglass's line of 2026-11-17 is answered in the same sentence: an
+  edit that loosens a check is put to the owner in plain words and made by the partner
+  on their yes, never on a maker's request. For the owner: one question when a check is
+  to be loosened, which the permission system was already forcing.

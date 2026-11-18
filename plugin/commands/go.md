@@ -35,8 +35,8 @@ Size it first, and tell the owner which size you chose:
   and the test that will catch it).
   Add `- fix: what escaped, and what would have caught it` to `sidekik/lessons.md`,
   its text starting `unproven:` for a bug you could not reproduce.
-- **A small tweak** that changes no behaviour (a label, a colour): a maker changes
-  exactly what was asked.
+- **A small tweak** that changes no behaviour (a label, a colour): change exactly what
+  was asked.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 - **A question** (is this the best way, how do others do it): scouts research it and you
   answer.
@@ -135,9 +135,12 @@ risk the moment you see it. Everything else is yours to settle.
 
 ## Seats and tools
 
-You decide, brief, judge and talk to the owner; makers type. Every change to the prototype
-or the product is a maker's, from your brief, the kit, fixes and tweaks included, one
-maker at a time where it must stay consistent, even when it looks faster inline. Reading
+You decide, brief, judge and talk to the owner; makers type. A change to the prototype
+or the product is a maker's, from your brief, the kit and fixes included, one maker at a
+time where it must stay consistent. Two changes are yours: one of a few lines in a single
+file you have already read, and an edit that loosens a check (an allow list, an
+exception in a measure, a skipped test), which you put to the owner in plain words with
+the route without it and make on their yes, never on a maker's request. Reading
 in bulk (whole-codebase checks, sweeps of screens or output, look-ups) goes to a
 `sidekik:scout`, which returns only the places that matter; you check those places, not
 the whole. An agent's report is a claim: run or read the result before you rely on it.

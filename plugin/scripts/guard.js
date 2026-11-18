@@ -37,7 +37,7 @@ function agentCall(data) {
       hookEventName: 'PreToolUse',
       permissionDecision: asking ? 'ask' : 'deny',
       permissionDecisionReason: asking
-        ? `${said} Allow it only if you agreed to the stronger model and its cost for this job.`
+        ? `${said} Allow it only if you agreed to that model for this job.`
         : `${said} Start it again without a model. Another model is the owner's decision, and this session's permission mode shows them no prompt: tell them the extra cost, and they can allow it in a mode that asks.`,
     },
   };

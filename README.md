@@ -39,9 +39,9 @@ engine, a pipeline). Confirmed examples become the tests.
 Claude comes to the owner when a good partner would. Several of those moments stop the
 work until the owner answers; four are asked at the brief list, each brief's prototype,
 the stack and going live. The session runs the mark only after the owner's yes, and the
-mark is the record of it (the marks below say exactly what each requires). The build
+mark is the record of it. The build
 between them runs unattended and reports as it goes. An agent runs on the model its file
-names; a call that raises it goes to the owner's own permission prompt, and the examples
+names; a call that names another goes to the owner's own permission prompt, and the examples
 pass of a whole new product starts at a stop that offers a thinner pass. A bug or a
 small tweak skips the stages: it is fixed directly and reported in one line.
 
@@ -64,7 +64,7 @@ built. What cost more than it caught is taken out, whatever lesson put it there.
 
 ## Contract (for whoever builds or changes the plugin)
 
-Everything the plugin knows about a project lives in `sidekik/` in that project, and is
+What the scripts read lives in `sidekik/` in that project, and is
 landed with the project's work. Scripts re-read it on every call.
 
 ```
@@ -120,7 +120,7 @@ Line formats, exactly:
   "briefs": { "01": "built" } }
 ```
 
-A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`, `decisionsHash`, `kitHash`, and the `decisions` count in old history entries) is kept as it is and ignored.
+A missing field in an older state file counts as its empty value; a field no script reads any more is kept as it is and ignored.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 

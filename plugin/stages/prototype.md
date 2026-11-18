@@ -26,8 +26,7 @@ session with no memory can extend it.
 ## Foundation
 
 While the foundation is built, a scout checks how three good current products handle the
-same thing, from their help centres and public docs, and says unknown where it finds
-nothing. Use what works, and what the owner gave you.
+same thing. Use what works, and what the owner gave you.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, naming the
   widths the product is used at (phone, tablet, laptop, as the product picture says), and
@@ -93,14 +92,14 @@ generator of the flows page). A picture is taken for someone to look at: before 
 stop the scripts measure and retake the examples that stop shows and no others, and the
 flows page is built again by its generator, never patched.
 
-1. A scout uses the real thing: it clicks every screen in a browser at each width the kit
+1. A scout uses the real thing: it clicks this pass's screens in a browser at each width the kit
    names (serving the folder locally if it refuses file addresses), reads the exchanges,
    runs the cases, and measures what eyes miss with a script a maker writes: text contrast
    in each theme, field text size at phone width, one kind of control drawn one way, no
    card inside a card, every kit token computing to a value; a page it cannot open fails.
-   It returns what is broken, empty, failing the measure or at odds with the rest, and a
-   maker fixes that.
-2. A maker builds `shots/flows.html` with the generator: each flow in step order, every
+   It returns what is broken, empty, failing the measure or at odds with the rest, and
+   that is fixed.
+2. The generator builds `shots/flows.html`: each flow in step order, every
    example in a flow, every step with its screenshot or the spoken lines of its exchange,
    one anchor per step.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,

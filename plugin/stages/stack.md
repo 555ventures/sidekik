@@ -23,8 +23,7 @@ what they chose. Never read the owner's other repositories to guess a stack.
    candidate's current documentation through Context7. Facts only, no pick in mind; what no
    source settles stays marked "not confirmed". A decision that is hard to reverse gets the
    deeper read.
-3. **Proposal.** One page the owner sees whole on screen, never a summary with the brief
-   left in a file: the architecture as a picture (which parts exist, who calls whom, where
+3. **Proposal.** One page the owner sees whole on screen, never a summary of a file: the architecture as a picture (which parts exist, who calls whom, where
    data lives), two or three whole designs, the data design in short as a picture (what
    the product stores, the rules every brief shares, the areas and what each owns), and
    per decision, first one plain sentence on what the choice means for the product and its
@@ -66,8 +65,7 @@ what they chose. Never read the owner's other repositories to guess a stack.
    helper classes stay classes. Its one check command carries the quality
    checks every later change must pass, as far as the stack has tools: tests, style rules,
    type checks, duplicate code, unused code, which area may use which, no raw colours or
-   sizes outside the design system, no secrets, no to-do notes. It runs before every
-   commit of the product on the owner's machine, so build it light: a part whose files did not change
+   sizes outside the design system, no secrets, no to-do notes. Build it light: a part whose files did not change
    since it last passed is skipped, and it never starts more than a few workers at once.
    Add an index command that prints, from the code, the names and signatures each area
    exposes. Put the layout and all commands in `CLAUDE.md`.

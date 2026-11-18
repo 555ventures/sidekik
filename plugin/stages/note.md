@@ -1,8 +1,8 @@
 # Build note
 
 Write `sidekik/build-notes/<NN>-<slug>.md`. It is your working note for
-whoever builds and reviews this brief, and the owner does not approve it. The prototype
-already shows the behaviour, so the note holds only what an example cannot show. Use these
+whoever builds and reviews this brief, and the owner does not approve it. The note holds
+only what an example cannot show. Use these
 headings:
 
 ```

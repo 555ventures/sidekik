@@ -134,7 +134,7 @@ test('prototyped needs every mapped screen done, a clean prototype check and no 
   assert.equal(p.read().briefs['01'], 'prototyped');
 });
 
-test('confirmed is refused while the brief has an open question, and needs no recorded yes otherwise', () => {
+test('confirmed is refused while the brief has an open question', () => {
   const state = { briefs: { '01': 'prototyped' } };
   project(state, { 'questions/pm.md': '- [open] 01: Weekly?\n' }).refused(['mark', '01', 'confirmed'], /open question/);
   const p = project(state, { 'questions/pm.md': '- [answered] 01: Weekly? → yes\n- [open] 02: Text?\n' });
@@ -155,7 +155,7 @@ test('open questions come from every questions file and can be narrowed to one b
   assert.deepEqual(openQuestions(p.root, '02'), ['- [open] 02: Do reminders go by text?', '- [open] all: Which currency?']);
 });
 
-test('briefs are confirmed with no recorded yes, and old approval fields are kept and read by nothing', () => {
+test('fields of an older state file that nothing reads are kept as they are', () => {
   // An older state file still carries the approval fields; they are kept as they are and read by nothing.
   const old = { approved: { '01': 'old-hash' }, approvals: { '01': { count: 1 } } };
   const p = project({ stack: true, briefs: { '01': 'prototyped', '02': 'prototyped' }, ...old },

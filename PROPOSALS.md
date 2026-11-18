@@ -543,3 +543,20 @@ from: unprompted, not at a stop.
   edit that loosens a check is put to the owner in plain words and made by the partner
   on their yes, never on a maker's request. For the owner: one question when a check is
   to be loosened, which the permission system was already forcing.
+- 0.22.7, the last read. One Opus reader at the highest effort read what was left and
+  quoted about 40 sentences that repeated another, contradicted one, or gave a reason
+  where the instruction stands alone; 238 words went from the guides. None changes what
+  the owner is asked. Kept against its advice, because they carry what the owner asked
+  for: "run that mark only after their yes", "the kit changes only on your decision",
+  and why learn's readers name their model.
+
+Counted and left as it is: the length of an agent's run. A median maker run is 85 to 120
+turns with a context of 250 to 400 thousand tokens read again on every turn, and runs
+over 60 turns took 70 to 88 percent of the remote projects' tokens. Length follows the
+number of files a maker writes and its check-and-fix loops, not reading before the first
+write. No sentence causes it that could be taken out, and a tidy never adds, so smaller
+pieces for makers is the owner's decision. Also left: the questions files (about 500
+lines, about 37 answered by the owner, most as recommended; whether sumglass's 31 answers
+changed anything was not counted), and the owner stops, where every answer in three of
+the four local projects was the recommended one while the owner changed the product by
+speaking unprompted.

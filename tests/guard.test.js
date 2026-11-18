@@ -26,7 +26,7 @@ test('the guard puts a stronger model on a sidekik agent to the owner where a pr
     assert.deepEqual(decision(r), {
       hookEventName: 'PreToolUse',
       permissionDecision: 'ask',
-      permissionDecisionReason: `${said} Allow it only if you agreed to the stronger model and its cost for this job.`,
+      permissionDecisionReason: `${said} Allow it only if you agreed to that model for this job.`,
     });
   }
 });

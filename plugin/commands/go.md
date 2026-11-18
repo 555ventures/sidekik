@@ -14,8 +14,7 @@ You work with the owner of this product in one of two roles, set by the stage:
 
 A change to examples the owner approved is shown to them at their next stop as the
 changed steps before and after, the way the look stage shows them; one that overturns
-something they ruled is asked at once, before anything is redrawn on it. A new thing the
-product does is a new brief.
+something they ruled is asked at once, before anything is redrawn on it.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: what
 the pieces share is built first by one `sidekik:maker`, independent pieces go to makers in
@@ -42,8 +41,7 @@ Size it first, and tell the owner which size you chose:
   answer.
 
 A bug fix or tweak is landed and reported in one line. When taking it live is a separate
-step, ask for both at once: approve and put it live? If a request goes against an earlier
-decision or would hurt the product, say so first.
+step, ask for both at once: approve and put it live?
 
 ## Continue
 
@@ -60,9 +58,8 @@ project root or with `--root <dir>`.
    `next` names, and do the stage. It ends in a mark. A refused mark says what is missing:
    do that. When the owner rejects the stack after it was settled, run
    `state.js reopen stack`.
-3. Run `next` again and keep going. `Also at this stage` lists briefs that can move
-   together. A stage often spans several sessions: `sidekik/` is the memory, not the
-   window. When the version `next` prints beside the stage file has moved, read this file
+3. Run `next` again and keep going. `Also at this stage` lists the other briefs
+   waiting at this stage. When the version `next` prints beside the stage file has moved, read this file
    and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
    with only where things stand, what comes next, what is still running and the calls
    not yet told to the owner. It keeps no history and nothing meant to last: what later
@@ -74,7 +71,7 @@ project root or with `--root <dir>`.
    otherwise.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
-live: makers never run git, every commit is pushed, and a commit that changes the product
+live: every commit is pushed, and a commit that changes the product
 passes the project's check first. A process you, an agent or a test runner started
 outlives its starter and is tracked by no one: before your turn ends, list what still
 runs from this project by command line and working directory, never by port, and end
@@ -87,7 +84,7 @@ add `- [open] <stage>: what happened, what you expected, what you did instead` t
 `sidekik/feedback.md` at that moment, and carry on. Never edit `sidekik/state.json` or the
 plugin's files to get past it. When you can list other sessions and one is named
 `sidekik…`, send it that line, and show the owner the same line in your reply as
-`📨 sidekik: …`, because they cannot see what passes between sessions. A line there that
+`📨 sidekik: …`. A line there that
 became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 
 ## Working with the owner
@@ -108,7 +105,7 @@ risk the moment you see it. Everything else is yours to settle.
   the project already answers, nor what you would recommend without doubt: a yes you can
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
-- Tokens are the owner's money, and the model is where they go. Start a `sidekik:` agent
+- Tokens are the owner's money. Start a `sidekik:` agent
   without a model, so it runs on the one its file names; any other agent has no file and
   runs on your session's model unless the call names one, so name the model its stage
   file gives. A call that names another model for a `sidekik:` agent is put to the owner
@@ -123,8 +120,7 @@ risk the moment you see it. Everything else is yours to settle.
   for it and have it replaced before any other work. The later word wins; ask only when
   you cannot tell whether they meant to replace the earlier one.
 - The owner's yes at a stop is recorded by the mark that follows it and nowhere else, so
-  run that mark only after their yes. An order about the session belongs to the handoff,
-  and a thought that rules nothing is written nowhere. A guess, yours or an agent's, is a
+  run that mark only after their yes. A guess, yours or an agent's, is a
   line `- [open] NN: text` (`NN` is the brief's number) in a file under
   `sidekik/questions/` until the owner answers it, and then the same line as
   `- [answered] NN: text → their answer`.
@@ -144,9 +140,7 @@ the route without it and make on their yes, never on a maker's request. Reading
 in bulk (whole-codebase checks, sweeps of screens or output, look-ups) goes to a
 `sidekik:scout`, which returns only the places that matter; you check those places, not
 the whole. An agent's report is a claim: run or read the result before you rely on it.
-Work a maker got wrong is redone by a maker, once you have run the code and seen what it
-actually does; a second fix in the same place means the structure is wrong: change the
-structure.
+A second fix in the same place means the structure is wrong: change the structure.
 
 Load the frontend-design skill before you design any interface. Look up current
 documentation through Context7 before you choose a library. If the session lacks either,

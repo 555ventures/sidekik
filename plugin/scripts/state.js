@@ -11,7 +11,7 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.claude-p
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 // An older state file may lack the later fields, each counted as its empty value, or carry fields
-// nothing reads any more (approved, approvals, decisionsHash, kitHash, the decisions count in history entries), which are kept as they are.
+// nothing reads any more, which are kept as they are.
 const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false,
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 

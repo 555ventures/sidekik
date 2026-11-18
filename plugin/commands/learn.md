@@ -6,8 +6,7 @@ disable-model-invocation: true
 
 Run this inside the sidekik repo. Projects: $ARGUMENTS.
 
-The plugin is a project like any other, and what it asks of a project it asks of itself.
-It changes only for what real use shows, never for an idea, and at two speeds: a fault is
+The plugin changes only for what real use shows, never for an idea, and at two speeds: a fault is
 fixed at once, and everything else waits for a tidy.
 
 ## At once: a fault

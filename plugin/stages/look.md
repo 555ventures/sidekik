@@ -2,7 +2,7 @@
 
 The owner is needed here. This is the design review.
 
-Show what they are deciding, at its size, for every brief that is prototyped and
+Show what they are deciding, for every brief that is prototyped and
 waiting, in one stop:
 
 - flows they have not seen: `shots/flows.html`, one way to open it and try it, and a few
@@ -17,7 +17,7 @@ waiting, in one stop:
 Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
 steps one at a time. End your turn.
 
-Repeat, using the real thing again each round. Aim for every persona finishing its task
+Repeat. Aim for every persona finishing its task
 without help and the skeptic's biggest objection answered. After their yes, write each
 answer into its question line and run `state.js mark <NN> confirmed` for each brief the
 yes covers.

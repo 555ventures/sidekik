@@ -1,8 +1,7 @@
 # Brief
 
 Write `sidekik/briefs.md`. A change to an existing product is usually one brief line with
-the next number, or, when the owner puts it off, a line under `## Later` without one,
-since `next` takes every numbered line. The picture, the prototype's word questions and
+the next number, or, when the owner puts it off, a line under `## Later` without one. The picture, the questions on voice and feel and
 the candidates below are for a new product.
 
 Start it with the product picture in a few plain lines:
@@ -19,7 +18,7 @@ Start it with the product picture in a few plain lines:
   a currency, a region, a channel, a native app), with what waits under `## Later`.
 
 Then the briefs. A brief is one thing a user will be able to do, in one sentence a
-customer would understand. It can add a feature, change one or remove one. Order them by
+customer would understand. Order them by
 what has to exist first. Format:
 `- 01 booking-flow: Clients book an appointment in under a minute.`
 

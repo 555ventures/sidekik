@@ -519,3 +519,17 @@ from: unprompted, not at a stop.
   in sumglass or poolyst since the rule began, and in the remote projects a wake that did
   nothing else cost the partner's whole context each time. The partner now lists once,
   before its turn ends; each agent still ends what it started.
+- 0.22.5, the size line before a run of agents (reversing that part of 0.20.0). The
+  owner, shown "A maker is now building actual screen mockups of the new setup, using
+  one standard-model agent at roughly 100–150k tokens, similar to an earlier round":
+  "Does it necessary? What I wanted you to do it stop overriding default models, and if
+  that happens, it needs my approval." Praxtrade had been given about nine such lines
+  and none changed anything. The line and its stop for a run "far larger than the last
+  one" are gone. What stays is what was asked for: an agent runs on the model its file
+  names and a call that names another goes to the owner's own prompt (the 0.21.0 guard),
+  plus the one stop before a whole new product's examples, which offers the thin pass;
+  say so and that stop goes too. In the same sentence, a fault found during this tidy:
+  "start an agent without a model" is true only of the plugin's own agents. An agent
+  with no file (the reader of several build notes, learn's readers) then runs on the
+  session's model, the owner's most expensive one, so the guide now says to name the
+  model its stage file gives.

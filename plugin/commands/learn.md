@@ -30,7 +30,8 @@ A tidy is due when the last version that starts with `tidy:` is some days of rea
 old, and when a new model arrives. A session hears only the rule that blocked it, never
 what obeying a rule cost, so the tidy starts in the projects, not in the plugin.
 
-Readers on Opus, one per project, count for each thing the plugin makes a session or the
+Readers, one per project, on Opus (named on each call: an agent with no file of its own
+runs on the session's model), count for each thing the plugin makes a session or the
 owner do how often it happened and how often it changed what was built: a real catch, an
 answer that was not the predicted yes, a file someone read. They read every feedback line
 too, answered or not, the refused steps in the history and `sidekik/lessons.md`: several

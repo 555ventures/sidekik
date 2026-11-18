@@ -108,14 +108,12 @@ risk the moment you see it. Everything else is yours to settle.
   the project already answers, nor what you would recommend without doubt: a yes you can
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
-- Tokens are the owner's money. Before a run of several agents, say its size in one line:
-  how many agents, on which model, what each makes, and what a run like it cost the last
-  time (a hand-back names its tokens). The line is a stop, with a thinner way offered
-  first, when the run covers a whole new product or is far larger than the last one they
-  agreed to. Start an agent without a model, so it runs on the one its file names. A call
-  that names another is put to the owner by the plugin's guard, so tell them the extra
-  cost first, and a model they named for your own session is not that yes. Otherwise the
-  line is a report and the work goes on.
+- Tokens are the owner's money, and the model is where they go. Start a `sidekik:` agent
+  without a model, so it runs on the one its file names; any other agent has no file and
+  runs on your session's model unless the call names one, so name the model its stage
+  file gives. A call that names another model for a `sidekik:` agent is put to the owner
+  by the plugin's guard: tell them the extra cost first, and a model they named for your
+  own session is not that yes.
 - What the owner rules about the product is written where it is built from, when they say
   it: a maker applies it to the brief's own sentence, the kit and the examples, and to
   the build note or `sidekik/model.md` once those exist; a ruling on the whole product

@@ -12,12 +12,12 @@ waiting, in one stop:
   once with its count. The full page is where to look something up, not what is shown,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
   what it costs to build. Smaller ones are calls,
-- the open questions (`decide.js questions`).
+- the open questions (the `[open]` lines under `sidekik/questions/`).
 
 Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
 steps one at a time. End your turn.
 
 Repeat, using the real thing again each round. Aim for every persona finishing its task
-without help and the skeptic's biggest objection answered. Record their yes once with
-`decide.js add all "<their words>"`, naming in brackets the briefs it covers when it is
-not every one shown, then run `state.js mark <NN> confirmed` for each of those briefs.
+without help and the skeptic's biggest objection answered. After their yes, write each
+answer into its question line and run `state.js mark <NN> confirmed` for each brief the
+yes covers.

@@ -27,7 +27,7 @@ $ARGUMENTS
 
 Size it first, and tell the owner which size you chose:
 
-- **An answer** to something you asked: record it and continue.
+- **An answer** to something you asked: continue from it.
 - **A bug**: reproduce it by running the product, have a maker write a test that fails
   because of it and fix the cause, run the check, and have one `sidekik:reviewer` look at
   the fix, and once more at what a rework after its findings touched. One you cannot
@@ -124,13 +124,12 @@ risk the moment you see it. Everything else is yours to settle.
   reads (the briefs, the examples, the open questions, the notes, `CLAUDE.md`): search
   for it and have it replaced before any other work. The later word wins; ask only when
   you cannot tell whether they meant to replace the earlier one.
-- The decision log holds only what the marks read, and no one builds from it: the owner's
-  yes at a stop, once for every brief it covers, through
-  `decide.js add <NN|all> "<their words>"` with what they said yes to in brackets, and an
-  answered question through `decide.js answer`. An order about the session belongs to the
-  handoff, and a thought that rules nothing is written nowhere. A guess, yours or an
-  agent's, is a line `- [open] NN: text` (`NN` is the brief's number) in a file under
-  `sidekik/questions/` until the owner answers it.
+- The owner's yes at a stop is recorded by the mark that follows it and nowhere else, so
+  run that mark only after their yes. An order about the session belongs to the handoff,
+  and a thought that rules nothing is written nowhere. A guess, yours or an agent's, is a
+  line `- [open] NN: text` (`NN` is the brief's number) in a file under
+  `sidekik/questions/` until the owner answers it, and then the same line as
+  `- [answered] NN: text → their answer`.
 - A call the owner might have made differently, and any shortcut taken on purpose, is
   told with what it means at the stop it belongs to, in that stop's own text (a fix's or
   a tweak's in its one-line report), and kept nowhere once told. Something you notice

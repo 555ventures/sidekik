@@ -37,9 +37,9 @@ talk to (a command-line tool, an API), cases to check for one that works on its 
 engine, a pipeline). Confirmed examples become the tests.
 
 Claude comes to the owner when a good partner would. Several of those moments stop the
-work until the owner answers; four are held by the scripts, each needing the owner's yes
-recorded as a decision: the brief list, each brief's prototype, a yes at the stack and
-going live (the marks below say exactly what each accepts). The build between them runs
+work until the owner answers; four are asked at the brief list, each brief's prototype,
+the stack and going live. The session runs the mark only after the owner's yes, and the
+mark is the record of it (the marks below say exactly what each requires). The build between them runs
 unattended and reports as it goes. A run of several agents is announced with its size, and
 is a stop when it covers a whole new product, is far larger than the last one agreed to,
 or raises an agent's model. A bug or a small tweak skips the stages: it is fixed directly
@@ -71,7 +71,6 @@ landed with the project's work. Scripts re-read it on every call.
 sidekik/
   state.json            written only by scripts
   briefs.md             - 01 booking-flow: Clients book in under a minute.
-  decisions.md          the owner's yes at each stop, read by the marks and by no builder; written only by decide.js
   questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
   handoff.md            where the work stands and what comes next, replaced whole each time
   stack.md              ## Picks, ## Your steps
@@ -90,7 +89,7 @@ sidekik/
 ```
 
 A PreToolUse hook (`hooks/hooks.json`, `scripts/guard.js`) refuses Write and Edit on
-`state.json` and `decisions.md`; edits made through the shell are not caught. The same
+`state.json`; edits made through the shell are not caught. The same
 hook reads every Agent call: one that starts a `sidekik:` agent on a model other than the
 one its file names is sent to the owner's permission prompt, or refused where the
 session's permission mode shows no prompt. `hooks.json` also runs `scripts/install.js` at
@@ -99,11 +98,9 @@ session start.
 Line formats, exactly:
 
 - Brief: `- NN slug: sentence` where `NN` is two digits and `slug` is `[a-z0-9-]+`.
-- Decision: `- YYYY-MM-DD NN: text`. `NN` is a brief number or `all`.
 - Question: `- [open] NN: text`, later `- [answered] NN: text → answer`, or
   `- [settled] NN: text → choice` when the partner settled it without the owner. `all` in place of
-  `NN` counts for every brief. `decide.js answer <NN|all> "<match>" "<answer>"` does the rewrite
-  and records the decision in one step.
+  `NN` counts for every brief. The line is rewritten by hand; no script does it.
 - Map row: `| area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension.
 - Lesson: `- NN: text` for a brief, `- fix: text` for a bug that escaped. No script reads
@@ -116,22 +113,22 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
-  "kitHash": null, "decisionsHash": null,
+  "kitHash": null,
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
-  "history": [ { "brief": "01", "mark": "built", "at": "2026-11-09T10:20:00.000Z", "decisions": 3 } ],
+  "history": [ { "brief": "01", "mark": "built", "at": "2026-11-09T10:20:00.000Z" } ],
   "briefs": { "01": "built" } }
 ```
 
-A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`) is kept as it is and ignored.
+A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`, `decisionsHash`, and the `decisions` count in old history entries) is kept as it is and ignored.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 
 | mark | requires |
 |---|---|
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; decisions file untampered; no open question for the brief; a decision for this brief or for `all` recorded after its last `prototyped` mark, so one yes covers every brief marked on it |
+| `confirmed` | `prototyped`; no open question for the brief |
 | `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
@@ -139,23 +136,20 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 
 Project marks:
 
-- `briefed`: `briefs.md` has brief lines and an `all` decision exists (the owner's yes on the list). It sets `briefed` true.
+- `briefed`: `briefs.md` has brief lines. It sets `briefed` true.
 - `stack`: every brief is at least `confirmed`; `stack.md` has `## Picks` and
-  `## Your steps`; `model.md` exists; an `all` decision is recorded after the latest
-  `confirmed` mark of any brief, or after the latest `reopen stack` when that is later; a
+  `## Your steps`; `model.md` exists; a
   check command is set and exits 0; the project has a commit and nothing outside
   `sidekik/` is uncommitted, so every brief gets a base.
   `init --existing "<check command>"` sets `stack` true at once. `reopen stack` (refused
   while `stack` is false) sets `stack` false and appends
-  `{ brief: null, mark: 'stack', reopen: true, at, decisions }`.
+  `{ brief: null, mark: 'stack', reopen: true, at }`.
 - `tidying`: records the current git commit as `tidyBase` (null outside a git repo).
 - `tidied`: `tidying` was marked after the last `tidied`, and the check command exits 0. It sets `tidied` to the number of `done` briefs, clears `tidyBase`, and prints the lines added and removed since `tidyBase` (when there is a base).
-- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done` and has a decision for it or for `all` recorded after its `done` mark, so one yes covers every brief the mark names. Adds them to `shipped`.
+- `shipped [NN ...]`: each named brief (default: every `done` brief not yet shipped) is `done`; when none is named, at least one `done` brief must be waiting. Adds them to `shipped`.
 
-Every mark attempt, brief or project, appends `{ brief, mark, at, decisions }` to
-`history` (`brief` is null for a project mark; `decisions` is how many decisions the file
-held at that moment, and an older entry without it counts as 0), with `refused: true` when
-it was refused.
+Every mark attempt, brief or project, appends `{ brief, mark, at }` to
+`history` (`brief` is null for a project mark), with `refused: true` when it was refused.
 
 `set-check "<command>"` refuses a command that contains `;`, saying to join the steps with
 `&&` so that a failing step fails the whole check.
@@ -257,27 +251,22 @@ named), and `Base: <sha>` or `Base: none`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
-`sidekik status`, `sidekik next`, `sidekik questions [NN]` and `sidekik check [freeze]`
-run the scripts below, and `sidekik state|decide <...>` passes the rest to that script.
+`sidekik status`, `sidekik next` and `sidekik check [freeze]`
+run the scripts below, and `sidekik state <...>` passes the rest to that script.
 `sidekik help` lists them; `--root <dir>` goes after the word. `sidekik status` clears the
 terminal first when its output is one; piped output is left plain.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
   `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,
-  `day() → YYYY-MM-DD` (local time), `rootFrom(argv) → { root, args }` (`args` without
+  `rootFrom(argv) → { root, args }` (`args` without
   `--root <dir>`).
 - `scripts/proto-check.js` exports `checkPrototype(root) → { ok, problems: [string] }`,
   `screensFor(root, brief) → [{ screen, status }]`, `freezeKit(root)`.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
   and how many examples it checked; `proto-check.js freeze`.
-- `scripts/decide.js` exports `verifyDecisions(root) → { ok, problems }`,
-  `decisionsFor(root, ...briefs) → [{ date, brief, text }]`, `openQuestions(root, brief?) → [string]`. CLI: `decide.js add <NN|all> "<text>"` (several at once: lines `NN: text` piped into
-  `decide.js add`, all or none), `decide.js answer <NN|all> "<match>" "<answer>"`, `decide.js verify`,
-  `decide.js list [NN]` (the lines recorded for a brief, its own and `all`, in file order; every line without `NN`),
-  `decide.js questions [NN]`, and `decide.js seal`, which accepts a hand edit the owner says is
-  theirs. `add` and `answer` refuse while an unaccepted hand edit is in the file.
-- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)` and
-  `nextStep(root, state)` for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
+  `nextStep(root, state)` and `openQuestions(root, brief?) → [string]` (the `- [open] NN: text`
+  lines under `questions/`, narrowed to the brief and `all` when a brief is given) for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reopen stack`,
   `set-check "<cmd>"`, `set-deps "<cmd>"`, `allow <name ...>`. A refused mark prints the unmet
   requirement in plain words and exits 1.

@@ -3,8 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { readState, writeState, read, rootFrom, NO_SETUP } = require('./lib/store');
-const { verifyDecisions, decisionsFor, openQuestions } = require('./decide');
+const { dir, readState, writeState, read, rootFrom, NO_SETUP } = require('./lib/store');
 const { checkPrototype, screensFor } = require('./proto-check');
 
 const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.claude-plugin', 'plugin.json'), 'utf8')).version;
@@ -12,8 +11,8 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '.claude-p
 const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 // An older state file may lack the later fields, each counted as its empty value, or carry fields
-// nothing reads any more (approved, approvals), which are kept as they are.
-const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null, decisionsHash: null,
+// nothing reads any more (approved, approvals, decisionsHash, the decisions count in history entries), which are kept as they are.
+const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null,
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
 const has = (text, re) => text !== null && re.test(text);
@@ -53,6 +52,24 @@ function sizeSince(root, base) {
   return size;
 }
 
+// Every open question line under sidekik/questions/, with its brief and text.
+function questionLines(root) {
+  const qdir = path.join(dir(root), 'questions');
+  if (!fs.existsSync(qdir)) return [];
+  return fs.readdirSync(qdir).filter((f) => f.endsWith('.md')).sort().flatMap((f) => (
+    fs.readFileSync(path.join(qdir, f), 'utf8').split('\n').flatMap((line) => {
+      const m = /^- \[open\] (\d\d|all): ?(.*)/.exec(line);
+      return m ? [{ line, brief: m[1], text: m[2] }] : [];
+    })));
+}
+
+// The open question lines, narrowed to one brief and `all` when a brief is given.
+function openQuestions(root, brief) {
+  return questionLines(root)
+    .filter((q) => brief === undefined || q.brief === brief || q.brief === 'all')
+    .map(({ line }) => line);
+}
+
 function readBriefs(root) {
   return (read(root, 'briefs.md') ?? '').split('\n')
     .map((line) => /^- (\d\d) ([a-z0-9-]+): (.+)$/.exec(line))
@@ -85,16 +102,6 @@ function doneWhenItems(note) {
   return (end === -1 ? after : after.slice(0, end)).filter((l) => l.startsWith('- ')).length;
 }
 
-// The decisions file only grows, so the owner's yes is a decision for `brief` or for all after the first `count` lines.
-const decidedAfter = (root, brief, count = 0) => decisionsFor(root).slice(count).some((d) => d.brief === brief || d.brief === 'all');
-
-// The owner's yes counts when it comes after the last mark it must follow, and one for all covers every brief marked on it.
-// A mark records how many decisions there were; an older entry without that counts as 0, so any decision counts.
-function decidedSince(root, state, brief, mark) {
-  const last = state.history.findLast((h) => h.brief === brief && h.mark === mark && !h.refused);
-  return decidedAfter(root, brief, last?.decisions);
-}
-
 const REQUIRES = {
   prototyped(root, state, b) {
     const stray = openQuestions(root).map((q) => /^- \[open\] (\d\d):/.exec(q)?.[1])
@@ -107,12 +114,8 @@ const REQUIRES = {
     return ok ? null : `The prototype check found ${problems.length} problem(s), the first being: ${problems[0]}`;
   },
   confirmed(root, state, b) {
-    const decisions = verifyDecisions(root);
-    if (!decisions.ok) return decisions.problems[0];
     const open = openQuestions(root, b.nn).length;
-    if (open) return `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.`;
-    return decidedSince(root, state, b.nn, 'prototyped') ? null
-      : `Brief ${b.nn} has no decision recording the owner's yes on its prototype. After their yes, run decide.js add all "<their words>" once for every brief it covers, and mark again.`;
+    return open ? `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.` : null;
   },
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';
@@ -171,9 +174,6 @@ function markBrief(root, state, nn, mark) {
 
 function markBriefed(root, state) {
   if (!readBriefs(root).length) return 'The briefs file has no brief lines yet.';
-  if (decisionsFor(root, 'all').length === 0) {
-    return 'The list has no decision recording the owner\'s yes on it. After their yes, run decide.js add all "<their words>" and mark again.';
-  }
   state.briefed = true;
   return null;
 }
@@ -186,11 +186,6 @@ function markStack(root, state) {
     return 'The stack file needs a "## Picks" section and a "## Your steps" section.';
   }
   if (read(root, 'model.md') === null) return 'The data design file sidekik/model.md does not exist yet.';
-  // The owner's yes must come after the last confirmed mark, or after the last reopen when that is later.
-  const since = state.history.findLast((h) => !h.refused && (h.mark === 'confirmed' || h.reopen));
-  if (!decidedAfter(root, 'all', since?.decisions)) {
-    return 'The stack has no decision recorded since the last prototype was confirmed or the stack was reopened. After their yes, run decide.js add all "<their picks>" and mark again.';
-  }
   const problem = checkProblem(root, state);
   if (problem) return problem;
   const loose = uncommitted(root);
@@ -226,9 +221,6 @@ function markShipped(root, state, named = []) {
   if (!briefs.length) return 'There is no finished brief waiting to be shipped.';
   const notDone = briefs.find((nn) => !done.includes(nn));
   if (notDone) return `Brief ${notDone} is not finished, so it cannot be marked live.`;
-  // The owner's yes to take briefs live is a decision for each or for all after its done mark, at the ship stop; an answer at the close stop is not it.
-  const unsaid = briefs.find((nn) => !decidedSince(root, state, nn, 'done'));
-  if (unsaid) return `There is no decision recording the owner's yes to take brief ${unsaid} live. After their yes, run decide.js add all "<their words>" once, and mark again naming the briefs it covers.`;
   state.shipped = [...new Set([...state.shipped, ...briefs])].sort();
   return null;
 }
@@ -302,13 +294,13 @@ function main(root, [cmd, a, b, ...more]) {
   } else if (cmd === 'reopen' && a === 'stack') {
     if (!state.stack) return 'The stack is not settled, so there is nothing to reopen.';
     state.stack = false;
-    state.history.push({ brief: null, mark: 'stack', reopen: true, at: new Date().toISOString(), decisions: decisionsFor(root).length });
+    state.history.push({ brief: null, mark: 'stack', reopen: true, at: new Date().toISOString() });
     writeState(root, state);
     console.log('The stack is open again.');
   } else if (cmd === 'mark' && a) {
     const markProject = { briefed: markBriefed, stack: markStack, tidying: markTidying, tidied: markTidied, shipped: markShipped }[a];
     const problem = markProject ? markProject(root, state, [b, ...more].filter(Boolean)) : markBrief(root, state, a, b);
-    const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), decisions: decisionsFor(root).length, ...(problem && { refused: true }) };
+    const entry = { brief: markProject ? null : a, mark: markProject ? a : b, at: new Date().toISOString(), ...(problem && { refused: true }) };
     // A refused attempt leaves the stored state as it was, apart from the history.
     writeState(root, { ...(problem ? stored : state), history: [...state.history, entry] });
     if (problem) return problem;
@@ -332,4 +324,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, rank, nextStep };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep, openQuestions };

@@ -7,10 +7,10 @@ const { spawnSync } = require('child_process');
 const script = path.join(__dirname, '..', 'plugin', 'scripts', 'guard.js');
 const guard = (input) => spawnSync(process.execPath, [script], { input, encoding: 'utf8' });
 
-test('the guard refuses a write to a file only the scripts may write', () => {
-  const r = guard(JSON.stringify({ tool_input: { file_path: '/work/app/sidekik/decisions.md' } }));
+test('the guard refuses a write to the file only the scripts may write', () => {
+  const r = guard(JSON.stringify({ tool_input: { file_path: '/work/app/sidekik/state.json' } }));
   assert.equal(r.status, 2);
-  assert.match(r.stderr, /^sidekik\/decisions\.md is written only by the plugin's scripts\. Run the script instead of editing the file\.\n$/);
+  assert.match(r.stderr, /^sidekik\/state\.json is written only by the plugin's scripts\. Run the script instead of editing the file\.\n$/);
 });
 
 const call = (tool, input, mode) => guard(JSON.stringify({

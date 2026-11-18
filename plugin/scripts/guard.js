@@ -1,11 +1,11 @@
 'use strict';
-// A PreToolUse hook with two jobs. One: refuses a Write or Edit on the two files only the
-// scripts may write. Two: puts to the owner an Agent call that starts a sidekik: agent on
-// a model other than the one its file names, or refuses it where no prompt is shown.
+// A PreToolUse hook with two jobs. One: refuses a Write or Edit on sidekik/state.json, the one
+// file only the scripts may write. Two: puts to the owner an Agent call that starts a sidekik: agent
+// on a model other than the one its file names, or refuses it where no prompt is shown.
 const fs = require('fs');
 const path = require('path');
 
-const GUARDED = ['/sidekik/state.json', '/sidekik/decisions.md'];
+const GUARDED = ['/sidekik/state.json'];
 const ASKING_MODES = ['default', 'plan', 'acceptEdits', 'auto'];
 
 // The model named in the frontmatter of the plugin's agent file, or null.

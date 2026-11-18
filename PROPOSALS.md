@@ -450,3 +450,33 @@ redo "on Opus" is a redo by a maker. Makers, reviewers, walkers and scouts canno
 agents. For the owner: a prompt each time a partner asks for a stronger model, and none
 otherwise. Not done: a turn limit on an agent (it stops work halfway and is a number the
 owner would override) and a lower compaction window for makers (not yet tried in use).
+
+## The second count: the mark is the record of a yes
+
+**Tidy of 2026-11-18, approved by the owner that day, applied from 0.22.0, one version for
+each thing taken out so each can be undone alone.** Readers counted six projects
+(sumglass, sumaro, poolyst, praxtrade, and nikoniko-hub and shop-bltr on the remote
+machine) for the three days since the 0.18.3 tidy. What earned its cost again and stays
+untouched: the reviewer (about 200 proven bugs in 64 runs, nearly all fixed, and its
+second look found 59 of them), the walkers (about 115 findings in 14 runs), and the owner
+looking at a drawn or running thing, which is where almost every change of theirs came
+from: unprompted, not at a stop.
+
+- 0.22.0, the decision log. `decide.js`, the sealed `sidekik/decisions.md`, its hash in
+  the state file and the yes that four marks read are gone. A mark is run after the
+  owner's yes and is its record; a question the owner answered is its own line rewritten
+  as `[answered]`. Counted: 235 lines were logged in the six projects, 22 of them one yes
+  copied onto each brief it covered and about 60 housekeeping or thinking aloud; no mark
+  in the four local projects was refused for a missing yes, and shop-bltr's five such
+  refusals each rejected a yes the owner had already given, logged before the mark
+  instead of after it ("I keep saying yes! How many times do you need to confirm same
+  questions over and over"). In sumglass any of six unrelated lines for `all` would have
+  opened the go-live gate of brief 33. In praxtrade the log drew all three of its
+  feedback lines, four complaints from the owner and 42 commits that held only a new
+  hash.
+
+  What the owner gives up, said plainly: no script refuses a mark any more because no
+  yes was written down. Since 0.18.0 that refusal proved only that the owner had said
+  something after the mark, not what; in two counts it never caught a session passing an
+  owner moment. The stops themselves do not change: the brief list, the look, the stack
+  and going live are asked as before, and going live still ends the turn first.

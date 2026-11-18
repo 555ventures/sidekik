@@ -2,8 +2,7 @@
 // The progress screen, derived from the same functions as state.js next so the two agree.
 const path = require('path');
 const { readState, read, rootFrom } = require('./lib/store');
-const { openQuestions } = require('./decide');
-const { MARKS, fresh, readBriefs, rank, nextStep } = require('./state');
+const { MARKS, fresh, readBriefs, rank, nextStep, openQuestions } = require('./state');
 const { screensFor } = require('./proto-check');
 
 // Each state's icon and label on the roadmap. Resting states collapse into runs and carry no bar.

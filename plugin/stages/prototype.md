@@ -89,8 +89,9 @@ that stage's list.
 ## Check
 
 What the check makes lives under `shots/` (the screenshots, the measuring script and the
-generator of the flows page), and its scripts run again before every owner stop that
-redraws screens, so its pages are rebuilt, never patched.
+generator of the flows page). A picture is taken for someone to look at: before an owner
+stop the scripts measure and retake the examples that stop shows and no others, and the
+flows page is built again by its generator, never patched.
 
 1. A scout uses the real thing: it clicks every screen in a browser at each width the kit
    names (serving the folder locally if it refuses file addresses), reads the exchanges,

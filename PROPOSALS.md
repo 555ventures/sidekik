@@ -486,3 +486,16 @@ from: unprompted, not at a stop.
   by a new freeze, 15 freezes, no catch. In poolyst a maker changed the kit and froze it
   again itself; in shop-bltr a second kit beside the old one during a redesign met ten
   refusals. The kit still changes only on the partner's decision, by the guide alone.
+- 0.22.2, retaking every picture before a stop. prototype.md said the check's scripts
+  "run again before every owner stop that redraws screens, so its pages are rebuilt,
+  never patched", and the projects' scripts could only retake them all. Counted in the
+  three days: sumglass 3,257 picture changes and 710 MB of git objects, praxtrade 3,420
+  and a 757 MB repository, shop-bltr 712 pictures and 1,629 picture reads by agents. Of
+  sumglass's 1,339 pictures retaken after one icon ruling, 1,025 differed in under 0.1%
+  of their pixels, and the owner looked at composed before-and-after sheets, never at
+  the retaken set. Now a picture is taken for someone to look at: before a stop the
+  scripts measure and retake the examples that stop shows and no others, and a kit
+  piece changed the same way in many places is shown once with its count, as a sentence
+  already was. The flows page is still built by its generator. For the owner: the same
+  stop, without the wait. Not done: keeping the pictures out of git (a new practice,
+  which no project has tried).

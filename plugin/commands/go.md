@@ -65,23 +65,21 @@ project root or with `--root <dir>`.
    window. When the version `next` prints beside the stage file has moved, read this file
    and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
    with only where things stand, what comes next, what is still running and the calls
-   not yet told to the owner. It keeps no history and nothing meant to last: what later work must
-   know goes into the file it is about (`CLAUDE.md`, `sidekik/stack.md`, the prototype's
-   `INDEX.md`, the build note of the brief that needs it). Send any `[open]` feedback
-   lines of this stretch not yet sent. When the work is
-   committed and nothing of yours is running (no agent, no background task, no server),
-   tell the owner in one line that it is safe to `/clear` and run `/sidekik:go`; say
-   nothing about clearing otherwise.
+   not yet told to the owner. It keeps no history and nothing meant to last: what later
+   work must know goes into the file it is about (`CLAUDE.md`, `sidekik/stack.md`, the
+   prototype's `INDEX.md`, the build note of the brief that needs it). Send any `[open]`
+   feedback lines of this stretch not yet sent. When the work is committed and nothing
+   of yours is running (no agent, no background task, no server), tell the owner in one
+   line that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing
+   otherwise.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
-live: makers never run git, every commit is pushed, and on a product with a check command
-every commit passes it first, whatever the stage; a commit of notes alone (`sidekik/`
-outside `prototype/`) runs only the steps of the check that read those files. A process
-you, an agent or a test runner started outlives its starter and is tracked by no one:
-after each agent reports and before your turn ends, list what still runs from this
-project by command line and working directory, never by port, and end each by pid until
-it is gone, except one the owner needs for a stop: the stop and `handoff.md` name its
-address and how to stop it.
+live: makers never run git, every commit is pushed, and a commit that changes the product
+passes the project's check first. A process you, an agent or a test runner started
+outlives its starter and is tracked by no one: before your turn ends, list what still
+runs from this project by command line and working directory, never by port, and end
+each by pid until it is gone, except one the owner needs for a stop: the stop and
+`handoff.md` name its address and how to stop it.
 
 When the plugin itself gets in your way (a refusal that is wrong, a dead end, a guide that
 can be read two ways or does not fit this product, work it demanded that produced nothing),

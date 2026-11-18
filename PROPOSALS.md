@@ -508,3 +508,14 @@ from: unprompted, not at a stop.
   weekly limit resets on 20 Nov") stayed 33 hours and put 31 makers on Opus. It is now
   replaced before a stop only, and holds nothing meant to last: what later work must know goes into
   the file it is about. Poolyst asked for exactly that on 2026-11-15.
+- 0.22.4, two chores done for every commit and every agent. The check command before
+  every commit, whatever it changed: the partner ran it 93 times in sumglass, sumaro and
+  poolyst with no real failure (two were one flaky test), because the built and reviewed
+  marks and the makers had already run it; in praxtrade the same sentence was read as
+  "every commit passes the proof", a suite of ten minutes that staged every picture. It
+  now runs before a commit that changes the product; 0.18.5's exception for a commit of
+  notes alone is gone with it. And listing what still runs after each agent reports:
+  about 760 listings in the four local projects ended about a dozen real leftovers, none
+  in sumglass or poolyst since the rule began, and in the remote projects a wake that did
+  nothing else cost the partner's whole context each time. The partner now lists once,
+  before its turn ends; each agent still ends what it started.

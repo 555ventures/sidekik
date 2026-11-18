@@ -79,7 +79,7 @@ sidekik/
   feedback.md           where the plugin itself got in the way:  - [open] stage: text
   prototype/
     INDEX.md            what this is and the rules for anyone adding to it
-    kit/                what every example shares, frozen once the foundation is done
+    kit/                what every example shares
     <area>/<example>    a screen (.html), an exchange or a case (any other file type)
     map/<area>.md       | example | brief | status | purpose | links |
     sample/             shared and per-area sample data, neither kit nor example
@@ -113,7 +113,6 @@ Line formats, exactly:
 
 ```json
 { "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
-  "kitHash": null,
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
@@ -121,7 +120,7 @@ Line formats, exactly:
   "briefs": { "01": "built" } }
 ```
 
-A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`, `decisionsHash`, and the `decisions` count in old history entries) is kept as it is and ignored.
+A missing field in an older state file counts as its empty value; a field no script reads any more (`approved`, `approvals`, `decisionsHash`, `kitHash`, and the `decisions` count in old history entries) is kept as it is and ignored.
 
 A brief's value is its last mark. Marks in order, and what each one requires:
 
@@ -251,19 +250,19 @@ named), and `Base: <sha>` or `Base: none`.
 Scripts are CommonJS, Node 22+, no dependencies, and take `--root <dir>` (default: the
 current directory) for the project root that holds `sidekik/`.
 
-`sidekik status`, `sidekik next` and `sidekik check [freeze]`
+`sidekik status`, `sidekik next` and `sidekik check`
 run the scripts below, and `sidekik state <...>` passes the rest to that script.
 `sidekik help` lists them; `--root <dir>` goes after the word. `sidekik status` clears the
 terminal first when its output is one; piped output is left plain.
 
 - `scripts/lib/store.js` exports `dir(root)`, `readState(root)`, `writeState(root, state)`,
-  `read(root, rel) → text or null` (a file under `sidekik/`), `sha(text)`,
+  `read(root, rel) → text or null` (a file under `sidekik/`),
   `rootFrom(argv) → { root, args }` (`args` without
   `--root <dir>`).
 - `scripts/proto-check.js` exports `checkPrototype(root) → { ok, problems: [string] }`,
-  `screensFor(root, brief) → [{ screen, status }]`, `freezeKit(root)`.
+  `screensFor(root, brief) → [{ screen, status }]`.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
-  and how many examples it checked; `proto-check.js freeze`.
+  and how many examples it checked.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
   `nextStep(root, state)` and `openQuestions(root, brief?) → [string]` (the `- [open] NN: text`
   lines under `questions/`, narrowed to the brief and `all` when a brief is given) for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
@@ -279,8 +278,7 @@ terminal first when its output is one; piped output is left plain.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
 `kit/`, `map/`, `shots/` and `sample/` folders. It fails on: a file with no map row (the
-message shows what a map row looks like); a `done` map row with no file; kit files that differ from the
-frozen hash; a kit stylesheet with an `@import` or a `url(` that points at `http`. For
+message shows what a map row looks like); a `done` map row with no file; a kit stylesheet with an `@import` or a `url(` that points at `http`. For
 `.html` files it also fails on: a class the kit css does not define; a `<style>` block; an
 inline `style` that sets anything but `top`, `left`, `width`, `height`, `grid-*` or a
 `--custom-property`; `alert(`, `confirm(` or `prompt(`; a stylesheet or script loaded from

@@ -6,7 +6,7 @@ const { spawnSync } = require('child_process');
 
 const USAGE = `sidekik status             where the work stands
 sidekik next               what comes next
-sidekik check [freeze]     check the prototype
+sidekik check              check the prototype
 sidekik state <...>        run that script with the rest
 Every form takes --root <dir> (default: the current directory).`;
 const [word, ...rest] = process.argv.slice(2);

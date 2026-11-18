@@ -480,3 +480,9 @@ from: unprompted, not at a stop.
   something after the mark, not what; in two counts it never caught a session passing an
   owner moment. The stops themselves do not change: the brief list, the look, the stack
   and going live are asked as before, and going live still ends the turn first.
+- 0.22.1, the kit freeze. `proto-check.js freeze`, the kit's hash in the state file and
+  the refusal for a kit changed since it was frozen are gone. Sumglass ran the check 56
+  times in the three days: 18 refusals for a changed kit, each one expected and followed
+  by a new freeze, 15 freezes, no catch. In poolyst a maker changed the kit and froze it
+  again itself; in shop-bltr a second kit beside the old one during a redesign met ten
+  refusals. The kit still changes only on the partner's decision, by the guide alone.

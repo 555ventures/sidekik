@@ -2,7 +2,7 @@
 // Checks the prototype in sidekik/prototype so parallel example authors stay on one kit and one map.
 const fs = require('fs');
 const path = require('path');
-const { dir, readState, writeState, sha, rootFrom } = require('./lib/store');
+const { dir, rootFrom } = require('./lib/store');
 
 const protoDir = (root) => path.join(dir(root), 'prototype');
 const kitDir = (root) => path.join(protoDir(root), 'kit');
@@ -19,12 +19,6 @@ function walk(base, sub = '') {
 }
 
 const exampleFiles = (root) => walk(protoDir(root)).filter((f) => f !== 'INDEX.md' && !/^(kit|map|shots|sample)\//.test(f));
-
-function kitHash(root) {
-  const kit = kitDir(root);
-  if (!fs.existsSync(kit)) return sha('');
-  return sha(walk(kit).map((f) => `${f}\0${fs.readFileSync(path.join(kit, f), 'utf8')}\0`).join(''));
-}
 
 function mapRows(root) {
   const mapDir = path.join(protoDir(root), 'map');
@@ -142,29 +136,15 @@ function checkPrototype(root) {
   for (const f of examples) {
     if (!mapped.has(f)) problems.push(`${f} is not listed in any map file. A map row looks like: | area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`);
   }
-
-  const state = readState(root);
-  if (state && state.kitHash && state.kitHash !== kitHash(root)) {
-    problems.push('The kit has changed since it was frozen: undo the change, or run proto-check.js freeze if you decided it.');
-  }
   return { ok: problems.length === 0, problems };
 }
 
-function freezeKit(root) {
-  writeState(root, { ...readState(root), kitHash: kitHash(root) });
-}
-
 if (require.main === module) {
-  const { root, args } = rootFrom(process.argv);
-  if (args.includes('freeze')) {
-    freezeKit(root);
-    console.log('The kit is frozen.');
-  } else {
-    const { ok, problems } = checkPrototype(root);
-    for (const p of problems) console.log(p);
-    if (ok) console.log(`The prototype check passed on all ${exampleFiles(root).length} example(s).`);
-    process.exit(ok ? 0 : 1);
-  }
+  const { root } = rootFrom(process.argv);
+  const { ok, problems } = checkPrototype(root);
+  for (const p of problems) console.log(p);
+  if (ok) console.log(`The prototype check passed on all ${exampleFiles(root).length} example(s).`);
+  process.exit(ok ? 0 : 1);
 }
 
-module.exports = { checkPrototype, screensFor, freezeKit };
+module.exports = { checkPrototype, screensFor };

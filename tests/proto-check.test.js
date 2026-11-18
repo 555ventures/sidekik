@@ -5,8 +5,7 @@ const fs = require('fs');
 const os = require('os');
 const path = require('path');
 const { spawnSync } = require('child_process');
-const { checkPrototype, screensFor, freezeKit } = require('../plugin/scripts/proto-check');
-const { readState, writeState } = require('../plugin/scripts/lib/store');
+const { checkPrototype, screensFor } = require('../plugin/scripts/proto-check');
 
 const PAGE = (body) => `<!doctype html><html><head>
 <link rel="stylesheet" href="../kit/kit.css"><script src="../kit/kit.js"></script></head>
@@ -112,24 +111,7 @@ test('an example of any file type with no map row fails', () => {
   fails(project({ 'bookings/orphan.json': '{}' }), /^bookings\/orphan\.json is not listed in any map file\. A map row looks like: \| area\/file\.ext \| NN \| planned or done \| purpose \| area\/other\.ext, \.\.\. \|$/);
 });
 
-test('sample data beside the examples needs no map row and is not part of the kit', () => {
+test('sample data beside the examples needs no map row', () => {
   const root = project({ 'sample/bookings.js': 'module.exports = [];\n' });
   assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
-  writeState(root, { check: 'npm test', kitHash: null });
-  freezeKit(root);
-  fs.appendFileSync(path.join(root, 'sidekik', 'prototype', 'sample', 'bookings.js'), 'module.exports.push(1);\n');
-  assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
-});
-
-test('freezing records the kit hash and a later kit change fails', () => {
-  const root = project();
-  writeState(root, { check: 'npm test', kitHash: null });
-  freezeKit(root);
-  const state = readState(root);
-  assert.match(state.kitHash, /^[0-9a-f]{64}$/);
-  assert.strictEqual(state.check, 'npm test');
-  fs.writeFileSync(path.join(root, 'sidekik', 'prototype', 'kit', '.DS_Store'), 'finder');
-  assert.strictEqual(checkPrototype(root).ok, true);
-  fs.writeFileSync(path.join(root, 'sidekik', 'prototype', 'kit', 'kit.js'), 'changed();\n');
-  fails(root, /kit has changed since it was frozen/);
 });

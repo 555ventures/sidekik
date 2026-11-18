@@ -2,7 +2,6 @@
 // The one reader and writer of sidekik/state.json, and the reader of the other files in sidekik/.
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 
 const dir = (root) => path.join(root, 'sidekik');
 const file = (root) => path.join(dir(root), 'state.json');
@@ -29,8 +28,6 @@ function read(root, rel) {
   return fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null;
 }
 
-const sha = (text) => crypto.createHash('sha256').update(text).digest('hex');
-
 // `--root <dir>` from argv, else the current directory, and the arguments without it; no folder after it stops the script.
 function rootFrom(argv) {
   const args = argv.slice(2);
@@ -48,4 +45,4 @@ function rootFrom(argv) {
 // Said by every script that needs the project set up first.
 const NO_SETUP = 'This project has no sidekik setup yet; run init first.';
 
-module.exports = { NO_SETUP, dir, readState, writeState, read, sha, rootFrom };
+module.exports = { NO_SETUP, dir, readState, writeState, read, rootFrom };

@@ -35,14 +35,14 @@ nothing. Use what works, and what the owner gave you.
   only shows a screen on a desktop is not a kit class. Otherwise the shared names and
   formats.
 - `sample/`: the people, figures and rows the examples draw from: `shared.*` for everyone,
-  `<area>.*` for what one area alone needs; outside the kit, so the freeze does not stop
-  them, and outside the map. The kit carries the small script that prints rows as markup.
+  `<area>.*` for what one area alone needs; outside the kit and outside the map. The kit
+  carries the small script that prints rows as markup.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`: what this is and its rules.
 
 Then the heart of the product as two or three candidates under `shots/candidates/`, which
-the checker and the freeze ignore, in the kit's tokens. When the heart is a conversation
+the checker ignores, in the kit's tokens. When the heart is a conversation
 with a model or a live agent, which scripted exchanges cannot show, one candidate is a
 thin working piece on the real model. The moment they exist, hand them to the owner as
 images or as a thing to try: one line with what differs and what to look at, and end your
@@ -52,9 +52,8 @@ there, kept and mapped like any other example. Variants of one screen early are 
 variants of a prototype are waste. Then one finished reference example for each other area
 (a part of the product a user would name), by makers against the kit as it stands, each in
 the product's primary language, with any other language shown by one example later. Look
-at them all yourself in a browser, settle their kit requests, and run
-`proto-check.js freeze`. After that the kit changes only on your decision, and you freeze
-again.
+at them all yourself in a browser and settle their kit requests. After that the kit
+changes only on your decision.
 
 For an existing product the kit is what the product really uses, and each example a
 brief changes is redrawn in place; the product's tests that read it are pointed at a copy

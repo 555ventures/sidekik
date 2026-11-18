@@ -23,7 +23,7 @@ const proto = (status, extra = '') => ({
 function project(state = {}, files = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sidekik-state-'));
   const all = { 'briefs.md': `- ${B1}\n- ${B2}\n`, ...files };
-  if (state) all['state.json'] = JSON.stringify({ check: null, stack: false, kitHash: null, briefs: {}, ...state });
+  if (state) all['state.json'] = JSON.stringify({ check: null, stack: false, briefs: {}, ...state });
   for (const [rel, text] of Object.entries(all).filter(([, t]) => t !== null)) {
     fs.mkdirSync(path.dirname(path.join(root, 'sidekik', rel)), { recursive: true });
     fs.writeFileSync(path.join(root, 'sidekik', rel), text);
@@ -98,7 +98,7 @@ test('mark briefed needs brief lines', () => {
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);
-  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false, kitHash: null,
+  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false,
     bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
   p.run('set-check', 'npm test');
   assert.match(p.run('init', '--existing', 'make test').out, /nothing was changed/);

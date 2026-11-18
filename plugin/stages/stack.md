@@ -7,10 +7,10 @@ what they chose. Never read the owner's other repositories to guess a stack.
 1. **Criteria.** One owner batch before anything is researched: the platforms now and
    later (web, native mobile, desktop), who else will call the backend, where the users
    are and how many, the budget per month, who will write and maintain the code (a
-   language counts by how well that writer writes and checks it), and the development
-   machine as it is (which databases, object stores and mail catchers already run, in
-   which containers and on which ports; how env files and secrets are kept), which serves
-   only to reuse local services. In the same batch, the decisions this product needs,
+   language counts by how well that writer writes and checks it). A scout reads the
+   development machine as it is (which databases, object stores and mail catchers
+   already run, in which containers and on which ports; how env files and secrets are
+   kept), which serves only to reuse local services. In the same batch, the decisions this product needs,
    named from the confirmed examples and the questions the prototype settled as stack
    decisions: the architecture, the framework, the main libraries of each part, the data
    design, the UI toolkit the kit becomes and whether it reaches a native app, the
@@ -51,8 +51,8 @@ what they chose. Never read the owner's other repositories to guess a stack.
    live test, never the value. Each step that needs a key tells the owner to run it; the
    report tells you which steps are done.
 8. **Try the risky pieces** before the skeleton: where a decision or a confirmed example
-   depends on what an outside service can do, run a small real test against it and show
-   the result. One that needs a key waits for its step; write it, or "not tried" and which
+   depends on what an outside service can do, a maker runs a small real test against it
+   and you show the result. One that needs a key waits for its step; write it, or "not tried" and which
    briefs wait on it, into `sidekik/stack.md`.
 9. **Best practice for the picks.** From the documentation read in step 2 (the patterns it
    advises, what its current version changed, its known traps), write what a builder must
@@ -71,6 +71,4 @@ what they chose. Never read the owner's other repositories to guess a stack.
    exposes. Put the layout and all commands in `CLAUDE.md`.
 
 Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and
-`## Your steps`. Run `state.js set-check "<command>"`, then
-`state.js set-deps "<a command that prints one library name per line>"`. Then
-`state.js mark stack`.
+`## Your steps`. Run `state.js set-check "<command>"`, then `state.js mark stack`.

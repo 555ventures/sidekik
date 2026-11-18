@@ -41,10 +41,9 @@ function project(state = {}, files = {}) {
     assert.match(r.out, pattern);
     assert.deepEqual({ ...read(), history: null }, { ...before, history: null });
   };
-  const libs = (...names) => fs.writeFileSync(path.join(root, 'libs.txt'), names.map((n) => `${n}\n`).join(''));
   const write = (rel, text) => fs.writeFileSync(path.join(root, rel), text);
   const git = (...args) => spawnSync('git', ['-C', root, '-c', 'user.name=test', '-c', 'user.email=test@example.com', ...args], { encoding: 'utf8' }).stdout.trim();
-  return { root, run, read, refused, libs, write, git };
+  return { root, run, read, refused, write, git };
 }
 
 // The state files here lack the later fields, as an older state file would.
@@ -98,7 +97,7 @@ test('mark briefed needs brief lines', () => {
 test('init writes a fresh state once, and --existing settles the stack', () => {
   const p = project(null);
   assert.equal(p.run('init').code, 0);
-  assert.deepEqual(p.read(), { check: null, depsCommand: null, deps: null, stack: false, briefed: false,
+  assert.deepEqual(p.read(), { check: null, stack: false, briefed: false,
     bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
   p.run('set-check', 'npm test');
   assert.match(p.run('init', '--existing', 'make test').out, /nothing was changed/);
@@ -106,7 +105,7 @@ test('init writes a fresh state once, and --existing settles the stack', () => {
 
   const existing = project(null);
   existing.run('init', '--existing', 'make test');
-  assert.deepEqual([existing.read().stack, existing.read().check, existing.read().deps], [true, 'make test', null]);
+  assert.deepEqual([existing.read().stack, existing.read().check], [true, 'make test']);
 
   const joined = project(null);
   assert.match(joined.run('init', '--existing', 'lint; test').out, /cannot contain ";"/);
@@ -217,20 +216,8 @@ test('noted records the git commit as the base, and built refuses an empty chang
   assert.equal(p.run('mark', '02', 'built').code, 0);
 });
 
-test('built needs every library the library command lists agreed and a check command that passes when run from the project root', () => {
+test('built needs a check command that passes when run from the project root', () => {
   const p = project({ stack: true, briefs: { '01': 'noted' } });
-  p.refused(['set-deps', 'exit 1'], /did not run/);
-  p.libs('react');
-  assert.equal(p.run('set-deps', 'cat libs.txt').code, 0);
-  assert.deepEqual([p.read().depsCommand, p.read().deps], ['cat libs.txt', ['react']]);
-  p.libs('react', 'dayjs');
-  p.refused(['mark', '01', 'built'], /the library the owner has not agreed to: dayjs\. .* run state\.js allow dayjs\./);
-  assert.equal(p.run('allow', 'dayjs').code, 0);
-  assert.deepEqual(p.read().deps, ['react', 'dayjs']);
-  p.libs('react', 'dayjs', 'zod', 'clsx');
-  p.refused(['mark', '01', 'built'], /libraries the owner has not agreed to: zod, clsx\. .* run state\.js allow zod clsx\./);
-  assert.match(p.run('allow', 'zod', 'clsx').out, /The libraries zod, clsx are now allowed\./);
-  assert.deepEqual(p.read().deps, ['react', 'dayjs', 'zod', 'clsx']);
   p.refused(['mark', '01', 'built'], /No check command/);
   p.refused(['set-check', 'npm test; npm run lint'], /cannot contain ";"\. Join the steps with &&/);
   p.run('set-check', 'exit 1');
@@ -285,18 +272,6 @@ test('the stack mark needs confirmed briefs, a complete stack file, a data desig
   p.git('commit', '-qm', 'more');
   assert.equal(p.run('mark', 'stack').code, 0);
   assert.equal(p.read().stack, true);
-});
-
-test('the stack mark records the library command\'s output as the deps', () => {
-  const p = project({ check: IN_ROOT, briefs: { '01': 'confirmed', '02': 'confirmed' } }, { 'stack.md': '## Picks\n- Node\n\n## Your steps\n- None.\n', 'model.md': '# Data\n' });
-  p.git('init', '-q');
-  p.write('app.js', 'x\n');
-  p.git('add', 'app.js');
-  p.git('commit', '-qm', 'skeleton');
-  assert.equal(p.run('set-deps', 'printf "react\\ndayjs\\n"').code, 0);
-  p.run('allow', 'old');
-  assert.equal(p.run('mark', 'stack').code, 0);
-  assert.deepEqual(p.read().deps, ['react', 'dayjs']);
 });
 
 test('reopen stack unsettles a settled stack, and it can be marked again', () => {

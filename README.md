@@ -8,6 +8,10 @@ want through a prototype, and Claude works with you in one of two roles:
 - **Technical Partner** while it is built: it owns the agent team and the health of the
   code, builds what you decided, talks to you in plain words, and rarely needs you.
 
+In both it leads the way a senior partner would: answerable for the result and not for
+the steps, held to what the best team would ship today and looking that up instead of
+trusting its memory, with agents doing the work.
+
 Install, in Claude Code:
 
 ```
@@ -27,9 +31,10 @@ first, in plain English, with a work queue at the end: `/plugin install style@si
 idea → briefs → prototype → look → stack → build note → build → review → close → ship
 ```
 
-One pattern runs through all of it, for the prototype and for the product alike: one hand
-builds the shared foundation, independent pieces are built in parallel, a machine checks
-every piece, fresh eyes check the result once, and one lesson changes what happens next.
+One pattern runs through all of it, for the prototype and for the product alike: the
+approach is settled first, one hand builds the shared foundation, independent pieces are
+built at the same time, a machine checks every piece, fresh eyes check the result once, and
+one lesson changes what happens next.
 
 A prototype is a set of concrete examples of the product in use, in the form the product
 is judged by: screens to click for a product you look at, exchanges to read for one you
@@ -112,7 +117,7 @@ Line formats, exactly:
 `state.json`:
 
 ```json
-{ "check": "npm test", "depsCommand": null, "deps": null, "stack": false, "briefed": false,
+{ "check": "npm test", "stack": false, "briefed": false,
   "bases": { "01": "<git sha or null>" },
   "sizes": { "01": { "code": 310, "tests": 60, "removed": 12, "testsRemoved": 0 } },
   "tidied": 0, "tidyBase": null, "shipped": [],
@@ -129,7 +134,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 | `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
 | `confirmed` | `prototyped`; no open question for the brief |
 | `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
-| `built` | `noted`; the library command lists no name missing from `deps`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
+| `built` | `noted`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |
 | `done` | `reviewed` |
 
@@ -152,14 +157,6 @@ Every mark attempt, brief or project, appends `{ brief, mark, at }` to
 
 `set-check "<command>"` refuses a command that contains `;`, saying to join the steps with
 `&&` so that a failing step fails the whole check.
-
-Libraries, for any language: `set-deps "<command>"` stores a project command that prints one
-library name per line, runs it, and records its output as `deps`. `allow <name ...>` adds one
-or more, after the owner's yes. `built` runs the command again and refuses any name that is
-not in `deps`, naming every missing library and the `allow` command for them. `mark stack`
-runs the command and records its output as `deps` when one is set: the skeleton's libraries
-are the owner's picks at that mark. With no library command set, this requirement is
-skipped.
 
 A brief's size is what was committed since its base, from `git diff --numstat <base> HEAD`:
 lines added, split into tests
@@ -267,7 +264,7 @@ terminal first when its output is one; piped output is left plain.
   `nextStep(root, state)` and `openQuestions(root, brief?) → [string]` (the `- [open] NN: text`
   lines under `questions/`, narrowed to the brief and `all` when a brief is given) for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reopen stack`,
-  `set-check "<cmd>"`, `set-deps "<cmd>"`, `allow <name ...>`. A refused mark prints the unmet
+  `set-check "<cmd>"`. A refused mark prints the unmet
   requirement in plain words and exits 1.
 - `scripts/status.js` CLI: no arguments but `--root`.
 - `scripts/install.js` is the SessionStart hook: it writes the `sidekik` command (a `sh`

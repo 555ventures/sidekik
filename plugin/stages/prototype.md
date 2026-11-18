@@ -25,8 +25,11 @@ session with no memory can extend it.
 
 ## Foundation
 
-While the foundation is built, a scout checks how three good current products handle the
-same thing. Use what works, and what the owner gave you.
+Before the kit, scouts bring how the best current products of this kind look, read and
+behave this year: their screens at the widths the product is used at and their ways
+through the same tasks, each with its source and date. The kit and the candidates are
+judged against those and against what the owner gave you, and one that would look dated
+beside them is not shown.
 
 - `kit/`: for screens, one stylesheet with the tokens and every shared class, naming the
   widths the product is used at (phone, tablet, laptop, as the product picture says), and
@@ -40,15 +43,16 @@ same thing. Use what works, and what the owner gave you.
   `| area/file.ext | NN | planned | purpose | area/other.ext |`.
 - `INDEX.md`: what this is and its rules.
 
-Then the heart of the product as two or three candidates under `shots/candidates/`, which
-the checker ignores, in the kit's tokens. When the heart is a conversation
+Then the heart of the product as two or three candidates, one maker each at the same
+time, under `shots/candidates/`, which the checker ignores, in the kit's tokens. When the heart is a conversation
 with a model or a live agent, which scripted exchanges cannot show, one candidate is a
 thin working piece on the real model. The moment they exist, hand them to the owner as
 images or as a thing to try: one line with what differs and what to look at, and end your
 turn. Their pick becomes the one reference example and the kit follows it. A working piece
 they picked is where every brief is tried from then on: a brief's examples are its tries
-there, kept and mapped like any other example. Variants of one screen early are cheap;
-variants of a prototype are waste. Then one finished reference example for each other area
+there, kept and mapped like any other example, and it is product code from that day: the
+Technical Partner's duties apply to it whatever the stage. Variants of one screen early
+are cheap; variants of a prototype are waste. Then one finished reference example for each other area
 (a part of the product a user would name), by makers against the kit as it stands, each in
 the product's primary language, with any other language shown by one example later. Look
 at them all yourself in a browser and settle their kit requests. After that the kit
@@ -63,15 +67,14 @@ more foundation.
 
 ## Examples
 
-A new product's remaining examples are the largest run of agents it will see, so the
-pass starts at a stop: tell the owner how many examples and makers the full pass takes
-and what the reference examples cost, and offer the thin pass first. In the thin pass
+Choose how much of a new product's remaining examples to draw now, and tell the owner
+which pass and why. The full pass draws every brief. In the thin pass
 every brief is mapped to the reference example that shows it, only the first slice to be
 built (one area's briefs, or fewer) is drawn in full, and each later slice gets its
 examples before its build note, shown to the owner then like any change to approved
-examples; its risk is a need the stack must meet that is found late. On their yes, makers
-draw what was chosen, one per area, a large area split by flow so that no maker draws
-more than a few briefs. A maker writes what the kit lacks in
+examples; its risk is a need the stack must meet that is found late. Makers draw what
+you chose at the same time, one per area, a large area split by flow so that no maker
+draws more than a few briefs. A maker writes what the kit lacks in
 `map/kit-requests-<area>.md` and its guesses in `sidekik/questions/<area>.md`. When they
 return, settle the kit requests, and the
 questions that are not the owner's as `[settled] NN: … → what you chose`; one the examples

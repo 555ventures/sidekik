@@ -560,3 +560,67 @@ lines, about 37 answered by the owner, most as recommended; whether sumglass's 3
 changed anything was not counted), and the owner stops, where every answer in three of
 the four local projects was the recommended one while the owner changed the product by
 speaking unprompted.
+
+## The partner leads: one standard, and the approach before the makers
+
+**Asked by the owner 2026-11-18, applied in 0.23.0.** Hours after the tidy above, praxtrade
+wrote four lines in one afternoon about one thing. A reviewer proved faults of structure
+in a new foundation and the session "answer[ed] each finding with one more rule in the
+same place"; it had "briefed a hand-made in-place drawing from one line of a critique,
+with no alternatives compared and no trial"; it had added mechanisms for two weeks to a
+working piece under a prototype's duties; and it "ran every maker one after another for a
+day". The owner to that session: "why you always not fix the root cause, but trying to
+apply hot patches?" and "is this because of Sidekik plugin?" Learn first declined all four
+by its own rule (not a fault, wait for a tidy), which was the same habit: procedure over
+judgment.
+
+The owner then said what the lead session is for. They run it on the strongest model
+because "Orchestrator's job is to observe, supervise agents ... just like C-suite or senior
+level people", "and propose better approach if they stuck"; and: "How many times I need to
+tell you to check 2026 best practice, why design looks like 2023 standards instead of
+2026, and why you don't apply best user experience." On libraries: a mature library was
+"just for example, if it does not make any sense, it better you build it", and "I feel
+you hate using libraries".
+
+Applied, as one standard with one owner and no new stage, script or agent:
+
+- go.md opens with it: the partner leads as a senior partner would, answerable for the
+  result and not for the steps; the bar is what the best team would ship today; its memory
+  is older than today, so scouts find what the best current work does, from dated sources,
+  before it decides how something is built, looks or is used; it brings the better way
+  before being asked.
+- The approach is settled before the first maker of anything new to the product's
+  structure: scouts find the ways, a library that already solves it among them, a maker
+  tries the likeliest in a scratch folder, a reviewer tries to break the trial, the partner
+  chooses, and the build note records what was weighed and what the trial showed. A fix
+  inside an existing pattern needs none of this.
+- A finding that the structure is wrong is not rework: the makers building on it stop and
+  the root cause is fixed. An agent that comes back late or without the result is not sent
+  again the same way.
+- Independent pieces go to makers at the same time, in one tree, each on its own files;
+  reviews run at the same time; the lead no longer reproduces bugs, reads a codebase or
+  runs trials itself.
+- The prototype starts from how the best current products of its kind look, read and
+  behave this year, and a candidate that would look dated beside them is not shown.
+- A working piece the owner picked is product code from that day.
+
+For the owner, two things change in what they are asked. A library is theirs to decide
+at the stack stage (the main ones) and when it costs money or is hard to leave; any other
+library is the partner's call, told at the close, as the product's own code always was,
+and the script that refused an unagreed library is gone (sumaro: three such refusals, all
+for libraries already in the skeleton). And the stop before a new product's examples
+(0.20.0) is now the partner's choice of the full or the thin pass, told with its reason;
+only raising an agent's model still needs their approval.
+
+Tried before release: the praxtrade moment (five reviewer findings on a hand-made
+mechanism, three briefs waiting) was put to a fresh session on the lead's model twice.
+With the 0.22.7 guide it stopped patching and sent one maker to rebuild. With this guide
+it also sent a scout to find how the best charting tools do it from dated sources, had
+the approach tried in a scratch folder and a reviewer try to break the trial before the
+build. The scene was written after the fact and made the structural fault plain, so it
+does not show that the old guide would have caught it in real use; praxtrade shows it did
+not.
+
+Not done: a mark or a script that proves the approach was tried (the same paperwork the
+tidy took out), a design-critic agent, and a rule for each of the four lines.
+

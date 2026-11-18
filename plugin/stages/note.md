@@ -14,7 +14,8 @@ headings:
 ## Not doing
 ```
 
-- **Behind them.** What is stored (following `sidekik/model.md` when there is one). The
+- **Behind them.** For anything new to the product's structure, the approach: what was
+  weighed and what the trial showed. What is stored (following `sidekik/model.md` when there is one). The
   rules: who may do what, money, limits. What happens when something fails. What cannot be
   undone. For a change to an existing product: what happens to data that already exists
   and to users who know the old behaviour.

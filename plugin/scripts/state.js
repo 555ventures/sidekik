@@ -12,7 +12,7 @@ const MARKS = ['prototyped', 'confirmed', 'noted', 'built', 'reviewed', 'done'];
 const STAGES = ['prototype', 'look', 'note', 'build', 'review', 'close'];
 // An older state file may lack the later fields, each counted as its empty value, or carry fields
 // nothing reads any more, which are kept as they are.
-const fresh = () => ({ check: null, depsCommand: null, deps: null, stack: false, briefed: false,
+const fresh = () => ({ check: null, stack: false, briefed: false,
   bases: {}, sizes: {}, tidied: 0, tidyBase: null, shipped: [], history: [], briefs: {} });
 
 const has = (text, re) => text !== null && re.test(text);
@@ -20,12 +20,6 @@ const git = (root, ...args) => {
   const run = spawnSync('git', args, { cwd: root, encoding: 'utf8' });
   return run.status === 0 ? run.stdout.trim() : null;
 };
-
-// The project's library command prints one name per line; null when it fails.
-function libraries(root, command) {
-  const run = spawnSync(command, { shell: true, cwd: root, encoding: 'utf8' });
-  return run.status === 0 ? run.stdout.split('\n').map((l) => l.trim()).filter(Boolean) : null;
-}
 
 // What is not committed outside sidekik/, in words; '' when everything is.
 function uncommitted(root) {
@@ -126,10 +120,6 @@ const REQUIRES = {
     return doneWhenItems(note) ? null : `The build note sidekik/${rel} needs a "## Done when" section with at least one item.`;
   },
   built(root, state, b) {
-    const names = state.depsCommand ? libraries(root, state.depsCommand) : [];
-    if (!names) return `The library command "${state.depsCommand}" did not run.`;
-    const extra = names.filter((name) => !state.deps.includes(name));
-    if (extra.length) return `The project uses ${extra.length === 1 ? 'the library' : 'libraries'} the owner has not agreed to: ${extra.join(', ')}. After the owner's yes, run state.js allow ${extra.join(' ')}.`;
     const size = sizeSince(root, state.bases[b.nn]);
     // A brief committed before another of its wave was marked built was measured there, so it may be empty here.
     const noted = state.history.findLast((h) => h.brief === b.nn && h.mark === 'noted' && !h.refused)?.at;
@@ -190,12 +180,6 @@ function markStack(root, state) {
   if (problem) return problem;
   const loose = uncommitted(root);
   if (loose) return `The skeleton must be committed before the stack is settled, so that every brief has a starting point: ${loose}.`;
-  // The skeleton's libraries are the owner's picks at this mark.
-  if (state.depsCommand) {
-    const names = libraries(root, state.depsCommand);
-    if (!names) return `The library command "${state.depsCommand}" did not run.`;
-    state.deps = names;
-  }
   state.stack = true;
   return null;
 }
@@ -282,15 +266,6 @@ function main(root, [cmd, a, b, ...more]) {
     if (a.includes(';')) return SEMICOLON;
     writeState(root, { ...state, check: a });
     console.log(`The check command is now "${a}".`);
-  } else if (cmd === 'set-deps' && a) {
-    const deps = libraries(root, a);
-    if (!deps) return `The library command "${a}" did not run, so nothing was changed.`;
-    writeState(root, { ...state, depsCommand: a, deps });
-    console.log(`The library command is now "${a}", and the ${deps.length} libraries it lists are accepted.`);
-  } else if (cmd === 'allow' && a) {
-    const names = [a, b, ...more].filter(Boolean);
-    writeState(root, { ...state, deps: [...new Set([...(state.deps ?? []), ...names])] });
-    console.log(`The ${names.length === 1 ? 'library' : 'libraries'} ${names.join(', ')} ${names.length === 1 ? 'is' : 'are'} now allowed.`);
   } else if (cmd === 'reopen' && a === 'stack') {
     if (!state.stack) return 'The stack is not settled, so there is nothing to reopen.';
     state.stack = false;
@@ -310,7 +285,7 @@ function main(root, [cmd, a, b, ...more]) {
       shipped: `The finished briefs are now live: ${state.shipped.join(', ')}.` }[a]
       ?? `Brief ${a} is now marked ${b}.${size ? ` It added ${size.code} lines of code and ${size.tests} lines of tests, and removed ${size.removed} lines, ${size.testsRemoved} of them tests.` : ''}`);
   } else {
-    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reopen stack, set-check "<cmd>", set-deps "<cmd>", or allow <name ...>.';
+    return 'Use one of: init [--existing "<cmd>"], next, mark <NN> <mark>, mark briefed|stack|tidying|tidied|shipped [NN ...], reopen stack, or set-check "<cmd>".';
   }
   return null;
 }

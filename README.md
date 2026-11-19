@@ -105,7 +105,8 @@ Line formats, exactly:
 - Brief: `- NN slug: sentence` where `NN` is two digits and `slug` is `[a-z0-9-]+`.
 - Question: `- [open] NN: text`, later `- [answered] NN: text → answer`, or
   `- [settled] NN: text → choice` when the partner settled it without the owner. `all` in place of
-  `NN` counts for every brief. The line is rewritten by hand; no script does it.
+  `NN` is a question about the whole product. The line is rewritten by hand; no script does it.
+  No script reads it: the look stage shows the `[open]` lines to the owner.
 - Map row: `| area/file.ext | NN | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension. Nothing after `NN` is
   read; an older map with `planned` or `done` in the third cell works the same.
@@ -184,20 +185,17 @@ What `next` answers:
 | every brief is `done`, some are not in `shipped` | `ship` (no brief) |
 | every brief is `done` and shipped | `idle` |
 
-`next` prints six lines: `Stage:`, `Brief: NN slug: sentence` or `Brief: none`, `Read:` with
+`next` prints five lines: `Stage:`, `Brief: NN slug: sentence` or `Brief: none`, `Read:` with
 the absolute path of the stage file (`none` for idle) and the plugin version, as
 `(sidekik <version>)`, `Also at this stage: 02, 03` listing
 the other briefs whose own next stage is the same (`none` when there are none),
-`Open questions for this brief: N` (`Open questions for all briefs: N` when no brief is
-named), and `Base: <sha>` or `Base: none`.
+and `Base: <sha>` or `Base: none`.
 
 `scripts/status.js` is the progress screen. It derives everything from the same functions
 `next` uses, which `state.js` exports, so the two cannot disagree. The screen, exactly:
 
 ```
 🙋 Waiting on you
-   ├─ 1 question on the whole product
-   ├─ 2 questions on 03 history
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 
@@ -207,7 +205,7 @@ named), and `Base: <sha>` or `Base: none`.
    ✅ 01 even-split         live
    🔨 02 drinks-separately  ▓▓▓▓░░  built
    🎨 03 history            ▓▓░░░░  design approved
-   🎨 04 share-link         ░░░░░░  prototyping, 1 of 2 examples
+   🎨 04 share-link         ░░░░░░  prototyping, 2 examples
    📦 05 tip-jar            finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live · 38 min from your yes to finished
@@ -216,9 +214,7 @@ named), and `Base: <sha>` or `Base: none`.
 - Order: Waiting on you, a blank line, Next, a blank line, the roadmap (a title line, then
   one row per brief or run of briefs), a blank line, Progress. With no briefs the roadmap is
   the single line `🗺️ No briefs yet.` and there is no Progress line.
-- Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; one line for open questions filed under `all` (`N question(s) on the
-  whole product`), counted once; one line per brief with open questions filed under that
-  brief's number (`N question(s) on NN slug`); `your look at the prototype (01, 02)` when the stage is `look`, listing every
+- Waiting on you, in this order: `your yes on the brief list` when the stage is `brief`; `your look at the prototype (01, 02)` when the stage is `look`, listing every
   `prototyped` brief; `your stack picks` when the stage is `stack`; one line per brief not yet `done`
   whose review file has `- [owner]` lines (`N review question(s) on NN slug`); `your sign-off to
   take 01, 02 live` listing `done` briefs not yet shipped, when there are any. Tree
@@ -261,9 +257,8 @@ terminal first when its output is one; piped output is left plain.
   `screensFor(root, brief) → [file]`, the files its map rows name.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
   and how many examples it checked.
-- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
-  `nextStep(root, state)` and `openQuestions(root, brief?) → [string]` (the `- [open] NN: text`
-  lines under `questions/`, narrowed to the brief and `all` when a brief is given) for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
+- `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)` and
+  `nextStep(root, state)`, for `status.js`. CLI: `init [--existing "<cmd>"]`, `next`, `mark <NN> <mark>`,
   `mark briefed|stack|tidying|tidied|shipped [NN ...]`, `reopen stack`,
   `set-check "<cmd>"`. A refused mark prints the unmet
   requirement in plain words and exits 1.

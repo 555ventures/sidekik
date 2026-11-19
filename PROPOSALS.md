@@ -641,3 +641,4 @@ only for what the partner cannot settle itself.
 
 **Taken out 2026-11-19 on the owner's word ("only do this high value low risk item"), from a count over seven projects.** 0.23.2: the `confirmed` mark no longer waits on open questions (25 refusals, no gap; the owner was asked the defaults a second time). The questions files and the look stop that shows them stay.
 0.23.3: the map loses its `planned` / `done` column and the checker its two map problems (about 265 edits that only flipped the word, about 200 "file not in the map" problems, 2 rows caught). A brief is prototyped when the files its map rows name exist. The map stays as the makers' work list.
+0.23.4: the scripts no longer count questions (a reviewer proved that after 0.23.2 the status screen and `next` kept showing questions of finished briefs as waiting on the owner). The questions files are plain files the look stop reads.

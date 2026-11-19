@@ -46,24 +46,6 @@ function sizeSince(root, base) {
   return size;
 }
 
-// Every open question line under sidekik/questions/, with its brief and text.
-function questionLines(root) {
-  const qdir = path.join(dir(root), 'questions');
-  if (!fs.existsSync(qdir)) return [];
-  return fs.readdirSync(qdir).filter((f) => f.endsWith('.md')).sort().flatMap((f) => (
-    fs.readFileSync(path.join(qdir, f), 'utf8').split('\n').flatMap((line) => {
-      const m = /^- \[open\] (\d\d|all): ?(.*)/.exec(line);
-      return m ? [{ line, brief: m[1], text: m[2] }] : [];
-    })));
-}
-
-// The open question lines, narrowed to one brief and `all` when a brief is given.
-function openQuestions(root, brief) {
-  return questionLines(root)
-    .filter((q) => brief === undefined || q.brief === brief || q.brief === 'all')
-    .map(({ line }) => line);
-}
-
 function readBriefs(root) {
   return (read(root, 'briefs.md') ?? '').split('\n')
     .map((line) => /^- (\d\d) ([a-z0-9-]+): (.+)$/.exec(line))
@@ -105,7 +87,7 @@ const REQUIRES = {
     const { ok, problems } = checkPrototype(root);
     return ok ? null : `The prototype check found ${problems.length} problem(s), the first being: ${problems[0]}`;
   },
-  // The owner's yes to the prototype is the confirmation; open questions are defaults, read by next and status.
+  // The owner's yes to the prototype is the confirmation; no mark waits on a question line.
   confirmed: () => null,
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';
@@ -237,7 +219,6 @@ function printNext(root, state) {
   console.log(`Brief: ${brief ? `${brief.nn} ${brief.slug}: ${brief.sentence}` : 'none'}`);
   console.log(`Read: ${stageFile} (sidekik ${version})`);
   console.log(`Also at this stage: ${also.join(', ') || 'none'}`);
-  console.log(`Open questions for ${brief ? 'this brief' : 'all briefs'}: ${openQuestions(root, brief?.nn).length}`);
   console.log(`Base: ${(brief && state.bases[brief.nn]) || 'none'}`);
 }
 
@@ -295,4 +276,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { MARKS, fresh, readBriefs, rank, nextStep, openQuestions };
+module.exports = { MARKS, fresh, readBriefs, rank, nextStep };

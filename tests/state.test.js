@@ -7,7 +7,6 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const scripts = path.join(__dirname, '..', 'plugin', 'scripts');
-const { openQuestions } = require(path.join(scripts, 'state.js'));
 const version = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'plugin', '.claude-plugin', 'plugin.json'), 'utf8')).version;
 const B1 = '01 booking-flow: Clients book in under a minute.';
 const B2 = '02 reminders: Clients get a reminder the day before.';
@@ -54,7 +53,7 @@ test('next answers every row of the table', () => {
     [{ briefed: false }, {}, 'brief', 'none'],
     [{ briefed: true }, {}, 'prototype', B1, { also: '02' }],
     [{ briefs: { '01': 'prototyped' } }, {}, 'prototype', B2],
-    [{ briefs: { '01': 'prototyped', '02': 'confirmed' } }, { 'questions/pm.md': '- [open] 01: Weekly?\n- [open] 02: Text?\n' }, 'look', B1, { open: 1 }],
+    [{ briefs: { '01': 'prototyped', '02': 'confirmed' } }, {}, 'look', B1],
     [{ briefs: { '01': 'confirmed', '02': 'confirmed' } }, {}, 'stack', 'none'],
     [{ stack: true, briefs: { '01': 'done' } }, {}, 'prototype', B2],
     [{ stack: true, briefs: { '01': 'done' }, tidyBase: 'abc123' }, {}, 'tidy', 'none'],
@@ -73,11 +72,10 @@ test('next answers every row of the table', () => {
     [{ stack: true, briefs: { '01': 'done', '02': 'done' }, tidied: 2 }, {}, 'ship', 'none'],
     [{ stack: true, briefs: { '01': 'done', '02': 'done' }, tidied: 2, shipped: ['01', '02'] }, {}, 'idle', 'none'],
   ];
-  for (const [state, files, stage, brief, { open = 0, also = 'none', base = 'none' } = {}] of rows) {
+  for (const [state, files, stage, brief, { also = 'none', base = 'none' } = {}] of rows) {
     const read = stage === 'idle' ? 'none' : path.join(scripts, '..', 'stages', `${stage}.md`);
-    const questions = brief === 'none' ? 'all briefs' : 'this brief';
     assert.equal(project(state, files).run('next').out,
-      `Stage: ${stage}\nBrief: ${brief}\nRead: ${read} (sidekik ${version})\nAlso at this stage: ${also}\nOpen questions for ${questions}: ${open}\nBase: ${base}\n`,
+      `Stage: ${stage}\nBrief: ${brief}\nRead: ${read} (sidekik ${version})\nAlso at this stage: ${also}\nBase: ${base}\n`,
       `${stage} ${JSON.stringify(state)}`);
   }
 });
@@ -133,19 +131,6 @@ test('prototyped needs every mapped file to exist and a clean prototype check', 
   // An older map still has a status in the third cell; it is ignored.
   const old = project({}, proto('', '| book/start.html | 01 | planned | start | |'));
   assert.equal(old.run('mark', '01', 'prototyped').code, 0);
-});
-
-test('open questions come from every questions file and can be narrowed to one brief', () => {
-  const p = project({}, {
-    'questions/designer.md': '- [open] 01: Is a booking ever longer than two hours?\n- [answered] 01: Weekends? → yes\n',
-    'questions/engineer.md': '# notes\n- [open] 02: Do reminders go by text?\n- [open] all: Which currency?\n',
-  });
-  assert.deepEqual(openQuestions(p.root), [
-    '- [open] 01: Is a booking ever longer than two hours?',
-    '- [open] 02: Do reminders go by text?',
-    '- [open] all: Which currency?',
-  ]);
-  assert.deepEqual(openQuestions(p.root, '02'), ['- [open] 02: Do reminders go by text?', '- [open] all: Which currency?']);
 });
 
 test('fields of an older state file that nothing reads are kept as they are', () => {

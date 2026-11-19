@@ -31,13 +31,10 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
       + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
     'prototype/map/share.md': '| screen | brief | purpose | notes |\n|---|---|---|---|\n'
       + '| share/link.html | 04 | link | |\n| share/revoke.html | 04 | revoke | |\n',
-    'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
     'reviews/01.md': '- [owner] Already finished.\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
   });
   assert.equal(out, `🙋 Waiting on you
-   ├─ 1 question on the whole product
-   ├─ 2 questions on 03 history
    ├─ 1 review question on 02 drinks-separately
    └─ your sign-off to take 05 live
 

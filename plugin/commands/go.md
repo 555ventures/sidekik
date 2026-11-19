@@ -25,9 +25,16 @@ something they ruled is asked at once, before anything is redrawn on it.
 
 Every stage follows one pattern, and stage files hold only what is specific to them: the
 approach is settled, what the pieces share is built first by one `sidekik:maker`,
-independent pieces go to makers at the same time in one tree, each on the files its brief
-names, with scouts and the reviews of finished pieces running beside them, a machine
-checks every piece, fresh eyes look once, and one lesson is recorded.
+independent pieces go to makers at the same time, each on the files its brief names, with
+scouts and the reviews of finished pieces running beside them, a machine checks every
+piece, fresh eyes look once, and one lesson is recorded. Pieces are independent when a
+listing of who imports each file they change shows it, never by their names or their
+place on a screen. Makers at work at the same time on the product's code each get a git
+worktree of their own, started from your latest commit (the Agent tool's
+`isolation: "worktree"` starts from the remote's default branch unless the project's
+`worktree.baseRef` setting is `"head"`) with what the check needs and git does not hold
+(installed packages) linked in; you commit and merge each one and run the check on the
+merged tree.
 
 ## What the owner typed
 

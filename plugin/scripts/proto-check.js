@@ -1,5 +1,5 @@
 'use strict';
-// Checks the prototype in sidekik/prototype so parallel example authors stay on one kit and one map.
+// Checks the prototype in sidekik/prototype so parallel example authors stay on one kit.
 const fs = require('fs');
 const path = require('path');
 const { dir, rootFrom } = require('./lib/store');
@@ -29,16 +29,14 @@ function mapRows(root) {
       if (!line.trim().startsWith('|')) continue;
       const cells = line.split('|').slice(1, -1).map((c) => c.trim());
       if (!/\.\w+$/.test(cells[0]) || !/^\d\d$/.test(cells[1] ?? '')) continue;
-      rows.push({ map: `map/${f}`, screen: cells[0], brief: cells[1], status: cells[2] });
+      rows.push({ screen: cells[0], brief: cells[1] });
     }
   }
   return rows;
 }
 
 function screensFor(root, brief) {
-  return mapRows(root)
-    .filter((r) => r.brief === brief)
-    .map(({ screen, status }) => ({ screen, status }));
+  return mapRows(root).filter((r) => r.brief === brief).map((r) => r.screen);
 }
 
 const kitSheets = (root) => (fs.existsSync(kitDir(root)) ? walk(kitDir(root)) : [])
@@ -123,19 +121,8 @@ function checkPrototype(root) {
     }
   }
   const classes = kitClasses(sheets);
-  const examples = exampleFiles(root);
-  for (const f of examples.filter((e) => e.endsWith('.html'))) problems.push(...checkHtml(proto, f, classes));
+  for (const f of exampleFiles(root).filter((e) => e.endsWith('.html'))) problems.push(...checkHtml(proto, f, classes));
 
-  const rows = mapRows(root);
-  for (const r of rows) {
-    if (r.status === 'done' && !fs.existsSync(path.join(proto, r.screen))) {
-      problems.push(`${r.map} marks ${r.screen} as done, but that file does not exist.`);
-    }
-  }
-  const mapped = new Set(rows.map((r) => r.screen));
-  for (const f of examples) {
-    if (!mapped.has(f)) problems.push(`${f} is not listed in any map file. A map row looks like: | area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`);
-  }
   return { ok: problems.length === 0, problems };
 }
 

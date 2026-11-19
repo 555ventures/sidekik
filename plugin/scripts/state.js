@@ -100,7 +100,8 @@ const REQUIRES = {
   prototyped(root, state, b) {
     const examples = screensFor(root, b.nn);
     if (!examples.length) return `Brief ${b.nn} has no examples in the prototype map yet.`;
-    if (examples.some((e) => e.status !== 'done')) return `Brief ${b.nn} still has examples in the prototype map that are not done.`;
+    const missing = examples.find((f) => !fs.existsSync(path.join(dir(root), 'prototype', f)));
+    if (missing) return `Brief ${b.nn} names ${missing} in the prototype map, but that file does not exist.`;
     const { ok, problems } = checkPrototype(root);
     return ok ? null : `The prototype check found ${problems.length} problem(s), the first being: ${problems[0]}`;
   },

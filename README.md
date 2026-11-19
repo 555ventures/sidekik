@@ -86,7 +86,7 @@ sidekik/
     INDEX.md            what this is and the rules for anyone adding to it
     kit/                what every example shares
     <area>/<example>    a screen (.html), an exchange or a case (any other file type)
-    map/<area>.md       | example | brief | status | purpose | links |
+    map/<area>.md       | example | brief | purpose | links |
     sample/             shared and per-area sample data, neither kit nor example
     shots/              screenshots, candidates, the flows page and the scripts that make them; not checked
   build-notes/01-booking-flow.md   has "## Reuse" and a "## Done when" list
@@ -106,8 +106,9 @@ Line formats, exactly:
 - Question: `- [open] NN: text`, later `- [answered] NN: text → answer`, or
   `- [settled] NN: text → choice` when the partner settled it without the owner. `all` in place of
   `NN` counts for every brief. The line is rewritten by hand; no script does it.
-- Map row: `| area/file.ext | NN | planned or done | purpose | area/other.ext, ... |`. The
-  path is relative to `sidekik/prototype/` and has a file extension.
+- Map row: `| area/file.ext | NN | purpose | area/other.ext, ... |`. The
+  path is relative to `sidekik/prototype/` and has a file extension. Nothing after `NN` is
+  read; an older map with `planned` or `done` in the third cell works the same.
 - Lesson: `- NN: text` for a brief, `- fix: text` for a bug that escaped. No script reads
   it: the close stage and a bug fix write the line, and `/sidekik:learn` reads it at a tidy.
 - Feedback: `- [open] stage: text`, later `- [fixed] stage: text → what changed` or
@@ -131,7 +132,7 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 
 | mark | requires |
 |---|---|
-| `prototyped` | the brief has map rows, all `done`; the prototype check passes |
+| `prototyped` | the brief has map rows, every file they name exists; the prototype check passes |
 | `confirmed` | `prototyped` |
 | `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
@@ -238,7 +239,7 @@ named), and `Base: <sha>` or `Base: none`.
   (`noted`), 🔨 `built`, 🔍 `reviewed`. Its tail is a six-cell bar, one ▓ for each mark reached
   (prototyped, confirmed, noted, built, reviewed, done), padded with ░, then two spaces and the
   label. A brief with no mark but rows on the prototype map is `prototyping`: its bar is six
-  ░ and its label is `prototyping, D of M examples`, done rows of all rows.
+  ░ and its label is `prototyping, M examples`, one for each row.
 - Progress: designed counts briefs at `confirmed` or later, built counts `built` or later,
   live counts shipped briefs. Once a `done` brief has both `confirmed` and `done` entries in
   `history`, it adds ` · 38 min from your yes to finished`: the median whole minutes between
@@ -257,7 +258,7 @@ terminal first when its output is one; piped output is left plain.
   `rootFrom(argv) → { root, args }` (`args` without
   `--root <dir>`).
 - `scripts/proto-check.js` exports `checkPrototype(root) → { ok, problems: [string] }`,
-  `screensFor(root, brief) → [{ screen, status }]`.
+  `screensFor(root, brief) → [file]`, the files its map rows name.
   CLI: `proto-check.js` prints problems and exits 1 if any, or one line saying it passed
   and how many examples it checked.
 - `scripts/state.js` exports `MARKS`, `fresh()`, `readBriefs(root)`, `rank(state, brief)`,
@@ -274,8 +275,7 @@ terminal first when its output is one; piped output is left plain.
   fails the session, and does nothing on Windows.
 
 The prototype check covers every file under `sidekik/prototype/` except `INDEX.md` and the
-`kit/`, `map/`, `shots/` and `sample/` folders. It fails on: a file with no map row (the
-message shows what a map row looks like); a `done` map row with no file; a kit stylesheet with an `@import` or a `url(` that points at `http`. For
+`kit/`, `map/`, `shots/` and `sample/` folders. It fails on: a kit stylesheet with an `@import` or a `url(` that points at `http`. For
 `.html` files it also fails on: a class the kit css does not define; a `<style>` block; an
 inline `style` that sets anything but `top`, `left`, `width`, `height`, `grid-*` or a
 `--custom-property`; `alert(`, `confirm(` or `prompt(`; a stylesheet or script loaded from

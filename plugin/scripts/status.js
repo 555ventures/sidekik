@@ -69,7 +69,7 @@ function screen(root) {
     const [icon, word] = MOTION[k];
     const cells = rank(state, first) + 1;
     const examples = screensFor(root, first.nn);
-    const label = k === 'prototyping' ? `prototyping, ${examples.filter((r) => r.status === 'done').length} of ${examples.length} examples` : word;
+    const label = k === 'prototyping' ? `prototyping, ${plural(examples.length, 'example')}` : word;
     return [icon, name(first), `${'▓'.repeat(cells)}${'░'.repeat(MARKS.length - cells)}  ${label}`];
   });
   const width = Math.max(...lines.map(([, label]) => label.length));

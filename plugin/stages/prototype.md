@@ -37,10 +37,10 @@ beside them is not shown.
   only shows a screen on a desktop is not a kit class. Otherwise the shared names and
   formats.
 - `sample/`: the people, figures and rows the examples draw from: `shared.*` for everyone,
-  `<area>.*` for what one area alone needs; outside the kit and outside the map. The kit
-  carries the small script that prints rows as markup.
+  `<area>.*` for what one area alone needs. The kit carries the small script that prints
+  rows as markup.
 - `map/<area>.md`: a table with one row per planned example, for every brief:
-  `| area/file.ext | NN | planned | purpose | area/other.ext |`.
+  `| area/file.ext | NN | purpose | area/other.ext |`.
 - `INDEX.md`: what this is and its rules.
 
 Then the heart of the product as two or three candidates, one maker each at the same
@@ -108,4 +108,4 @@ flows page is built again by its generator, never patched.
 3. For new behaviour, dispatch `sidekik:walker` agents in parallel: one per persona,
    knowing only that persona, and one as the skeptic.
 
-Set the finished rows to `done` and run `state.js mark <NN> prototyped` for each brief.
+Run `state.js mark <NN> prototyped` for each brief.

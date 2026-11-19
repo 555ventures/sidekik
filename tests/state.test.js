@@ -13,10 +13,10 @@ const B1 = '01 booking-flow: Clients book in under a minute.';
 const B2 = '02 reminders: Clients get a reminder the day before.';
 const NOTE = '# Booking flow\n\n## Reuse\n- The kit form.\n\n## Done when\n- A client books in under a minute.\n';
 const IN_ROOT = 'test -f sidekik/briefs.md';
-const proto = (status, extra = '') => ({
+const proto = (extra = '', row = '| book/start.html | 01 | start | |') => ({
   'prototype/kit/kit.css': '.btn { color: black; }\n',
   'prototype/book/start.html': `<link rel="stylesheet" href="../kit/kit.css"><button class="btn">Book</button>${extra}\n`,
-  'prototype/map/book.md': `| screen | brief | status | purpose | links |\n|---|---|---|---|---|\n| book/start.html | 01 | ${status} | start | |\n`,
+  'prototype/map/book.md': `| screen | brief | purpose | links |\n|---|---|---|---|\n${row}\n`,
 });
 
 // A project with two briefs; `state` is merged into a fresh state (null for none), a null file is left out.
@@ -124,12 +124,15 @@ test('a mark is refused unless it follows the current one', () => {
   project({ briefs: { '01': 'prototyped' } }).refused(['mark', '01', 'built'], /only be marked confirmed/);
 });
 
-test('prototyped needs every mapped screen done and a clean prototype check', () => {
-  project({}, proto('planned')).refused(['mark', '01', 'prototyped'], /not done/);
-  project({}, proto('done', '<style>b{}</style>')).refused(['mark', '01', 'prototyped'], /style/);
-  const p = project({}, proto('done'));
+test('prototyped needs every mapped file to exist and a clean prototype check', () => {
+  project({}, proto('', '| book/start.html | 01 | start | |\n| book/pay.html | 01 | pay | |')).refused(['mark', '01', 'prototyped'], /Brief 01 names book\/pay\.html in the prototype map, but that file does not exist\./);
+  project({}, proto('<style>b{}</style>')).refused(['mark', '01', 'prototyped'], /style/);
+  const p = project({}, proto());
   assert.equal(p.run('mark', '01', 'prototyped').code, 0);
   assert.equal(p.read().briefs['01'], 'prototyped');
+  // An older map still has a status in the third cell; it is ignored.
+  const old = project({}, proto('', '| book/start.html | 01 | planned | start | |'));
+  assert.equal(old.run('mark', '01', 'prototyped').code, 0);
 });
 
 test('open questions come from every questions file and can be narrowed to one brief', () => {

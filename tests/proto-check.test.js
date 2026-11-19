@@ -25,11 +25,11 @@ function project(files = {}) {
     'bookings/cancel.txt': 'Given a booking, cancel <style> confirm(it) shows "Cancelled".\n',
     'INDEX.md': 'A booking app.\n',
     'shots/list.png': 'png',
-    'map/bookings.md': '# Bookings\n\n| example | brief | status | purpose | links |\n|---|---|---|---|---|\n'
-      + '| bookings/list.html | 01 | done | All bookings | bookings/detail.html |\n'
-      + '| bookings/cancel.txt | 01 | done | Cancel a booking | |\n'
-      + '| bookings/detail.html | 01 | done | One booking | bookings/list.html |\n'
-      + '| bookings/waitlist.html | 02 | planned | Waiting clients | |\n',
+    'map/bookings.md': '# Bookings\n\n| example | brief | purpose | links |\n|---|---|---|---|\n'
+      + '| bookings/list.html | 01 | All bookings | bookings/detail.html |\n'
+      + '| bookings/cancel.txt | 01 | Cancel a booking | |\n'
+      + '| bookings/detail.html | 01 | One booking | bookings/list.html |\n'
+      + '| bookings/waitlist.html | 02 | Waiting clients | |\n',
     'map/kit-requests.md': '- please add a card-grid class\n',
     ...files,
   };
@@ -51,7 +51,7 @@ test('a clean prototype passes and screensFor lists a brief\'s rows', () => {
   // A table in map/ without a brief number, such as a kit request, is not a map.
   const root = project({ 'map/kit-requests-bookings.md': '| class | wanted |\n|---|---|\n| .entry-date | no wrap |\n' });
   assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
-  assert.deepStrictEqual(screensFor(root, '02'), [{ screen: 'bookings/waitlist.html', status: 'planned' }]);
+  assert.deepStrictEqual(screensFor(root, '02'), ['bookings/waitlist.html']);
   assert.strictEqual(screensFor(root, '01').length, 3);
 });
 
@@ -100,18 +100,4 @@ test('a kit stylesheet that imports or points at http fails', () => {
 test('a local link to a missing file fails', () => {
   fails(project({ 'bookings/detail.html': PAGE('<a href="../clients/profile.html#top">x</a>') }),
     /detail\.html links to "\.\.\/clients\/profile\.html#top", which does not exist/);
-});
-
-test('a done map row with no file fails', () => {
-  fails(project({ 'map/team.md': '| team/staff.html | 03 | done | Staff | |\n' }),
-    /map\/team\.md marks team\/staff\.html as done, but that file does not exist/);
-});
-
-test('an example of any file type with no map row fails', () => {
-  fails(project({ 'bookings/orphan.json': '{}' }), /^bookings\/orphan\.json is not listed in any map file\. A map row looks like: \| area\/file\.ext \| NN \| planned or done \| purpose \| area\/other\.ext, \.\.\. \|$/);
-});
-
-test('sample data beside the examples needs no map row', () => {
-  const root = project({ 'sample/bookings.js': 'module.exports = [];\n' });
-  assert.deepStrictEqual(checkPrototype(root), { ok: true, problems: [] });
 });

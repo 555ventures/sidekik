@@ -29,8 +29,8 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
   }, {
     'briefs.md': '# Split the bill\n\n- 01 even-split: Split evenly.\n- 02 drinks-separately: Drinks apart.\n'
       + '- 03 history: Past bills.\n- 04 share-link: Share a link.\n- 05 tip-jar: Add a tip.\n',
-    'prototype/map/share.md': '| screen | brief | status | purpose | notes |\n|---|---|---|---|---|\n'
-      + '| share/link.html | 04 | done | link | |\n| share/revoke.html | 04 | planned | revoke | |\n',
+    'prototype/map/share.md': '| screen | brief | purpose | notes |\n|---|---|---|---|\n'
+      + '| share/link.html | 04 | link | |\n| share/revoke.html | 04 | revoke | |\n',
     'questions/pm.md': '- [open] all: Which currency?\n- [open] 03: Round up?\n- [open] 03: Show tax?\n- [answered] 02: Split tax? → yes\n',
     'reviews/01.md': '- [owner] Already finished.\n',
     'reviews/02.md': '- [fixed] Rounding.\n- [owner] Copy tone.\n',
@@ -47,7 +47,7 @@ test('the screen shows what waits on the owner, what comes next, the roadmap and
    ✅ 01 even-split         live
    🔨 02 drinks-separately  ▓▓▓▓░░  built
    🎨 03 history            ▓▓░░░░  design approved
-   🎨 04 share-link         ░░░░░░  prototyping, 1 of 2 examples
+   🎨 04 share-link         ░░░░░░  prototyping, 2 examples
    📦 05 tip-jar            finished
 
 📈 Progress   4 of 5 designed · 3 of 5 built · 1 of 5 live · 38 min from your yes to finished

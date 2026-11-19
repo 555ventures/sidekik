@@ -84,7 +84,9 @@ project root or with `--root <dir>`.
    feedback lines of this stretch not yet sent. When the work is committed and nothing
    of yours is running (no agent, no background task, no server), tell the owner in one
    line that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing
-   otherwise.
+   otherwise, and when the owner asks to clear while an agent is at work, say what that
+   loses first: the agent is lost with the session, and the next one cannot reach it or
+   its report.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: every commit is pushed, and a commit that changes the product

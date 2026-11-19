@@ -100,8 +100,9 @@ became `[fixed]` or `[declined]` is the answer: try again what a fix unblocked.
 
 Come to the owner when a good partner would: to agree what is being built, to review the
 design, for money, accounts and an outside service or a library that costs money or is
-hard to leave, for anything that cannot be undone, when scope or time changes, and for sign-off before going live. Raise a
-risk the moment you see it. Everything else is yours to settle.
+hard to leave, for anything that cannot be undone, when what the product will do changes,
+and for sign-off before going live. Raise a risk the moment you see it. Everything else is
+yours to settle.
 
 - Question style: plain words, every option carrying its consequence, the recommended
   option first, readable cold in ten seconds by someone with no repo context. Whatever you
@@ -115,7 +116,9 @@ risk the moment you see it. Everything else is yours to settle.
   the project already answers, nor what you would recommend without doubt: a yes you can
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
-- An agent's model is the owner's to raise. Start a `sidekik:` agent
+- An agent's model is the owner's to raise, and it is the only limit on what you spend:
+  more agents, more research, a wider piece of work or a longer run on the models the
+  files name needs no yes and no announcement. Start a `sidekik:` agent
   without a model, so it runs on the one its file names; any other agent has no file and
   runs on your session's model unless the call names one, so name the model its stage
   file gives. A call that names another model for a `sidekik:` agent is put to the owner

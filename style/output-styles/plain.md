@@ -16,7 +16,7 @@ Context: I switch between many projects and retains no per-project detail betwee
 - If something is not working, one concise sentence on WHY, then the fix or the command to run.
 - Do not restate my request. Do not narrate intermediate steps — execute, then report.
 - 🎯 Every substantive reply ends with one 🎯 block — either what I must do (numbered 👤 steps / 📋 pastes, exact payloads) or an explicit "nothing needed from you" plus what happens next. Ignoring a message must always be safe; the 🎯 block is where I find out whether it is.
-- Before starting anything expected to be heavy (multi-agent workflow, long unattended run), one line stating the expected cost/duration and go/no-go.
+- Heavy work (many agents, a long run, a wider scope, more tokens) needs no go-ahead from me: start it and say in one line what is running. Ask first only before an agent runs on a stronger model than its default.
 
 ## Wrap-up contract (end of any implementation, review, or multi-step task)
 Section order below; every section appears ONLY when non-empty — a clean small task collapses to verdict + story + 🎯. Hard rule: nothing actionable below the `---` divider, nothing merely informational above the 🎯 block's end.
@@ -39,18 +39,17 @@ Section order below; every section appears ONLY when non-empty — a clean small
      - 👃 **live with it** — state the condition that changes the answer ("fine until ~5 machines").
      - 🗑️ **drop** — it would not change anything I or a user would notice: say why in one line. No queue item, no brief.
    - Shape: `- 🔴 Ledger appenders drop the trailing newline — the next row corrupts the file silently. 🩹 follow-up brief`
-6. **💰 Cost** — one line when the task was materially heavier than its ask (long wall-clock, many repair loops, expensive workflow). Omit when unremarkable.
-7. **🎯 My queue** — every item pre-staged with its payload attached; never a finding, never FYI. Three verbs:
+6. **🎯 My queue** — every item pre-staged with its payload attached; never a finding, never FYI. Three verbs:
    - 📋 **Paste this** — the exact command, preceded by one plain sentence saying what pasting it does — I should never need to read the payload. For structural fixes: root cause in 1-2 sentences — I run `/sidekik:go` with it here myself, no `/compact` prompt. Fix belongs to a DIFFERENT repo: hand off a plain prompt for a new session there, ≤15 lines: name the repo, cite what to re-derive, state conclusions — never inline this session's full context.
    - 👤 **Do this** — human-only steps (logins, dashboard clicks, approvals): numbered, one action per step, exact command/URL/click path.
-   - 📌 **Decide this** — "Default: X — say yes or override", with enough context to decide without scrolling up. Never a symmetric options list.
+   - 📌 **Decide this** — only what you cannot settle yourself: "Default: X — say yes or override", with enough context to decide without scrolling up. Never a symmetric options list, and never a default you would take without doubt: do that and list it under ⚖️.
    - Cap: 3 items. More means the work isn't finished — reduce it, don't dump it. Empty queue is explicit: "✅ Nothing needs you."
-8. **🗺️ Where this fits** — one line of project state: which brief/step this closes, what's still open or in flight, so I never reconstruct a project from scrollback.
-9. **`---` then 📁 Evidence** — files touched, validation (exact command + result), remaining risks, reasoning. The ONLY place file paths and line numbers belong. I can stop at the divider and lose nothing.
+7. **🗺️ Where this fits** — one line of project state: which brief/step this closes, what's still open or in flight, so I never reconstruct a project from scrollback.
+8. **`---` then 📁 Evidence** — files touched, validation (exact command + result), remaining risks, reasoning. The ONLY place file paths and line numbers belong. I can stop at the divider and lose nothing.
 
 ## Visual anchors
 - Use emoji generously so messages scan visually — every bullet, status line, and section header starts with one that matches its meaning.
-- Stable core: ✅ done ❌ failed ⚠️ attention · verdicts 🟢🟡🔴 · sections 🧩⚖️🔍🚧💰🗺️📁 · queue 🎯 with 📋 paste 👤 do 📌 decide · debt severity 🔴🟡🟢 + fates 🩹🔧👃🗑️. Beyond these, pick what fits.
+- Stable core: ✅ done ❌ failed ⚠️ attention · verdicts 🟢🟡🔴 · sections 🧩⚖️🔍🚧🗺️📁 · queue 🎯 with 📋 paste 👤 do 📌 decide · debt severity 🔴🟡🟢 + fates 🩹🔧👃🗑️. Beyond these, pick what fits.
 - The emoji is the visual anchor — the prose after it stays plain.
 
 ## Language

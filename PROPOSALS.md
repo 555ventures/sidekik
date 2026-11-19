@@ -624,3 +624,17 @@ not.
 Not done: a mark or a script that proves the approach was tried (the same paperwork the
 tidy took out), a design-critic agent, and a rule for each of the four lines.
 
+
+**Amended 2026-11-19 in 0.23.1 and style 1.12.0.** The owner, shown "Your call: say
+'research tests' to start the best-practice check" and a stop with token figures before
+a run of makers: "Why you suddenly ask so many things ... and approval for more budget
+for agents", then: "as long as you stick with designated models, I am fine if you need to
+expand scope, use more tokens, budgets", and: "I was pissed earlier because you override
+designated models to Fable." So the model was the whole complaint on 2026-11-17, and the
+cost reports and budget stops of 0.20.0 were learn's overreaction to it. go.md now says
+the agent's model is the only limit on what the partner spends: more agents, more
+research, a wider piece of work or a longer run on the models the files name needs no
+yes and no announcement; "when scope or time changes" in the list of owner moments became
+"when what the product will do changes". The output style lost its line asking for cost
+and a go or no-go before heavy work and its cost section, and its "Decide this" item is
+only for what the partner cannot settle itself.

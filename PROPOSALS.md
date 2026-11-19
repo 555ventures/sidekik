@@ -638,3 +638,5 @@ yes and no announcement; "when scope or time changes" in the list of owner momen
 "when what the product will do changes". The output style lost its line asking for cost
 and a go or no-go before heavy work and its cost section, and its "Decide this" item is
 only for what the partner cannot settle itself.
+
+**Taken out 2026-11-19 on the owner's word ("only do this high value low risk item"), from a count over seven projects.** 0.23.2: the `confirmed` mark no longer waits on open questions (25 refusals, no gap; the owner was asked the defaults a second time). The questions files and the look stop that shows them stay.

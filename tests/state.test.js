@@ -124,21 +124,12 @@ test('a mark is refused unless it follows the current one', () => {
   project({ briefs: { '01': 'prototyped' } }).refused(['mark', '01', 'built'], /only be marked confirmed/);
 });
 
-test('prototyped needs every mapped screen done, a clean prototype check and no question under a number that is not a brief', () => {
+test('prototyped needs every mapped screen done and a clean prototype check', () => {
   project({}, proto('planned')).refused(['mark', '01', 'prototyped'], /not done/);
-  project({}, { ...proto('done'), 'questions/pm.md': '- [open] 07: Which colour?\n' }).refused(['mark', '01', 'prototyped'], /no brief 07\. The number before the colon is the brief number/);
   project({}, proto('done', '<style>b{}</style>')).refused(['mark', '01', 'prototyped'], /style/);
   const p = project({}, proto('done'));
   assert.equal(p.run('mark', '01', 'prototyped').code, 0);
   assert.equal(p.read().briefs['01'], 'prototyped');
-});
-
-test('confirmed is refused while the brief has an open question', () => {
-  const state = { briefs: { '01': 'prototyped' } };
-  project(state, { 'questions/pm.md': '- [open] 01: Weekly?\n' }).refused(['mark', '01', 'confirmed'], /open question/);
-  const p = project(state, { 'questions/pm.md': '- [answered] 01: Weekly? → yes\n- [open] 02: Text?\n' });
-  assert.equal(p.run('mark', '01', 'confirmed').code, 0);
-  assert.equal(p.read().briefs['01'], 'confirmed');
 });
 
 test('open questions come from every questions file and can be narrowed to one brief', () => {

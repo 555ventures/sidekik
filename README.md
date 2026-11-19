@@ -131,8 +131,8 @@ A brief's value is its last mark. Marks in order, and what each one requires:
 
 | mark | requires |
 |---|---|
-| `prototyped` | the brief has map rows, all `done`; the prototype check passes; no open question is filed under a number that is not a brief (the refusal says that `NN` is the brief number) |
-| `confirmed` | `prototyped`; no open question for the brief |
+| `prototyped` | the brief has map rows, all `done`; the prototype check passes |
+| `confirmed` | `prototyped` |
 | `noted` | `confirmed`; `stack` is true; the build note exists, has a `## Reuse` section and a `## Done when` section with at least one `- ` item. Records the current git commit as the brief's base (null outside a git repo or before the first commit) |
 | `built` | `noted`; something was committed since the base (when there is a base), unless another brief was marked `built` after this one was `noted`, which then measured it; the check command exits 0. Records the brief's size |
 | `reviewed` | `built`; the review file exists with no `- [bug]` line left; when it holds a `- [fixed]` or `- [cut]` line, the check command exits 0 |

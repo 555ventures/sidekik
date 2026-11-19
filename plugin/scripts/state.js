@@ -98,19 +98,14 @@ function doneWhenItems(note) {
 
 const REQUIRES = {
   prototyped(root, state, b) {
-    const stray = openQuestions(root).map((q) => /^- \[open\] (\d\d):/.exec(q)?.[1])
-      .find((nn) => nn && !readBriefs(root).some((brief) => brief.nn === nn));
-    if (stray) return `An open question is filed under ${stray}, but there is no brief ${stray}. The number before the colon is the brief number.`;
     const examples = screensFor(root, b.nn);
     if (!examples.length) return `Brief ${b.nn} has no examples in the prototype map yet.`;
     if (examples.some((e) => e.status !== 'done')) return `Brief ${b.nn} still has examples in the prototype map that are not done.`;
     const { ok, problems } = checkPrototype(root);
     return ok ? null : `The prototype check found ${problems.length} problem(s), the first being: ${problems[0]}`;
   },
-  confirmed(root, state, b) {
-    const open = openQuestions(root, b.nn).length;
-    return open ? `Brief ${b.nn} still has ${open} open question(s) waiting for the owner.` : null;
-  },
+  // The owner's yes to the prototype is the confirmation; open questions are defaults, read by next and status.
+  confirmed: () => null,
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';
     const rel = `build-notes/${b.nn}-${b.slug}.md`;

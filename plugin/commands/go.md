@@ -33,8 +33,9 @@ place on a screen. Makers at work at the same time on the product's code each ge
 worktree of their own, started from your latest commit (the Agent tool's
 `isolation: "worktree"` starts from the remote's default branch unless the project's
 `worktree.baseRef` setting is `"head"`) with what the check needs and git does not hold
-(installed packages) linked in; you commit and merge each one and run the check on the
-merged tree.
+(installed packages) linked in; whether their tests can run at the same time is read
+from the test setup (a database, a port or a folder they would share), never assumed;
+you commit and merge each one and run the check on the merged tree.
 
 ## What the owner typed
 
@@ -50,8 +51,9 @@ Size it first:
   and the test that will catch it).
   Add `- fix: what escaped, and what would have caught it` to `sidekik/lessons.md`,
   its text starting `unproven:` for a bug you could not reproduce.
-- **A small tweak** that changes no behaviour (a label, a colour): change exactly what
-  was asked.
+- **A small tweak** that changes no behaviour (a label, a colour, an alignment): change
+  exactly what was asked, by your own hand when it is a few lines in one file you have
+  read.
 - **A feature added, changed or removed**: a brief. The `brief` stage file says how.
 - **A question** (is this the best way, how do others do it): scouts research it and you
   answer.
@@ -149,7 +151,7 @@ yours to settle.
 - A call the owner might have made differently, and any shortcut taken on purpose, is
   told with what it means at the stop it belongs to, in that stop's own text (a fix's or
   a tweak's in its one-line report), and kept nowhere once told. Something you notice
-  outside the brief is one line to the owner, not code.
+  outside what was asked is one line to the owner, not code.
 
 ## Seats and tools
 

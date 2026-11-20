@@ -83,12 +83,12 @@ project root or with `--root <dir>`.
    not yet told to the owner. It keeps no history and nothing meant to last: what later
    work must know goes into the file it is about (`CLAUDE.md`, `sidekik/stack.md`, the
    prototype's `INDEX.md`, the build note of the brief that needs it). Send any `[open]`
-   feedback lines of this stretch not yet sent. When the work is committed and nothing
-   of yours is running (no agent, no background task, no server), tell the owner in one
-   line that it is safe to `/clear` and run `/sidekik:go`; say nothing about clearing
-   otherwise, and when the owner asks to clear while an agent is at work, say what that
-   loses first: the agent is lost with the session, and the next one cannot reach it or
-   its report.
+   feedback lines of this stretch not yet sent. A clear loses what lives only in this
+   session: an agent at work, with its report, and a yes of the owner not yet acted on,
+   which no note carries to the next session. When the work is committed and neither is
+   left (no agent, no background task, no server, no yes waiting), tell the owner in one
+   line that it is safe to `/clear` and run `/sidekik:go`; otherwise say nothing about
+   clearing, and when they ask, say what it would lose.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: every commit is pushed, and a commit that changes the product

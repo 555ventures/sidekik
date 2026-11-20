@@ -642,3 +642,41 @@ only for what the partner cannot settle itself.
 **Taken out 2026-11-19 on the owner's word ("only do this high value low risk item"), from a count over seven projects.** 0.23.2: the `confirmed` mark no longer waits on open questions (25 refusals, no gap; the owner was asked the defaults a second time). The questions files and the look stop that shows them stay.
 0.23.3: the map loses its `planned` / `done` column and the checker its two map problems (about 265 edits that only flipped the word, about 200 "file not in the map" problems, 2 rows caught). A brief is prototyped when the files its map rows name exist. The map stays as the makers' work list.
 0.23.4: the scripts no longer count questions (a reviewer proved that after 0.23.2 the status screen and `next` kept showing questions of finished briefs as waiting on the owner). The questions files are plain files the look stop reads.
+
+## A session is one batch, and its end is the moment to clear
+
+**Asked by the owner 2026-11-20, applied in 0.23.10.** The owner: "when context is filling
+up say 50% or whatever value that best, Fable orchestrator to slow down and winding down
+agents and be ready for clear + rerun sidekik:go rather than keeping continue and reaches
+auto compact?" Learn first answered no (a compaction keeps running agents, a clear does
+not). The owner: "i asked literally all projects agents that if clear + rerun or compact
+which one best practice and they all said clear + rerun particularly for this sidekik
+plugin workflow", then: "or when you orchestrate, you aim for that context? like setting
+goal? until which point you implement, like batches".
+
+What was looked up and counted:
+
+- The lead has no gauge. Claude's docs say Fable and the later Opus models do not receive
+  the token-usage notices, and no hook input carries the fill level; only the owner's
+  status line does.
+- Anthropic's prompting guide: "consider starting with a brand new context window rather
+  than using compaction. Claude's latest models are extremely effective at discovering
+  state from the local filesystem." Its long-running harness works on "only one feature
+  at a time" and ends each session with a commit and a progress file. No source gives a
+  fill percentage. The Claude Code docs hold the other view, that compaction is a safe
+  default.
+- Since 2026-11-17, 10 of 46 lead sessions over five projects were compacted (11 times),
+  9 of them near 490k tokens, after 7 to 32 agent runs. In 9 of the 11 nothing visibly
+  went wrong afterwards; one scout may have been sent twice. The lead said "safe to
+  clear" in 39 of 46 sessions, anywhere from 64k to 639k, so the line carried no signal
+  of when a clear was due.
+
+Applied, as a goal the lead can see and no number: go.md's third step says a session is
+one batch (one round of the pattern), the lead tells the owner at its start where the
+session ends, and past that end or after a compaction it starts no new piece. At the end
+of the batch the one-line "safe to clear" becomes "it is the next step".
+
+Not done: a hook that reads the session's size from its transcript (the window differed
+from 210k to 500k between sessions, and the file's format is not documented), a count of
+agent runs as a cap (the owner has ruled out size budgets), and Claude Code's `/goal`
+(the owner's command; it checks a condition and does not watch the context).

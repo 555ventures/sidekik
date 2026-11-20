@@ -76,8 +76,13 @@ project root or with `--root <dir>`.
    `next` names, and do the stage. It ends in a mark. A refused mark says what is missing:
    do that. When the owner rejects the stack after it was settled, run
    `state.js reopen stack`.
-3. Run `next` again and keep going. `Also at this stage` lists the other briefs waiting
-   at this stage. When the version `next` prints beside the stage file has moved, read
+3. Run `next` again and keep going, to the end of this session's batch. A session is one
+   batch, because a fresh one that reads the files works better than a long one, or one
+   the harness compacted into a summary of itself, and you cannot see how full yours is:
+   when you start on briefs, tell the owner in one line where this session ends (which
+   briefs reach which mark; one round of the pattern above is a batch), and past that
+   end, or after a compaction, start no new piece. `Also at this stage` lists the other
+   briefs waiting at this stage. When the version `next` prints beside the stage file has moved, read
    this file and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
    with only where things stand, what comes next, what is still running and the calls
    not yet told to the owner. It keeps no history and nothing meant to last: what later
@@ -87,8 +92,9 @@ project root or with `--root <dir>`.
    session: an agent at work, with its report, and a yes of the owner not yet acted on,
    which no note carries to the next session. When the work is committed and neither is
    left (no agent, no background task, no server, no yes waiting), tell the owner in one
-   line that it is safe to `/clear` and run `/sidekik:go`; otherwise say nothing about
-   clearing, and when they ask, say what it would lose.
+   line that it is safe to `/clear` and run `/sidekik:go`, and at the end of the batch
+   that it is the next step; otherwise say nothing about clearing, and when they ask,
+   say what it would lose.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
 live: every commit is pushed, and a commit that changes the product

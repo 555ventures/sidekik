@@ -1,7 +1,9 @@
 # Brief
 
 Write `sidekik/briefs.md`. A change to an existing product is usually one brief line with
-the next number, or, when the owner puts it off, a line under `## Later` without one. The picture, the questions on voice and feel and
+the next number, or, when the owner puts it off, a line under `## Later` without one. A
+brief the owner drops loses its line, its number is never used again, and what they
+ruled instead goes into the picture or the brief it changes. The picture, the questions on voice and feel and
 the candidates below are for a new product.
 
 Start it with the product picture in a few plain lines:

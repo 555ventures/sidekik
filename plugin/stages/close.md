@@ -3,8 +3,7 @@
 Report the brief and keep going.
 
 Print, in plain words: what a user can now do, how to see it running, how much the brief
-added, and the calls you made on it, a finding the review left that you chose not to fix
-among them. Stop only if the review left an `- [owner]` item that is a product decision:
+added, and any finding the review left that you chose not to fix. Stop only if the review left an `- [owner]` item that is a product decision:
 ask it with your recommendation.
 
 Write one line in `sidekik/lessons.md`: `- NN: ` then the worst moment of this brief (a

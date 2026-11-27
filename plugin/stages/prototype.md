@@ -75,12 +75,10 @@ examples before its build note, shown to the owner then like any change to appro
 examples; its risk is a need the stack must meet that is found late. Makers draw what
 you chose at the same time, one per area, a large area split by flow so that no maker
 draws more than a few briefs. A maker writes what the kit lacks in
-`map/kit-requests-<area>.md` and its guesses in `sidekik/questions/<area>.md`. When they
-return, settle the kit requests, and the
-questions that are not the owner's as `[settled] NN: … → what you chose`; one the examples
-cannot answer because it is a stack decision (where it runs, what it costs, how it is
-packaged, what an outside service can do) is settled as `→ a stack decision` and joins
-that stage's list.
+`map/kit-requests-<area>.md` and reports its guesses. When they return, settle the kit
+requests; a guess the examples cannot answer because it is a stack decision (where it
+runs, what it costs, how it is packaged, what an outside service can do) is written
+into `sidekik/stack.md` for that stage.
 
 - Show what prose forgets: empty, loading, error, and every destructive or failing path.
 - What a user does inside another company's product comes from that company's own pages,

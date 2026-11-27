@@ -84,8 +84,8 @@ project root or with `--root <dir>`.
    end, or after a compaction, start no new piece. `Also at this stage` lists the other
    briefs waiting at this stage. When the version `next` prints beside the stage file has moved, read
    this file and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
-   with only where things stand, what comes next, what is still running and the calls
-   not yet told to the owner. It keeps no history and nothing meant to last: what later
+   with only where things stand, what comes next, what is still running and the
+   questions waiting for the owner. It keeps no history and nothing meant to last: what later
    work must know goes into the file it is about (`CLAUDE.md`, `sidekik/stack.md`, the
    prototype's `INDEX.md`, the build note of the brief that needs it). Send any `[open]`
    feedback lines of this stretch not yet sent. A clear loses what lives only in this
@@ -149,18 +149,16 @@ yours to settle.
   the build note or `sidekik/model.md` once those exist; a ruling on the whole product
   goes in the picture at the top of `sidekik/briefs.md`. One that replaces an earlier
   ruling is done only when the earlier one is gone from every file a session or an agent
-  reads (the briefs, the examples, the open questions, the notes, `CLAUDE.md`): search
+  reads (the briefs, the examples, the notes, `CLAUDE.md`): search
   for it and have it replaced before any other work. The later word wins; ask only when
   you cannot tell whether they meant to replace the earlier one.
 - The owner's yes at a stop is recorded by the mark that follows it and nowhere else, so
-  run that mark only after their yes. A guess, yours or an agent's, is a
-  line `- [open] NN: text` (`NN` is the brief's number) in a file under
-  `sidekik/questions/` until the owner answers it, and then the same line as
-  `- [answered] NN: text → their answer`.
-- A call the owner might have made differently, and any shortcut taken on purpose, is
-  told with what it means at the stop it belongs to, in that stop's own text (a fix's or
-  a tweak's in its one-line report), and kept nowhere once told. Something you notice
-  outside what was asked is one line to the owner, not code.
+  run that mark only after their yes.
+- A call the owner might have made differently, a guess of yours or an agent's about
+  what only they can rule, and any shortcut taken on purpose are built on and told with
+  what each means in your next reply to them, and kept nowhere once told. Only a guess
+  whose answer you cannot predict is put as a question. Something you notice outside
+  what was asked is one line to the owner, not code.
 
 ## Seats and tools
 

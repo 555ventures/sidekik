@@ -12,12 +12,11 @@ waiting, in one stop:
   places shown once with its count. The full page is where to look something up, not what is shown,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
   what it costs to build. Smaller ones are calls,
-- the open questions (the `[open]` lines under `sidekik/questions/`).
+- the questions only they can answer and whose answer you cannot predict.
 
 Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
 steps one at a time. End your turn.
 
 Repeat. Aim for every persona finishing its task
-without help and the skeptic's biggest objection answered. After their yes, write each
-answer into its question line and run `state.js mark <NN> confirmed` for each brief the
+without help and the skeptic's biggest objection answered. After their yes, run `state.js mark <NN> confirmed` for each brief the
 yes covers.

@@ -76,7 +76,6 @@ landed with the project's work. Scripts re-read it on every call.
 sidekik/
   state.json            written only by scripts
   briefs.md             - 01 booking-flow: Clients book in under a minute.
-  questions/<area>.md   guesses waiting for the owner:  - [open] 01: text
   handoff.md            where the work stands and what comes next, replaced whole each time
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas
@@ -103,10 +102,6 @@ session start.
 Line formats, exactly:
 
 - Brief: `- NN slug: sentence` where `NN` is two digits and `slug` is `[a-z0-9-]+`.
-- Question: `- [open] NN: text`, later `- [answered] NN: text → answer`, or
-  `- [settled] NN: text → choice` when the partner settled it without the owner. `all` in place of
-  `NN` is a question about the whole product. The line is rewritten by hand; no script does it.
-  No script reads it: the look stage shows the `[open]` lines to the owner.
 - Map row: `| area/file.ext | NN | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension. Nothing after `NN` is
   read; an older map with `planned` or `done` in the third cell works the same.

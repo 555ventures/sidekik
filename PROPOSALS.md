@@ -709,3 +709,50 @@ Not done: a hook that reads the session's size from its transcript (the window d
 from 210k to 500k between sessions, and the file's format is not documented), a count of
 agent runs as a cap (the owner has ruled out size budgets), and Claude Code's `/goal`
 (the owner's command; it checks a condition and does not watch the context).
+
+## The third count: a guess is a call or a question, and neither is kept in a file
+
+**Counted 2026-11-27 over sumglass, sumaro, poolyst and praxtrade for the days since the
+0.23.4 tidy, applied in 0.24.0.** What the owner was asked and what came back:
+
+- 67 asks at stops, 60 answered with the recommended yes (sumglass 6 of 6, poolyst 32 of
+  32, praxtrade 11 of 13, sumaro 11 of 16). The seven others were product rulings no
+  file could have predicted ("10 min of free talk", "it is ok, laywer said").
+- The questions files: poolyst's 26 answered lines were one "1. yes" to all 26 defaults,
+  and 26 more stayed `[open]` and were never asked; praxtrade's 12 open lines were asked
+  once and never answered; sumaro added 45 in two days, of which the partner settled 30.
+  Everything was built on the guess either way.
+- Calls waiting for "the stop it belongs to": about 20 groups carried in poolyst's
+  handoff for eight days (a 100-line block never shown), 14 in sumaro's "still to repeat
+  at brief 20's close", 6 in praxtrade's. No call was overturned in any project.
+
+go.md already said "a yes you can predict is a call, not a question". The questions
+files were a second road around that sentence: whatever a maker wrote as `[open]` was
+shown at the look stop, predictable or not. So `sidekik/questions/` and its three line
+states are gone. A maker says its guess in its report. The partner builds on it and
+tells it in its next reply, as a call; only a guess whose answer it cannot predict is
+put as a question. A stack decision found in the prototype is written into
+`sidekik/stack.md`. A call is told in the next reply and no longer waits for its stop,
+so the handoff carries questions waiting for the owner and no list of untold calls, and
+the close no longer repeats the brief's calls.
+
+To undo: restore the "A guess ... is a line `- [open] NN: text`" sentence in go.md, the
+look stop's bullet and the maker's bullet from 0.23.11. An existing `sidekik/questions/`
+folder is read by nothing; an `[open]` line in it that still matters is a question for
+the next reply.
+
+Also taken out, in 0.24.1: the tidy stage's reviewers no longer look for "prototype
+examples with nothing built for them" (sumglass, one tidy: an Opus reviewer over the
+prototype "found no fault a user sees", and a maker's two hours went to redrawing).
+
+What earned its cost again and stays: the reviewer sent to break a trial (praxtrade: 13
+of 15 broke the plan; sumaro: 16 faults over three trials; the two projects that skipped
+the trial paid a reverted ten-hour fix and a two-hour rework), the review of a fix (14 of
+19 found something in praxtrade, every round in poolyst), the list of processes before a
+turn ends (leftovers found in all four), and the build notes (opened by every maker and
+reviewer in poolyst).
+
+Counted and left: `sidekik/lessons.md` (64 lines; read by no agent in praxtrade and by
+2 of 62 in poolyst, but the check or `CLAUDE.md` sentence the close writes after it is
+what stuck, and learn reads the file), and waiting for a clear (the owner asked "when is
+it safe" about 29 times, most before 0.23.10; no work was lost on a clear after it).

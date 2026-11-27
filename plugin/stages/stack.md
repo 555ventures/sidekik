@@ -11,8 +11,8 @@ what they chose. Never read the owner's other repositories to guess a stack.
    development machine as it is (which databases, object stores and mail catchers
    already run, in which containers and on which ports; how env files and secrets are
    kept), which serves only to reuse local services. In the same batch, the decisions this product needs,
-   named from the confirmed examples and the questions the prototype settled as stack
-   decisions: the architecture, the framework, the main libraries of each part, the data
+   named from the confirmed examples and the stack decisions the prototype left in
+   `sidekik/stack.md`: the architecture, the framework, the main libraries of each part, the data
    design, the UI toolkit the kit becomes and whether it reaches a native app, the
    database and its access layer, login, hosting, storage, email, payments when the
    product charges, analytics, outside feeds, error tracking. Mark each hard or easy to

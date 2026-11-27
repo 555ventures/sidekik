@@ -27,7 +27,7 @@ Every stage follows one pattern, and stage files hold only what is specific to t
 approach is settled, what the pieces share is built first by one `sidekik:maker`,
 independent pieces go to makers at the same time, each on the files its brief names, with
 scouts and the reviews of finished pieces running beside them, a machine checks every
-piece, fresh eyes look once, and one lesson is recorded. Pieces are independent when a
+piece and fresh eyes look once. Pieces are independent when a
 listing of who imports each file they change shows it, never by their names or their
 place on a screen. Makers at work at the same time on the product's code each get a git
 worktree of their own, started from your latest commit (the Agent tool's
@@ -49,8 +49,6 @@ Size it first:
   more at what a rework after its findings touched. One you cannot
   reproduce: say so, and have a maker make the next occurrence name itself (a log line,
   and the test that will catch it).
-  Add `- fix: what escaped, and what would have caught it` to `sidekik/lessons.md`,
-  its text starting `unproven:` for a bug you could not reproduce.
 - **A small tweak** that changes no behaviour (a label, a colour, an alignment): change
   exactly what was asked, by your own hand when it is a few lines in one file you have
   read.
@@ -96,8 +94,8 @@ project root or with `--root <dir>`.
    say what it would lose.
 
 The `sidekik/` folder is landed with the work. You land work, and landing is not going
-live: every commit is pushed, and a commit that changes the product
-passes the project's check first. A process you, an agent or a test runner started
+live: every commit is pushed, and the project's check runs once on a finished
+piece (a brief at its built mark, a fix or a tweak before it lands), not on each commit. A process you, an agent or a test runner started
 outlives its starter and is tracked by no one: before your turn ends, list what still
 runs from this project by command line and working directory, never by port, and end
 each by pid until it is gone, except one the owner needs for a stop: the stop and

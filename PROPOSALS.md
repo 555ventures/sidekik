@@ -764,3 +764,52 @@ Counted and left: `sidekik/lessons.md` (64 lines; read by no agent in praxtrade 
 2 of 62 in poolyst, but the check or `CLAUDE.md` sentence the close writes after it is
 what stuck, and learn reads the file), and waiting for a clear (the owner asked "when is
 it safe" about 29 times, most before 0.23.10; no work was lost on a clear after it).
+
+## The loop heard only what escaped: a brief's time is now what a tidy is judged by
+
+**Ruled by the owner 2026-11-27, applied in 0.25.0.** The owner, after the third count:
+"Why many projects implementation so slow now? And why when we do feedback loop, plugin
+like v7, v8 and sidekik keep getting slow and bloated?", then "So sidekik is healthy you
+are saying? Be honest, unbiased.." Learn's answer was no, and the owner said yes to this:
+the next change is a cut in steps per change, judged by the time from their yes to a
+finished brief, and no new sentence goes into the plugin until that number falls.
+
+Why the loop bloats. A bug that escaped gets a line ("what would have caught it"). A
+step that was too much gets none: praxtrade's session counted about 200 lesson lines and
+not one that said a run was too big. So every answer added a step, each one justified,
+and the tidies counted what a step caught and never how long a brief took. Size hid it:
+the scripts shrank from 41 KB to 32 KB while the projects slowed, because what grew was
+the number of agent runs one change needs.
+
+The number, from each project's `state.json` (wall time from `confirmed` to `done`,
+median): sumglass 6 h 04 min for its 24 briefs up to 2026-11-14, then 21 h 10 min for
+the last three; poolyst 52 h 21 min for nine briefs, and its one brief since 2026-11-19
+took 334 h 43 min; sumaro one brief in 9 h 05 min since 2026-11-19 and one in 62 h 58
+min before; praxtrade has never finished a brief. Since 2026-11-19 the four projects
+finished two briefs between them.
+
+Taken out:
+
+- The whole check before each commit. About 150 runs in the eight days (poolyst 37 at 4
+  to 25 minutes, praxtrade 41 at 18 to 25 minutes), six real catches, none a product bug
+  a reviewer had not also found. The check now runs once on a finished piece: a brief at
+  its built mark, which the script already enforces, and a fix or a tweak before it
+  lands.
+- The lesson and "fix what allowed it". Each finished brief and each bug had to leave a
+  line in `sidekik/lessons.md` and then a new check or a `CLAUDE.md` sentence: the same
+  loop, installed in every project. praxtrade's proof grew to 25 checks and 18 to 25
+  minutes, sumaro's check from 50 to 170 seconds in a day; the lines were read by no
+  agent in praxtrade and by 2 of 62 in poolyst. `lessons.md` is out of the close, the
+  bug route, the pattern and the contract. A bug still gets the test that fails because
+  of it. An existing `lessons.md` is read by nothing.
+
+Changed in learn itself: the readers first take how long a brief took and how many agent
+runs, and a tidy cuts the slowest first.
+
+Not cut, and why: the review of a fix. It is where the time goes (poolyst: six looks
+over one brief, about 30 hours), and it is also where the catches are (13 proven bugs in
+looks three to six, in code that pays money). Whether a review stops after its second
+look is the owner's to rule.
+
+To undo: restore the close's lesson paragraph and go.md's "a commit that changes the
+product passes the project's check first" from 0.24.2.

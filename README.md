@@ -33,8 +33,8 @@ idea → briefs → prototype → look → stack → build note → build → re
 
 One pattern runs through all of it, for the prototype and for the product alike: the
 approach is settled first, one hand builds the shared foundation, independent pieces are
-built at the same time, a machine checks every piece, fresh eyes check the result once, and
-one lesson changes what happens next.
+built at the same time, a machine checks every piece, and fresh eyes
+check the result once.
 
 A prototype is a set of concrete examples of the product in use, in the form the product
 is judged by: screens to click for a product you look at, exchanges to read for one you
@@ -49,8 +49,7 @@ between them runs unattended and reports as it goes. An agent runs on the model 
 names; a call that names another goes to the owner's own permission prompt. A bug or a
 small tweak skips the stages: it is fixed directly and reported in one line.
 
-Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,
-and each finished brief leaves one lesson and the check or sentence that prevents its worst moment.
+Every project also keeps itself clean: a tidy stage is scheduled by the script.
 
 A project also writes down where the plugin itself got in its way, and `/sidekik:learn`,
 run in this repo, fixes a fault of the plugin at once and answers in the project.
@@ -61,9 +60,9 @@ Its predecessors grew to tens of thousands of lines and answered every incident 
 rule, and for its first week so did this one: 73 of 95 fixes added words and 2 removed
 any. It stays small by how it changes, not by a limit. Only a fault (a crash, a wrong
 refusal, a dead end, an untrue sentence) is fixed when it is reported. Everything else
-waits for a tidy every few days, which starts in the projects: for each thing the plugin
-makes a session or the owner do, how often it happened and how often it changed what was
-built. What cost more than it caught is taken out, whatever lesson put it there.
+waits for a tidy every few days, which starts in the projects: how long a brief takes from the
+owner's yes to finished, and for each thing the plugin makes a session or the owner do,
+how often it happened, how long it took and how often it changed what was built. What cost more than it caught is taken out, whatever lesson put it there.
 `npm test` prints its size, so growth is seen and never hidden.
 
 ## Contract (for whoever builds or changes the plugin)
@@ -78,7 +77,6 @@ sidekik/
   handoff.md            where the work stands and what comes next, replaced whole each time
   stack.md              ## Picks, ## Your steps
   model.md              the data design and the product's areas
-  lessons.md            - 01: text   - fix: text
   feedback.md           where the plugin itself got in the way:  - [open] stage: text
   prototype/
     INDEX.md            what this is and the rules for anyone adding to it
@@ -104,8 +102,6 @@ Line formats, exactly:
 - Map row: `| area/file.ext | NN | purpose | area/other.ext, ... |`. The
   path is relative to `sidekik/prototype/` and has a file extension. Nothing after `NN` is
   read; an older map with `planned` or `done` in the third cell works the same.
-- Lesson: `- NN: text` for a brief, `- fix: text` for a bug that escaped. No script reads
-  it: the close stage and a bug fix write the line, and `/sidekik:learn` reads it at a tidy.
 - Feedback: `- [open] stage: text`, later `- [fixed] stage: text → what changed` or
   `- [declined] stage: text → why, and what to do meanwhile`. No script reads it: the
   project's session writes the line, and `/sidekik:learn` answers it.

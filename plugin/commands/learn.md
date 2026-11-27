@@ -30,15 +30,17 @@ old, and when a new model arrives. A session hears only the rule that blocked it
 what obeying a rule cost, so the tidy starts in the projects, not in the plugin.
 
 Readers, one per project, on Opus (named on each call: an agent with no file of its own
-runs on the session's model), count for each thing the plugin makes a session or the
-owner do how often it happened and how often it changed what was built: a real catch, an
-answer that was not the predicted yes, a file someone read. They read every feedback line
-too, answered or not, the refused steps in the history and `sidekik/lessons.md`: several
-lines about one part mean the part is wrong, not its wording.
+runs on the session's model), take first how long a brief took from the owner's yes to
+finished (`sidekik status` prints it) and how many agent runs it took, then count for
+each thing the plugin makes a session or the owner do how often it happened, how long it
+took and how often it changed what was built: a real catch, an answer that was not the
+predicted yes, a file someone read. They read every feedback line too, answered or not,
+and the refused steps in the history: several lines about one part mean the part is
+wrong, not its wording.
 
 Then change the plugin, the first of these that fits each finding:
 
-1. Take out what cost more than it caught: the mechanism with its script, its tests and
+1. Take out what cost more than it caught, the slowest first: the mechanism with its script, its tests and
    its sentences. A lesson behind a rule does not protect it.
 2. Replace a part that keeps collecting lessons with a simpler one. Never patch it again.
 3. An edit in place to a sentence.

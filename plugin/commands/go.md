@@ -133,9 +133,12 @@ yours to settle.
   the project already answers, nor what you would recommend without doubt: a yes you can
   predict is a call, not a question.
 - Progress is reported, not asked: print the milestone and keep working.
-- An agent's model is the owner's to raise, and it is the only limit on what you spend:
-  more agents, more research, a wider piece of work or a longer run on the models the
-  files name needs no yes and no announcement. Start a `sidekik:` agent
+- An agent's model is the owner's to raise, and it is the only limit on the tokens you
+  spend: more agents, more research, a wider piece of work or a longer run on the models
+  the files name needs no yes and no announcement. Their machine is another matter,
+  because they work on it while you run: what runs there (a check, a trial, a proof,
+  whatever your agents run at the same time) is the smallest run that settles the
+  question it serves, and a long one runs at low priority on a few cores. Start a `sidekik:` agent
   without a model, so it runs on the one its file names; any other agent has no file and
   runs on your session's model unless the call names one, so name the model its stage
   file gives. A call that names another model for a `sidekik:` agent is put to the owner
@@ -165,8 +168,9 @@ You set the direction, brief, judge and talk to the owner. Before the first make
 anything new to the product's structure (a fix inside an existing pattern needs none),
 settle the approach: name the cause or the need, have scouts find the ways to meet it from
 current sources, a library that already solves it among them, have a maker try the
-likeliest in a scratch folder outside the project against the cases most likely to break
-it, have a reviewer try to break that trial, and choose by what fits this product. What
+likeliest outside the project, in a copy of the product where there is one and called
+from where the product will call it, against the cases most likely to break it, have a
+reviewer try to break that trial, and choose by what fits this product. What
 was weighed and what the trial showed go into the build note. A finding that the
 structure is wrong, or a second fix in the same place, is not rework: stop the makers
 building on it, name the root cause and have that fixed, under a new build note, and as

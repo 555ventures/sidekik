@@ -639,6 +639,35 @@ yes and no announcement; "when scope or time changes" in the list of owner momen
 and a go or no-go before heavy work and its cost section, and its "Decide this" item is
 only for what the partner cannot settle itself.
 
+**Amended 2026-11-27 in 0.23.11.** "The only limit on what you spend" was read as covering
+the owner's machine too. On 2026-11-26 praxtrade's partner briefed a trial of more than
+115 cases at 1,000 simulated datasets each, "at most 10 node processes"; the maker ran
+six at full load for 19 minutes while the owner worked. The owner: "Why you need to burn
+CPU so high?", "This is recurring issue. Why you do this? ... Why you do not fix them?"
+(the same question had come on 2026-11-19 in all four projects: "Are you runnign test
+suite in right way? CPU is running so high"). The partner then wrote a budget in numbers
+into the project's `CLAUDE.md` ("at most 15 cases, at most 2 processes ... at most 15
+minutes"); the owner: "Are you sure the limit you just wrote is best practice? 15 is
+enough?", and had it removed. So go.md now says the model is the only limit on the
+tokens, and that the machine is another matter because the owner works on it: what runs
+there is the smallest run that settles the question it serves, and a long one runs at
+low priority on a few cores. No number, no budget line in a brief, no yes to ask.
+
+In the same sentence about settling an approach, the trial is no longer made "in a
+scratch folder outside the project" but outside the project in a copy of the product,
+called from where the product will call it: in praxtrade a trial that held every case
+was wrong for the product four times in a week, three caught by the reviewer sent to
+break it and one (a script that called a module the product calls inside a component's
+draw) only by the maker, an hour in.
+
+Tried before release, twice each on the lead's model: asked to brief a trial of three
+statistical tests, the 0.23.10 guide briefed 2,000 datasets per condition on half the
+cores ("Never sample the 62 or lower the dataset count"), and this guide a pilot at 100,
+then the smallest run that settles it, under `nice` on two or three processes. Asked to
+brief a trial of three ways to draw streamed Markdown, the old guide had the module
+copied into a scratch folder and this one had the candidates called from the component
+that calls it, in a copy of the product.
+
 **Taken out 2026-11-19 on the owner's word ("only do this high value low risk item"), from a count over seven projects.** 0.23.2: the `confirmed` mark no longer waits on open questions (25 refusals, no gap; the owner was asked the defaults a second time). The questions files and the look stop that shows them stay.
 0.23.3: the map loses its `planned` / `done` column and the checker its two map problems (about 265 edits that only flipped the word, about 200 "file not in the map" problems, 2 rows caught). A brief is prototyped when the files its map rows name exist. The map stays as the makers' work list.
 0.23.4: the scripts no longer count questions (a reviewer proved that after 0.23.2 the status screen and `next` kept showing questions of finished briefs as waiting on the owner). The questions files are plain files the look stop reads.

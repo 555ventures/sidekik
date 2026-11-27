@@ -70,5 +70,5 @@ what they chose. Never read the owner's other repositories to guess a stack.
    Add an index command that prints, from the code, the names and signatures each area
    exposes. Put the layout and all commands in `CLAUDE.md`.
 
-Write `sidekik/stack.md` with `## Picks` (each pick, its reason and its sources) and
+`sidekik/stack.md` holds `## Picks` (each pick, its reason and its sources) and
 `## Your steps`. Run `state.js set-check "<command>"`, then `state.js mark stack`.

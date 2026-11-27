@@ -46,8 +46,7 @@ work until the owner answers; four are asked at the brief list, each brief's pro
 the stack and going live. The session runs the mark only after the owner's yes, and the
 mark is the record of it. The build
 between them runs unattended and reports as it goes. An agent runs on the model its file
-names; a call that names another goes to the owner's own permission prompt, and the examples
-pass of a whole new product starts at a stop that offers a thinner pass. A bug or a
+names; a call that names another goes to the owner's own permission prompt. A bug or a
 small tweak skips the stages: it is fixed directly and reported in one line.
 
 Every project also keeps itself clean and learns: a tidy stage is scheduled by the script,

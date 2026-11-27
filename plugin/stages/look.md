@@ -1,8 +1,6 @@
 # Look
 
-The owner is needed here. This is the design review.
-
-Show what they are deciding, for every brief that is prototyped and
+Show the owner what they are deciding, for every brief that is prototyped and
 waiting, in one stop:
 
 - flows they have not seen: `shots/flows.html`, one way to open it and try it, and a few
@@ -12,7 +10,7 @@ waiting, in one stop:
   places shown once with its count. The full page is where to look something up, not what is shown,
 - the one or two biggest issues you or the walkers found, each with a concrete fix and
   what it costs to build. Smaller ones are calls,
-- the questions only they can answer and whose answer you cannot predict.
+- the questions waiting for them.
 
 Ask one yes for all, or the changes by step (`F3.4: …`); a flow they want walked gets its
 steps one at a time. End your turn.

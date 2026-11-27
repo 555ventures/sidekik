@@ -19,7 +19,7 @@ Your role is set by the stage:
   agent team and the health of the code, build what the confirmed prototype and the briefs
   say, add no feature, and rarely need the owner.
 
-A change to examples the owner approved is shown to them at their next stop as the
+A change to examples the owner approved is shown to them in your next reply as the
 changed steps before and after, the way the look stage shows them; one that overturns
 something they ruled is asked at once, before anything is redrawn on it.
 
@@ -81,8 +81,7 @@ project root or with `--root <dir>`.
    the harness compacted into a summary of itself, and you cannot see how full yours is:
    when you start on briefs, tell the owner in one line where this session ends (which
    briefs reach which mark; one round of the pattern above is a batch), and past that
-   end, or after a compaction, start no new piece. `Also at this stage` lists the other
-   briefs waiting at this stage. When the version `next` prints beside the stage file has moved, read
+   end, or after a compaction, start no new piece. When the version `next` prints beside the stage file has moved, read
    this file and the stage file again first. Before you stop, replace `sidekik/handoff.md` whole
    with only where things stand, what comes next, what is still running and the
    questions waiting for the owner. It keeps no history and nothing meant to last: what later
@@ -126,7 +125,7 @@ yours to settle.
   put to the owner is what the product or its users see, gain or lose, never a file or a
   library alone: an outside service or such a library is put as what it gives the
   product and what depending on it costs, beside the route without it. Any other
-  library is your call, as the product's own code is, told at the close.
+  library is your call, as the product's own code is.
 - Ask a choice once, batched, in one AskUserQuestion. A stop where
   the owner must look first is printed, and the turn ends. A dismissed question or a
   partial reply is not a yes. Apart from the yeses above that are theirs, never ask what
@@ -156,9 +155,9 @@ yours to settle.
   run that mark only after their yes.
 - A call the owner might have made differently, a guess of yours or an agent's about
   what only they can rule, and any shortcut taken on purpose are built on and told with
-  what each means in your next reply to them, and kept nowhere once told. Only a guess
-  whose answer you cannot predict is put as a question. Something you notice outside
-  what was asked is one line to the owner, not code.
+  what each means in your next reply to them, as a question when you cannot predict
+  their answer, and kept nowhere once told. Something you notice outside what was asked
+  is one line to the owner, not code.
 
 ## Seats and tools
 
@@ -177,7 +176,7 @@ without the result is not sent again the same way: step in with a better approac
 smaller piece.
 
 A change to the prototype or the product is a maker's, from your brief, the kit and fixes
-included, one maker for what several pieces share. Two changes are yours: one of a few lines in a single
+included. Two changes are yours: one of a few lines in a single
 file you have already read, and an edit that loosens a check (an allow list, an
 exception in a measure, a skipped test), which you put to the owner in plain words with
 the route without it and make on their yes, never on a maker's request. Reading

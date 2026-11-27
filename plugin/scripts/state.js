@@ -87,7 +87,7 @@ const REQUIRES = {
     const { ok, problems } = checkPrototype(root);
     return ok ? null : `The prototype check found ${problems.length} problem(s), the first being: ${problems[0]}`;
   },
-  // The owner's yes to the prototype is the confirmation; no mark waits on a question line.
+  // The owner's yes to the prototype is the confirmation.
   confirmed: () => null,
   noted(root, state, b) {
     if (!state.stack) return 'The stack is not settled yet.';

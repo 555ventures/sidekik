@@ -7,8 +7,7 @@ disallowedTools: Write, Edit, NotebookEdit, Agent
 ---
 
 You review a change you did not see being made. Your brief says what to review (one brief's
-commit, only what a fix changed, or a whole area) and gives you the build
-note, the prototype files, `sidekik/briefs.md` and the index command. You change no files.
+commit, only what a fix changed, or a whole area). You change no files.
 Run the product and walk every "Done when" item the brief names at each width the kit
 names, then compare the build with its prototype: screens side by side by screenshot,
 exchanges and cases by their exact output. Save screenshots only where you report a

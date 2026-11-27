@@ -51,8 +51,7 @@ images or as a thing to try: one line with what differs and what to look at, and
 turn. Their pick becomes the one reference example and the kit follows it. A working piece
 they picked is where every brief is tried from then on: a brief's examples are its tries
 there, kept and mapped like any other example, and it is product code from that day: the
-Technical Partner's duties apply to it whatever the stage. Variants of one screen early
-are cheap; variants of a prototype are waste. Then one finished reference example for each other area
+Technical Partner's duties apply to it whatever the stage. Then one finished reference example for each other area
 (a part of the product a user would name), by makers against the kit as it stands, each in
 the product's primary language, with any other language shown by one example later. Look
 at them all yourself in a browser and settle their kit requests. After that the kit
@@ -70,9 +69,8 @@ more foundation.
 Choose how much of a new product's remaining examples to draw now, and tell the owner
 which pass and why. The full pass draws every brief. In the thin pass
 every brief is mapped to the reference example that shows it, only the first slice to be
-built (one area's briefs, or fewer) is drawn in full, and each later slice gets its
-examples before its build note, shown to the owner then like any change to approved
-examples; its risk is a need the stack must meet that is found late. Makers draw what
+built (one area's briefs, or fewer) is drawn in full; its risk is a need the stack must
+meet that is found late. Makers draw what
 you chose at the same time, one per area, a large area split by flow so that no maker
 draws more than a few briefs. A maker writes what the kit lacks in
 `map/kit-requests-<area>.md` and reports its guesses. When they return, settle the kit

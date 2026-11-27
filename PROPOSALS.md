@@ -745,6 +745,14 @@ Also taken out, in 0.24.1: the tidy stage's reviewers no longer look for "protot
 examples with nothing built for them" (sumglass, one tidy: an Opus reviewer over the
 prototype "found no fault a user sees", and a maker's two hours went to redrawing).
 
+The last read of the whole plugin (0.24.2) took out what the two changes above left
+dangling and what was said twice. Two of its edits touch the owner: a change to
+examples they approved is shown in the partner's next reply and no longer waits for
+their next stop (poolyst owed one before-and-after for eight days), and the ship stop
+no longer lists again the calls made on the way, which were told when they were made.
+The README no longer says the examples pass "starts at a stop that offers a thinner
+pass": since 0.23.0 the pass is the partner's choice, told with its reason.
+
 What earned its cost again and stays: the reviewer sent to break a trial (praxtrade: 13
 of 15 broke the plan; sumaro: 16 faults over three trials; the two projects that skipped
 the trial paid a reverted ten-hour fix and a two-hour rework), the review of a fix (14 of

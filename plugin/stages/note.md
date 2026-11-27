@@ -2,8 +2,9 @@
 
 Write `sidekik/build-notes/<NN>-<slug>.md`. It is your working note for
 whoever builds and reviews this brief, and the owner does not approve it. The note holds
-only what an example cannot show. Use these
-headings:
+only what an example cannot show. A brief the thin pass only mapped to a reference
+example gets its examples first, shown to the owner like any change to approved
+examples. Use these headings:
 
 ```
 # <the brief's sentence>

@@ -12,6 +12,7 @@ Then:
   `- [owner]`.
 - If you fixed anything, dispatch the reviewer once more over only what the fixes changed,
   with the affected "Done when" items; a fix that changed the structure is reviewed
-  whole. Nothing else in the brief is reviewed again or can block.
+  whole. That second look is the last: what it finds is fixed, each with a test that
+  fails because of it, and nothing is reviewed again or can block.
 
 Run `state.js mark <NN> reviewed`, then land the fixes.

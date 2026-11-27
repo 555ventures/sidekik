@@ -806,10 +806,15 @@ Taken out:
 Changed in learn itself: the readers first take how long a brief took and how many agent
 runs, and a tidy cuts the slowest first.
 
-Not cut, and why: the review of a fix. It is where the time goes (poolyst: six looks
-over one brief, about 30 hours), and it is also where the catches are (13 proven bugs in
-looks three to six, in code that pays money). Whether a review stops after its second
-look is the owner's to rule.
+The review of a fix was put to the owner, because it is where the time goes (poolyst:
+six looks over one brief, about 30 hours) and also where the catches are (13 proven bugs
+in looks three to six, in code that pays money). Asked "a review stops after its second
+look ... It would have saved about 12 hours on poolyst's brief and missed 13 real bugs
+there", the owner said yes. In 0.25.1 review.md says the second look is the last: what
+it finds is fixed, each with a test that fails because of it, and nothing is reviewed
+again. The old sentence ("If you fixed anything, dispatch the reviewer once more") was
+read again after every round of fixes, so a review ended only when a look came back
+clean. To undo: say "keep reviewing until clean".
 
 To undo: restore the close's lesson paragraph and go.md's "a commit that changes the
 product passes the project's check first" from 0.24.2.
